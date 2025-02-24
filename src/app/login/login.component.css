@@ -1,0 +1,107 @@
+/* Style général */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Image à gauche */
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4; /* Couleur de fond */
+}
+
+.image-container img {
+    max-width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* Formulaire à droite */
+.form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.form-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: white;
+    text-align: center;
+}
+
+/* Champs du formulaire */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Mot de passe avec bouton d'affichage */
+.password-group {
+    position: relative;
+}
+
+.password-group button {
+    position: absolute;
+    right: 10px;
+    top: 65%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Bouton de connexion */
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+/* Pied de formulaire */
+.form-footer {
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.form-footer a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Lien pour s'inscrire */
+.register-link {
+    margin-top: 15px;
+    font-size: 14px;
+}

@@ -1,0 +1,76 @@
+<div class="historique-container flex">
+  <!-- Sidebar existante -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Contenu principal -->
+  <div class="content flex-1 p-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-semibold">Historique</h2>
+    </div>
+
+    <!-- Tableau -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <!-- Barre de recherche et sélecteur de date alignés -->
+      <div class="search-container">
+        <!-- Barre de recherche -->
+        <div class="search-container relative">
+          <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher..." class="input pl-10 pr-4">
+          <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        </div>
+        
+      
+     
+      </div>
+      
+      <!-- Table -->
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="border-b">
+            <th class="py-3 px-4 text-left">ID</th>
+            <th class="py-3 px-4 text-left">Nom</th>
+            <th class="py-3 px-4 text-left">Rôle</th>
+            <th class="py-3 px-4 text-left">Prénom</th>
+            <th class="py-3 px-4 text-left">Date</th>
+            <th class="py-3 px-4 text-left">Actions</th>
+            <th class="py-3 px-4 text-left">Heure d'arrivée</th>
+            <th class="py-3 px-4 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of getFilteredUsers()" class="border-b hover:bg-gray-100">
+            <td class="py-3 px-4">{{ user.id }}</td>
+            <td class="py-3 px-4">{{ user.nom }}</td>
+            <td class="py-3 px-4">{{ user.role }}</td>
+            <td class="py-3 px-4">{{ user.prenom }}</td>
+            <td class="py-3 px-4">{{ user.date }}</td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-1 rounded text-white text-sm"
+                    [ngClass]="getActionClass(user.action)">
+                {{ user.action }}
+              </span>
+            </td>
+            <td class="py-3 px-4">{{ user.heure }}</td>
+            <td class="py-3 px-4">
+              <span class="px-3 py-1 rounded text-white text-sm"
+                    [ngClass]="user.status === 'active' ? 'bg-green-500' : 'bg-gray-400'">
+                {{ user.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-4">
+        <button *ngFor="let page of [].constructor(totalPages()); let i = index" 
+                (click)="changePage(i + 1)" 
+                class="mx-1 px-3 py-1 border rounded-md"
+                [class.active]="currentPage === i + 1">
+          {{ i + 1 }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

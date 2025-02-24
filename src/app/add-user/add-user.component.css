@@ -1,0 +1,80 @@
+.form-container {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    min-height: 500px;
+    justify-content: center;
+   
+  }
+  
+  .form-title {
+    background: #5B3CC4;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .validate {
+    background: #c1f0c1;
+  }
+  
+  .cancel {
+    background: #d9534f;
+    color: white;
+  }
+  input,
+  select {
+      width: 100%;
+      padding: 12px; /* Augmenté de 8px à 12px */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px; /* Augmenté de 14px à 16px */
+      outline: none;
+  }
+  
+  /* Ajout d'un effet au focus */
+  input:focus,
+  select:focus {
+      border-color: #007bff;
+      box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3); /* Augmenté légèrement */
+  }
+  span {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+  

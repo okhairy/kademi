@@ -1,0 +1,78 @@
+/* Global */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background: #F8F9FA;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 30px;
+    height: 30px;
+    background: lightgray;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+/* Stats Cards */
+.stats-cards {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card i {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.student { background: #6C63FF; color: white; }
+.rooms { background: #FF7043; color: white; }
+.restaurant { background: #FFC107; color: black; }
+.users { background: #5B3CC4; color: white; }
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Espacement entre les graphes */
+    width: 100%;
+    margin-top: 50px
+  }
+  
+  canvas {
+    width: 45% !important;
+    height: 350px !important;
+  }
+  

@@ -1,0 +1,21 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+@Component({
+  selector: 'app-sidebar',
+  standalone: true,
+  imports: [],
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.css'
+})
+export class SidebarComponent {
+  constructor(private router: Router) {}
+
+  logout() {
+    // Suppression des informations de session (ajuste selon ton stockage)
+    localStorage.removeItem('userToken');
+    sessionStorage.clear();
+
+    // Redirection vers la page de login
+    this.router.navigate(['/login']);
+  }
+}
