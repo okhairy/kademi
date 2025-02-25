@@ -1,74 +1,143 @@
-<div class="dashboard-container">
-    <!-- Sidebar -->
-    <app-sidebar></app-sidebar> 
-<div class="content p-4 flex-grow-1">
+<div class="dashboard-container d-flex">
+  <!-- Sidebar -->
+  <app-sidebar-etudiant></app-sidebar-etudiant>
+
+  <div class="content p-4 flex-grow-1">
     <h2 class="fw-bold">Bienvenue Nabila !!!</h2>
-    
+    <div class="d-flex align-items-center justify-content-end">
+      <div class="me-3 text-end">
+        <h6 class="fw-bold mb-0">{{ utilisateur.nom }}</h6>
+        <span class="text-muted">{{ utilisateur.role }}</span>
+      </div>
+      <img [src]="utilisateur.photo || 'assets/default-user.png'" alt="Photo de profil" class="rounded-circle" width="40" height="40">
+    </div>
+
     <!-- Cartes récapitulatives -->
     <div class="row g-3">
       <div class="col-md-4">
-        <div class="card p-3 text-center shadow">
-          <h5>Montant</h5>
-          <h3 class="text-success">2000 F cfa</h3>
+        <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #0BF4C8; color: #000;">
+          <div>
+            <h6>Montant</h6>
+            <h4 id="montant-text">2000 F CFA</h4>
+          </div>
+          <div class="d-flex align-items-center">
+            <img src="assets/depot.png" alt="Montant" width="50">
+            <i id="toggle-montant" class="fas fa-eye ms-2" style="cursor: pointer; font-size: 20px;"></i>
+          </div>
+        </div>
+      </div>
+      
+     
+      <div class="col-md-4">
+        <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #252C58; color: #fff;">
+          <div>
+            <h6>Dépense dans la semaine</h6>
+            <h4>750 F cfa</h4>
+          </div>
+          <img src="assets/motant.png" alt="Dépense" width="50">
+          
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card p-3 text-center shadow">
-          <h5>Dépense dans la semaine</h5>
-          <h3 class="text-warning">750 F cfa</h3>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card p-3 text-center shadow">
-          <h5>Dernier dépôt</h5>
-          <h3 class="text-primary">3000 F cfa</h3>
+        <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #C1BBEB; color: #000;">
+          <div>
+            <h6>Dernier dépôt</h6>
+            <h4>3000 F cfa</h4>
+          </div>
+          <img src="assets/oumou.png" alt="Dépôt" width="50">
         </div>
       </div>
     </div>
 
-    <!-- Historique des transactions -->
-    <div class="card mt-4 p-3">
-      <h5>Historique des transactions</h5>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Transaction</th>
-            <th>Date</th>
-            <th>Montant</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>K287308</td>
-            <td>Dépôt</td>
-            <td>13/09/2022</td>
-            <td>3000</td>
-            <td><span class="text-primary">Shipped</span></td>
-          </tr>
-          <tr>
-            <td>K283038</td>
-            <td>Petit déjeuner</td>
-            <td>13/09/2022</td>
-            <td>50</td>
-            <td><span class="text-success">Delivered</span></td>
-          </tr>
-          <tr>
-            <td>K287265</td>
-            <td>Déjeuner</td>
-            <td>13/09/2022</td>
-            <td>100</td>
-            <td><span class="text-info">Paid</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
-    <!-- Graphique -->
-    <div class="card mt-4 p-3">
-      <h5>Fini la billetterie !!!</h5>
-      <canvas id="barChart"></canvas>
-    </div>
-  </div>
-</div>
+    <div class="row mt-4">
+      <!-- Colonne principale : Historique des transactions -->
+      <div class="col-md-8">
+        <div class="card p-3">
+          <h5>Historique des transactions</h5>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Transaction</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transaction of transactions | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.montant }}</td>
+                <td><span class="text-primary">{{ transaction.status }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <!-- Pagination -->
+          <pagination-controls (pageChange)="page = $event" class="mt-3 d-flex justify-content-center"></pagination-controls>
+        </div>
+      </div> <!-- FIN de col-md-8 -->
+    
+      <!-- Colonne widgets à droite -->
+      <div class="col-md-4 d-flex flex-column h-100">
+        <!-- Graphe -->
+        <div class="card p-3 shadow-sm mb-3">
+          <canvas id="barChart"></canvas>
+        </div>
+    
+        <!-- Informations de codification -->
+        <div class="card p-3 shadow-sm mb-3">
+          <h6>Informations de codification:</h6>
+          <p><strong>Bâtiment / Pavillon :</strong> <span class="text-primary">B</span></p>
+          <p><strong>Chambre :</strong> <span class="text-primary">2</span></p>
+        </div>
+    
+        <!-- Actions -->
+        <div class="card p-3 shadow-sm mb-3">
+          <h6>Actions</h6>
+          <ul class="list-unstyled">
+            <li>Déposer en sûreté</li>
+            <li>Consultez vos transactions</li>
+            <li>Scannez pour vous régler</li>
+          </ul>
+        </div>
+    
+        <!-- Barres de progression -->
+        <div class="card p-3 shadow-sm">
+          <p class="mb-1">Étudiants inscrits</p>
+          <div class="progress">
+            <div class="progress-bar bg-primary" style="width: 80%;">20k</div>
+          </div>
+          <p class="mt-3 mb-1">Utilisateurs actifs</p>
+          <div class="progress">
+            <div class="progress-bar bg-primary" style="width: 40%;">7k</div>
+          </div>
+        </div>
+      </div> <!-- FIN de col-md-4 -->
+    
+    </div> <!-- FIN de row -->
+    
+ <!-- Script -->
+ <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(() => {  // Petite attente pour s'assurer que le DOM est bien chargé
+      const montantText = document.getElementById("montant-text");
+      const toggleMontant = document.getElementById("toggle-montant");
+      let isVisible = true;
+
+      toggleMontant.addEventListener("click", function() {
+        if (isVisible) {
+          montantText.textContent = "**** F CFA";
+          toggleMontant.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+          montantText.textContent = "2000 F CFA";
+          toggleMontant.classList.replace("fa-eye-slash", "fa-eye");
+        }
+        isVisible = !isVisible;
+      });
+    }, 500); // Délai pour éviter que l'événement ne s'attache pas
+  });
+</script>

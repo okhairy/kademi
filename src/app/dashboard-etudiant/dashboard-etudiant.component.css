@@ -22,4 +22,40 @@
   .table {
     text-align: center;
   }
+
+  .chart-container {
+    width: 70%; /* Utilise toute la largeur disponible */
+    height: 350px; /* Augmenter la hauteur du graphe */
+    display: flex;
+    justify-content: center; /* Centrer le graphe */
+    align-items: center;
+    padding: 10px;
+  }
   
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+
+.progress {
+  height: 16px;
+  background-color: #ddd;
+}
+
+.progress-bar {
+  font-size: 16px;
+  color: white;
+  text-align: right;
+  padding-right: 5px;
+}
+.list-unstyled {
+  background: #C1BBEB;
+  padding: 05px;
+  border-radius: 5px;
+}
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+

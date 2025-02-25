@@ -1,0 +1,17 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #4D44B5;
+  }
+  
+  .logo {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    font-size: 18px;
+    padding: 10px;
+  }
