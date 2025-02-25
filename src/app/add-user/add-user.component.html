@@ -46,7 +46,33 @@
             Sélectionnez un rôle.
           </span>
         </div>
+        <!-- Champs supplémentaires si Étudiant -->
+    <div *ngIf="selectedRole === 'etudiant'">
+        <div>
+          <label>Numéro de Dossier *</label>
+          <input type="text" formControlName="numeroDossier">
+          <span *ngIf="userForm.get('numeroDossier')?.invalid && userForm.get('numeroDossier')?.touched">
+            Numéro de dossier obligatoire.
+          </span>
+        </div>
+        <div>
+            <label>Photo</label>
+            <input type="file" formControlName="photo">
+          </div>
+      </div>
+  
+      <!-- Champ supplémentaire si Vigile -->
+      <div *ngIf="selectedRole === 'vigile'">
+        <label>Lieu *</label>
+        <input type="text" formControlName="lieu">
+        <span *ngIf="userForm.get('lieu')?.invalid && userForm.get('lieu')?.touched">
+          Lieu obligatoire.
+        </span>
+      </div>
       
-        <button type="submit" [disabled]="userForm.invalid">Valider</button>
+        <div class="button-group">
+            <button type="submit" [disabled]="userForm.invalid">Valider</button>
+            <button type="button" (click)="annuler()">Annuler</button>
+        </div>
       </form>
   </div>

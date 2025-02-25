@@ -34,7 +34,7 @@
 
 .nav-link {
     color: white;
-    font-size: 18px;
+    font-size: 22px;
     padding: 12px 15px;
     display: flex;
     align-items: center;
@@ -56,7 +56,7 @@
 .logout {
     margin-top: auto; /* Pousse la déconnexion vers le bas */
     color: white;
-    font-size: 18px;
+    font-size: 22px;
     text-decoration: none;
     padding: 12px 15px;
     width: 100%;

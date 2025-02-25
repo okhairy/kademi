@@ -1,13 +1,12 @@
-.form-container {
+/* .form-container {
     width: 70%;
     margin: 0 auto;
     padding: 20px;
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    min-height: 500px;
+   height: 800px; 
     justify-content: center;
-   
   }
   
   .form-title {
@@ -20,6 +19,7 @@
   
   .form-group {
     margin-bottom: 15px;
+   
   }
   
   .form-group label {
@@ -57,18 +57,18 @@
   input,
   select {
       width: 100%;
-      padding: 12px; /* Augmenté de 8px à 12px */
+      padding: 12px; 
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 16px; /* Augmenté de 14px à 16px */
+      font-size: 16px; 
       outline: none;
   }
   
-  /* Ajout d'un effet au focus */
+ 
   input:focus,
   select:focus {
       border-color: #007bff;
-      box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3); /* Augmenté légèrement */
+      box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3); 
   }
   span {
     color: red;
@@ -77,4 +77,114 @@
     display: block;
 }
 
-  
+   */
+   /* Centrer le formulaire sur la page */
+body, html {
+    height: 100%;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    
+}
+
+.form-container {
+    width: 70%;
+    min-height: 600px; /* Augmenter la hauteur */
+    background: white;
+   /*  padding: 30px; */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    /* display: flex; */
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    /* flex-direction: column; */
+    /* align-items: center; */
+}
+
+.form-title {
+    background: #5B3CC4;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Style des champs */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Message d'erreur */
+span {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Bouton */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 48%; /* Ajuste la largeur pour les aligner */
+}
+
+button[type="submit"] {
+    background-color: #5B3CC4;
+    color: white;
+}
+
+button[type="button"] {
+    background-color: red;
+    color: white;
+}
+
+button[type="button"]:hover {
+    background-color: #999;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

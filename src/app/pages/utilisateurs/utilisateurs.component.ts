@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router,private modalService: NgbModal) {}
   searchTerm: string = '';
   users = [
     { nom: 'Karen Hope', id: '#123456789', date: 'March 25, 2021', role: 'etudiant', email: 'karenhope@gmail.com', selected: false, assigned: false },
@@ -22,7 +23,12 @@ export class UtilisateursComponent {
     { nom: 'oumoul Adja', id: '#123456789', date: 'March 25, 2021', role: 'Vigile', email: 'nadilaadja@gmail.com', selected: false },
     { nom: 'Johnny Ahmad', id: '#123456789', date: 'March 25, 2021', role: 'Vigile', email: 'johnyahmad@gmail.com', selected: false }
   ];
+  showModal = false;
+  showDeleteModal = false; // Modal pour la suppression
+  userToDelete: any = null;
+  utilisateurId!: number;
   filteredUsers = [...this.users];
+  showBlockModal = false;  // Modal pour le blocage
   filterUsers() {
     const term = this.searchTerm.toLowerCase();
     this.filteredUsers = this.users.filter(user =>
@@ -63,5 +69,50 @@ export class UtilisateursComponent {
   goToAddUser() {
     this.router.navigate(['/inscription']);
   }
-  
+  //methode pour supprimer un utilisateur
+  confirmDelete(user: any) {
+    this.userToDelete = user;
+    this.showModal = true;
+  }
+
+ /*  deleteUser() {
+    if (this.userToDelete) {
+      this.users = this.users.filter(u => u !== this.userToDelete);
+      this.filteredUsers = [...this.users];
+      this.closeModal();
+    }
+  } */
+
+  closeModal() {
+    this.showModal = false;
+    this.userToDelete = null;
+  }
+  //methode pour modifier un utilisateur
+  modifierUtilisateur(id: string) {
+    this.router.navigate(['/modification', Number(id)]);
+  }
+  // Ouvrir/Fermer le modal de suppression
+  openDeleteModal() {
+    this.showDeleteModal = true;
+  }
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+  }
+  deleteUser() {
+    alert("L'utilisateur a été supprimé !");
+    this.closeDeleteModal();
+  }
+
+  // Ouvrir/Fermer le modal de blocage
+  openBlockModal() {
+    this.showBlockModal = true;
+  }
+  closeBlockModal() {
+    this.showBlockModal = false;
+  }
+  bloquerUtilisateur() {
+    alert("L'utilisateur a été bloqué !");
+    this.closeBlockModal();
+  }
+
 }

@@ -1,0 +1,74 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar> 
+<div class="content p-4 flex-grow-1">
+    <h2 class="fw-bold">Bienvenue Nabila !!!</h2>
+    
+    <!-- Cartes récapitulatives -->
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card p-3 text-center shadow">
+          <h5>Montant</h5>
+          <h3 class="text-success">2000 F cfa</h3>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 text-center shadow">
+          <h5>Dépense dans la semaine</h5>
+          <h3 class="text-warning">750 F cfa</h3>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-3 text-center shadow">
+          <h5>Dernier dépôt</h5>
+          <h3 class="text-primary">3000 F cfa</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historique des transactions -->
+    <div class="card mt-4 p-3">
+      <h5>Historique des transactions</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Montant</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>K287308</td>
+            <td>Dépôt</td>
+            <td>13/09/2022</td>
+            <td>3000</td>
+            <td><span class="text-primary">Shipped</span></td>
+          </tr>
+          <tr>
+            <td>K283038</td>
+            <td>Petit déjeuner</td>
+            <td>13/09/2022</td>
+            <td>50</td>
+            <td><span class="text-success">Delivered</span></td>
+          </tr>
+          <tr>
+            <td>K287265</td>
+            <td>Déjeuner</td>
+            <td>13/09/2022</td>
+            <td>100</td>
+            <td><span class="text-info">Paid</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Graphique -->
+    <div class="card mt-4 p-3">
+      <h5>Fini la billetterie !!!</h5>
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+</div>

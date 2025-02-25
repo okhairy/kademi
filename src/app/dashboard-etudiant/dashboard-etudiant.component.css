@@ -1,0 +1,25 @@
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+  .logo {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    font-size: 18px;
+    padding: 10px;
+  }
+  
+  .card {
+    border-radius: 10px;
+    background: #fff;
+  }
+  
+  .table {
+    text-align: center;
+  }
+  

@@ -52,15 +52,16 @@
           
             <!-- Groupe des autres actions -->
             <div class="actions-container">
-              <button class="action-btn" title="Supprimer">
-                <i class="bi bi-trash"></i>
+              <button class="action-btn" title="Supprimer" (click)="openDeleteModal()">
+                  <i class="bi bi-trash"></i>
               </button>
           
-              <button class="action-btn" title="Modifier">
+              <button class="action-btn" title="Modifier" (click)="modifierUtilisateur(user.id)">
                 <i class="bi bi-pencil"></i>
               </button>
+              
           
-              <button class="action-btn" title="Bloquer">
+              <button class="action-btn" title="Bloquer" (click)="openBlockModal()">
                 <i class="bi bi-ban"></i>
               </button>
             </div>
@@ -80,4 +81,26 @@
 </button>
   </div>
 </div>
-  
+ <!-- MODAL DE CONFIRMATION DE SUPPRESSION -->
+<div class="modal" *ngIf="showDeleteModal">
+  <div class="modal-content">
+    <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+    <div class="modal-buttons">
+      <button class="confirm-btn" (click)="deleteUser()">Confirmer</button>
+      <button class="cancel-btn" (click)="closeDeleteModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE CONFIRMATION DE BLOCAGE -->
+<div class="modal-overlay" *ngIf="showBlockModal">
+  <div class="modal-content">
+    <h3>Confirmation</h3>
+    <p>Êtes-vous sûr de vouloir bloquer cet utilisateur ?</p>
+    <div class="modal-buttons">
+      <button class="btn btn-secondary" (click)="closeBlockModal()">Annuler</button>
+      <button class="btn btn-danger" (click)="bloquerUtilisateur()">Valider</button>
+    </div>
+  </div>
+</div>
+
