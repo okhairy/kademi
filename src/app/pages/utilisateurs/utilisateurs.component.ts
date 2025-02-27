@@ -4,11 +4,12 @@ import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddUserComponent } from '../../add-user/add-user.component';
 
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [CommonModule,SidebarComponent,FormsModule],
+  imports: [CommonModule,SidebarComponent,FormsModule,AddUserComponent],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.css'
 })
@@ -29,6 +30,8 @@ export class UtilisateursComponent {
   utilisateurId!: number;
   filteredUsers = [...this.users];
   showBlockModal = false;  // Modal pour le blocage
+  showAddUserModal: boolean = false;
+
   filterUsers() {
     const term = this.searchTerm.toLowerCase();
     this.filteredUsers = this.users.filter(user =>
@@ -114,5 +117,24 @@ export class UtilisateursComponent {
     alert("L'utilisateur a été bloqué !");
     this.closeBlockModal();
   }
+  
+  nouvelUtilisateur = {
+      nom: '',
+      id: '',
+      email: '',
+      role: ''
+  };
 
+  openAddUserModal() {
+      this.showAddUserModal = true;
+  }
+
+  closeAddUserModal() {
+      this.showAddUserModal = false;
+  }
+
+  ajouterUtilisateur() {
+      console.log("Utilisateur ajouté :", this.nouvelUtilisateur);
+      this.closeAddUserModal();
+  }
 }

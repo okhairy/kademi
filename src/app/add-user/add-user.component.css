@@ -1,190 +1,122 @@
-/* .form-container {
-    width: 70%;
-    margin: 0 auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-   height: 800px; 
-    justify-content: center;
-  }
-  
-  .form-title {
-    background: #5B3CC4;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-   
-  }
-  
-  .form-group label {
-    display: block;
-    font-weight: bold;
-  }
-  
-  .form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .btn {
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .validate {
-    background: #c1f0c1;
-  }
-  
-  .cancel {
-    background: #d9534f;
-    color: white;
-  }
-  input,
-  select {
-      width: 100%;
-      padding: 12px; 
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px; 
-      outline: none;
-  }
-  
- 
-  input:focus,
-  select:focus {
-      border-color: #007bff;
-      box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3); 
-  }
-  span {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-   */
-   /* Centrer le formulaire sur la page */
-body, html {
-    height: 100%;
-    margin:0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f4f4f4;
-    
-}
-
-.form-container {
-    width: 70%;
-    min-height: 600px; /* Augmenter la hauteur */
-    background: white;
-   /*  padding: 30px; */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    /* display: flex; */
-    justify-content: center;
-    margin: 0 auto;
-    padding: 20px;
-    /* flex-direction: column; */
-    /* align-items: center; */
-}
-
 .form-title {
-    background: #5B3CC4;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
+  color: blue;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-/* Style des champs */
-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-form div {
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 900px;
+  text-align: center;
 }
 
 input, select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-input:focus, select:focus {
-    border-color: #007bff;
-    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+small {
+  color: red;
+  font-size: 12px;
 }
 
-/* Message d'erreur */
+.modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-btn {
+  background: green;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* Style des messages d'erreur */
 span {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
+  color: red;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
 }
 
-/* Bouton */
+/* Style des champs invalides */
+input.ng-touched.ng-invalid, 
+select.ng-touched.ng-invalid {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
 .button-group {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
 button {
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 48%; /* Ajuste la largeur pour les aligner */
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 button[type="submit"] {
-    background-color: #5B3CC4;
-    color: white;
+  background-color: #28a745;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+button[type="submit"]:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
 }
 
 button[type="button"] {
-    background-color: red;
-    color: white;
+  background-color: #dc3545;
+  color: white;
 }
 
 button[type="button"]:hover {
-    background-color: #999;
+  background-color: #c82333;
 }
 
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+
+@media (max-width: 768px) {
+  .form-container {
+    width: 80%; /* Pour s'adapter aux écrans plus petits */
+  }
 }

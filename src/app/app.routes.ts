@@ -6,6 +6,7 @@ import { HistoriqueComponent } from './historique/historique.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { ModificationUtilisateurComponent } from './modification-utilisateur/modification-utilisateur.component';
 import { DashboardEtudiantComponent } from './dashboard-etudiant/dashboard-etudiant.component';
+import { DepotComponent } from './depot/depot.component';
 
 
 export const routes: Routes = [
@@ -17,5 +18,6 @@ export const routes: Routes = [
     { path: 'inscription', component: AddUserComponent },
     { path: 'modification/:id', component: ModificationUtilisateurComponent },
     { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
+    { path: 'depot', component: DepotComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
   ];

@@ -11,7 +11,7 @@
     
     <div class="button-container">
         <button class="delete-btn">Suppression plusieurs</button>
-        <button class="add-btn" (click)="goToAddUser()">+ Nouveau utilisateur</button>
+        <button class="add-btn" (click)="openAddUserModal()">+ Nouveau utilisateur</button>
       </div>
       
     
@@ -104,3 +104,9 @@
   </div>
 </div>
 
+ <!-- MODAL D'AJOUT UTILISATEUR -->
+ <div class="modal-overlay" *ngIf="showAddUserModal">
+  <div class="modal-content">
+    <app-add-user (closeForm)="closeAddUserModal()"></app-add-user>
+  </div>
+</div>

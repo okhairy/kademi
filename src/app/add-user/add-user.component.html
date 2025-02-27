@@ -2,64 +2,80 @@
     <h2 class="form-title">Inscription</h2>
   
     <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-        <div>
-          <label>Prénom *</label>
-          <input type="text" formControlName="prenom">
-          <span *ngIf="userForm.get('prenom')?.invalid && userForm.get('prenom')?.touched">
-            Prénom obligatoire (2 caractères minimum).
-          </span>
-        </div>
+      <div>
+        <label>Prénom *</label>
+        <input type="text" formControlName="prenom" (input)="checkField('prenom')">
+        <span class="error" *ngIf="errors.prenom">
+          {{ errors.prenom }}
+        </span>
+      </div>
       
-        <div>
-          <label>Nom *</label>
-          <input type="text" formControlName="nom">
-          <span *ngIf="userForm.get('nom')?.invalid && userForm.get('nom')?.touched">
-            Nom obligatoire (2 caractères minimum).
-          </span>
-        </div>
+      <div>
+        <label>Nom *</label>
+        <input type="text" formControlName="nom" (input)="checkField('nom')">
+        <span class="error" *ngIf="errors.nom">
+          {{ errors.nom }}
+        </span>
+      </div>
       
-        <div>
-          <label>Email *</label>
-          <input type="email" formControlName="email">
-          <span *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
-            Email invalide.
-          </span>
-        </div>
+      <div>
+        <label>Email *</label>
+        <input type="email" formControlName="email" (input)="checkField('email')">
+        <span class="error" *ngIf="errors.email">
+          {{ errors.email }}
+        </span>
+      </div>
       
-        <div>
-          <label>Téléphone *</label>
-          <input type="text" formControlName="telephone">
-          <span *ngIf="userForm.get('telephone')?.invalid && userForm.get('telephone')?.touched">
-            Numéro invalide (doit commencer par 70, 75, 76, 77 ou 78 et avoir 9 chiffres).
-          </span>
-        </div>
+      <div>
+        <label>Téléphone *</label>
+        <input type="text" formControlName="telephone" (input)="checkField('telephone')">
+        <span class="error" *ngIf="errors.telephone">
+          {{ errors.telephone }}
+        </span>
+      </div>
       
-        <div>
-          <label>Rôle *</label>
-          <select formControlName="role">
-            <option value="">Sélectionner un rôle</option>
-            <option value="etudiant">Étudiant</option>
-            <option value="vigile">Vigile</option>
-            <option value="admin">Admin</option>
-          </select>
-          <span *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched">
-            Sélectionnez un rôle.
-          </span>
-        </div>
+      <div>
+        <label>Rôle *</label>
+        <select formControlName="role" (change)="checkField('role')">
+          <option value="">Sélectionner un rôle</option>
+          <option value="etudiant">Étudiant</option>
+          <option value="vigile">Vigile</option>
+          <option value="admin">Admin</option>
+        </select>
+        <span class="error" *ngIf="errors.role">
+          {{ errors.role }}
+        </span>
+      </div>
+      
+        
         <!-- Champs supplémentaires si Étudiant -->
-    <div *ngIf="selectedRole === 'etudiant'">
-        <div>
-          <label>Numéro de Dossier *</label>
-          <input type="text" formControlName="numeroDossier">
-          <span *ngIf="userForm.get('numeroDossier')?.invalid && userForm.get('numeroDossier')?.touched">
-            Numéro de dossier obligatoire.
-          </span>
-        </div>
-        <div>
+        <div *ngIf="selectedRole === 'etudiant'">
+          <div>
+            <label>Numéro de Dossier *</label>
+            <input type="text" formControlName="numeroDossier">
+            <span class="error" *ngIf="userForm.get('numeroDossier')?.invalid && userForm.get('numeroDossier')?.touched">
+              Numéro de dossier obligatoire.
+            </span>
+          </div>
+          <div>
+            <label>Chambre *</label>
+            <input type="text" formControlName="chambre">
+            <span class="error" *ngIf="userForm.get('chambre')?.invalid && userForm.get('chambre')?.touched">
+              Chambre obligatoire.
+            </span>
+          </div>
+          <div>
+            <label>Campus *</label>
+            <input type="text" formControlName="campus">
+            <span class="error" *ngIf="userForm.get('campus')?.invalid && userForm.get('campus')?.touched">
+              Campus obligatoire.
+            </span>
+          </div>
+          <div>
             <label>Photo</label>
             <input type="file" formControlName="photo">
           </div>
-      </div>
+        </div>
   
       <!-- Champ supplémentaire si Vigile -->
       <div *ngIf="selectedRole === 'vigile'">
@@ -72,7 +88,8 @@
       
         <div class="button-group">
             <button type="submit" [disabled]="userForm.invalid">Valider</button>
-            <button type="button" (click)="annuler()">Annuler</button>
+            <button type="button" (click)="close()">Annuler</button>
+
         </div>
       </form>
   </div>
