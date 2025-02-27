@@ -19,9 +19,9 @@ export class DashboardEtudiantComponent implements AfterViewInit {
     { id: 'K283038', type: 'Petit déjeuner', date: '13/09/2022', montant: 50, status: 'Delivered' },
     { id: 'K287265', type: 'Déjeuner', date: '13/09/2022', montant: 100, status: 'Paid' },
     { id: 'K287400', type: 'Dîner', date: '14/09/2022', montant: 200, status: 'Paid' },
-    { id: 'K287401', type: 'Boisson', date: '14/09/2022', montant: 150, status: 'Delivered' },
-    { id: 'K287402', type: 'Recharge', date: '15/09/2022', montant: 500, status: 'Shipped' },
-    { id: 'K287403', type: 'Achat', date: '16/09/2022', montant: 1000, status: 'Paid' }
+    { id: 'K287401', type: 'Déjeuner', date: '14/09/2022', montant: 150, status: 'Delivered' },
+    { id: 'K287402', type: 'Petit déjeuner', date: '15/09/2022', montant: 500, status: 'Shipped' },
+    { id: 'K287403', type: 'Dîner', date: '16/09/2022', montant: 1000, status: 'Paid' }
   ];
   ngAfterViewInit() {
     const ctx = document.getElementById('barChart') as HTMLCanvasElement;
