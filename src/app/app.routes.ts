@@ -8,6 +8,8 @@ import { ModificationUtilisateurComponent } from './modification-utilisateur/mod
 import { DashboardEtudiantComponent } from './dashboard-etudiant/dashboard-etudiant.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { DepotComponent } from './depot/depot.component';
+import { DashboardVigileComponent } from './dashboard-vigile/dashboard-vigile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 export const routes: Routes = [
@@ -21,5 +23,7 @@ export const routes: Routes = [
     { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
     { path: 'forgot', component: ForgotPasswordComponent },
     { path: 'depot', component: DepotComponent },
+    { path: 'vigile', component: DashboardVigileComponent },
+    { path: 'change', component: ChangePasswordComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
   ];

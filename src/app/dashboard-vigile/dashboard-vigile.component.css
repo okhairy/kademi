@@ -1,0 +1,35 @@
+.dashboard-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .top-bar {
+    background-color: #6f42c1;
+    color: white;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .weather-card, .scan-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .weather-card {
+    padding: 20px;
+    background: rgba(185, 185, 185, 1);
+  }
+  
+  .scan-card {
+    padding: 3px;
+    border: 2px dashed #ccc;
+  }
+  
+  .text-danger {
+    font-weight: bold;
+  }
+  
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }

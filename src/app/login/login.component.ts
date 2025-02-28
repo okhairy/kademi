@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +13,27 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   loginForm: FormGroup;
   showPassword = false;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Connexion réussie', this.loginForm.value);
+      this.authService.login(this.loginForm.value).subscribe(
+        response => {
+          console.log('Connexion réussie', response);
+          // Rediriger l'utilisateur ou effectuer d'autres actions
+        },
+        error => {
+          console.log('Erreur de connexion', error);
+          this.errorMessage = error.error.message || 'Une erreur est survenue lors de la connexion.';
+        }
+      );
     } else {
       console.log('Formulaire invalide');
     }

@@ -61,7 +61,7 @@
     position: relative;
 }
 
-.password-group button {
+.password-group i {
     position: absolute;
     right: 10px;
     top: 65%;

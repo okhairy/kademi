@@ -18,13 +18,17 @@
 
                 <div class="form-group password-group">
                     <label>Mot de passe</label>
-                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password">
-                    <button type="button" (click)="togglePassword()">👁️</button>
+                    <input [type]="showPassword ? 'text' : 'password'" formControlName="password" >
+                    <i class="eye-icon bi" [ngClass]="showPassword ? 'bi-eye-slash ' : 'bi-eye position-absolute'" (click)="togglePassword()"></i>
+                    
                 </div>
 
                 <div class="form-footer">
                     <a href="#">Mot de passe oublié ?</a>
                 </div>
+                <div *ngIf="errorMessage" class="text-danger mb-3">
+                    {{ errorMessage }}
+                  </div>
 
                 <button type="submit" class="submit-btn">Connexion</button>
             </form>
