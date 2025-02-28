@@ -22,6 +22,14 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
+
+    // Réinitialiser les messages d'erreur lorsque les champs de saisie sont modifiés
+    this.loginForm.get('email')?.valueChanges.subscribe(() => {
+      this.errorMessage = null;
+    });
+    this.loginForm.get('password')?.valueChanges.subscribe(() => {
+      this.errorMessage = null;
+    });
   }
 
   onSubmit() {
@@ -38,7 +46,7 @@ export class LoginComponent {
         },
         error => {
           console.log('Erreur de connexion', error);
-          this.errorMessage = error.error.message || 'Une erreur est survenue lors de la connexion.';
+          this.errorMessage = error.response?.data?.error || 'Une erreur est survenue lors de la connexion.';
         }
       );
     } else {
