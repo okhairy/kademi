@@ -7,10 +7,12 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-dashboard-etudiant',
-    imports: [SidebarEtudiantComponent, NgxPaginationModule],
+    standalone: true,
+    imports: [CommonModule, SidebarEtudiantComponent, NgxPaginationModule],
     templateUrl: './dashboard-etudiant.component.html',
     styleUrl: './dashboard-etudiant.component.css'
 })
+
 export class DashboardEtudiantComponent implements AfterViewInit {
   transactions = [
     { id: 'K287308', type: 'Dépôt', date: '13/09/2022', montant: 3000, status: 'Shipped' },

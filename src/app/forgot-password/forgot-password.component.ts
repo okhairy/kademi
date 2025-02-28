@@ -13,12 +13,11 @@ export class ForgotPasswordComponent {
   forgotPasswordForm: FormGroup;
   
 
-  constructor( @Inject(FormBuilder) private fb: FormBuilder) {
+  constructor( private fb: FormBuilder) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
-
   onSubmit() {
     if (this.forgotPasswordForm.valid) {
       console.log('Email:', this.forgotPasswordForm.value.email);
