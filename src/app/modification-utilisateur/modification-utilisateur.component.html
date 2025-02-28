@@ -1,52 +1,69 @@
 <div class="form-container">
-    <h2 class="form-title">Modification</h2>
+   <!--  <h2 class="form-title">Modification</h2> -->
   
     <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-        <div>
-          <label>Prénom *</label>
-          <input type="text" formControlName="prenom">
-        </div>
+      <h2 class="form-title">Modification</h2>
+  
+      <div class="input-group">
+          <div>
+              <label>Prénom *</label>
+              <input type="text" formControlName="prenom">
+          </div>
+          <div>
+              <label>Nom *</label>
+              <input type="text" formControlName="nom">
+          </div>
+      </div>
+  
+      <div class="input-group">
+          <div>
+              <label>Email *</label>
+              <input type="email" formControlName="email">
+          </div>
+          <div>
+              <label>Téléphone *</label>
+              <input type="text" formControlName="telephone">
+          </div>
+      </div>
+  
+      <div class="input-group">
+          <div>
+              <label>Rôle *</label>
+              <select formControlName="role">
+                  <option value="etudiant">Étudiant</option>
+                  <option value="vigile">Vigile</option>
+                  <option value="admin">Admin</option>
+              </select>
+          </div>
+      </div>
+  
+      <!-- Champs spécifiques au rôle sélectionné -->
+      <div *ngIf="userForm.get('role')?.value === 'etudiant'">
+          <div class="input-group">
+              <div>
+                  <label>Numéro de Dossier *</label>
+                  <input type="text" formControlName="numeroDossier">
+              </div>
+              <div>
+                  <label>Photo</label>
+                  <input type="file" formControlName="photo">
+              </div>
+          </div>
+      </div>
+  
+      <div *ngIf="userForm.get('role')?.value === 'vigile'">
+          <div class="input-group">
+              <div>
+                  <label>Lieu *</label>
+                  <input type="text" formControlName="lieu">
+              </div>
+          </div>
+      </div>
+  
+      <div class="button-group">
+        <button type="submit" [disabled]="userForm.invalid">Valider</button>
       
-        <div>
-          <label>Nom *</label>
-          <input type="text" formControlName="nom">
-        </div>
-      
-        <div>
-          <label>Email *</label>
-          <input type="email" formControlName="email">
-        </div>
-      
-        <div>
-          <label>Téléphone *</label>
-          <input type="text" formControlName="telephone">
-        </div>
-      
-        <div>
-          <label>Rôle *</label>
-          <select formControlName="role">
-            <option value="etudiant">Étudiant</option>
-            <option value="vigile">Vigile</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-
-        <!-- Affichage conditionnel selon le rôle -->
-        <div *ngIf="userForm.get('role')?.value === 'etudiant'">
-            <label>Numéro de Dossier *</label>
-            <input type="text" formControlName="numeroDossier">
-            <label>Photo</label>
-            <input type="file" formControlName="photo">
-        </div>
-
-        <div *ngIf="userForm.get('role')?.value === 'vigile'">
-            <label>Lieu *</label>
-            <input type="text" formControlName="lieu">
-        </div>
-
-        <div class="button-group">
-            <button type="submit">Valider</button>
-            <button type="button" (click)="annuler()">Annuler</button>
-        </div>
-    </form>
+          <button type="button" (click)="close()">Annuler</button>
+      </div>
+  </form>
 </div>
