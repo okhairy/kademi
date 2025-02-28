@@ -4,11 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-add-user',
-  standalone:true,
-  imports:[ReactiveFormsModule,CommonModule],
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+    selector: 'app-add-user',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './add-user.component.html',
+    styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent {
   @Output() closeForm = new EventEmitter<void>();

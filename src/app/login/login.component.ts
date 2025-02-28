@@ -3,11 +3,10 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true, // ✅ Indique que c'est un Standalone Component
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  imports: [CommonModule, ReactiveFormsModule] // ✅ Importer ici ReactiveFormsModule
+    selector: 'app-login', // ✅ Indique que c'est un Standalone Component
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    imports: [CommonModule, ReactiveFormsModule] // ✅ Importer ici ReactiveFormsModule
 })
 export class LoginComponent {
   loginForm: FormGroup;

@@ -6,11 +6,10 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-modification-utilisateur',
-  standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
-  templateUrl: './modification-utilisateur.component.html',
-  styleUrl: './modification-utilisateur.component.css'
+    selector: 'app-modification-utilisateur',
+    imports: [ReactiveFormsModule, CommonModule],
+    templateUrl: './modification-utilisateur.component.html',
+    styleUrl: './modification-utilisateur.component.css'
 })
 export class ModificationUtilisateurComponent implements OnInit {
   @Input() utilisateur: any; // L'utilisateur à modifier

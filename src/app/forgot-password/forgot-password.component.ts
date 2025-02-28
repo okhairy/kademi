@@ -4,11 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-forgot-password',
-  standalone: true,
-  imports: [ ReactiveFormsModule, CommonModule, NgIf],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.css'
+    selector: 'app-forgot-password',
+    imports: [ReactiveFormsModule, CommonModule, NgIf],
+    templateUrl: './forgot-password.component.html',
+    styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
   forgotPasswordForm: FormGroup;

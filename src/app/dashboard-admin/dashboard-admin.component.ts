@@ -3,11 +3,10 @@ import { Chart } from 'chart.js/auto';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
-  selector: 'app-dashboard-admin',
-  standalone:true,
-  imports:[SidebarComponent],
-  templateUrl: './dashboard-admin.component.html',
-  styleUrls: ['./dashboard-admin.component.css']
+    selector: 'app-dashboard-admin',
+    imports: [SidebarComponent],
+    templateUrl: './dashboard-admin.component.html',
+    styleUrls: ['./dashboard-admin.component.css']
 })
 export class DashboardAdminComponent implements AfterViewInit {
   
