@@ -8,11 +8,10 @@ import { AddUserComponent } from '../../add-user/add-user.component';
 import { ModificationUtilisateurComponent } from "../../modification-utilisateur/modification-utilisateur.component";
 
 @Component({
-  selector: 'app-utilisateurs',
-  standalone: true,
-  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
-  templateUrl: './utilisateurs.component.html',
-  styleUrl: './utilisateurs.component.css'
+    selector: 'app-utilisateurs',
+    imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
+    templateUrl: './utilisateurs.component.html',
+    styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent {
   constructor(private router: Router,private modalService: NgbModal) {}

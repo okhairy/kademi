@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-historique',
-  standalone: true,
-  imports: [SidebarComponent,CommonModule,FormsModule],
-  templateUrl: './historique.component.html',
-  styleUrl: './historique.component.css'
+    selector: 'app-historique',
+    imports: [SidebarComponent, CommonModule, FormsModule],
+    templateUrl: './historique.component.html',
+    styleUrl: './historique.component.css'
 })
 export class HistoriqueComponent {
   users = [

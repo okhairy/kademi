@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 import { Observable, from } from 'rxjs';
 
@@ -8,7 +7,7 @@ import { Observable, from } from 'rxjs';
 })
 export class AuthService {
   private axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000' // URL de base générale
+    baseURL: 'http://127.0.0.1:8000/api' // URL de base générale
   });
 
   constructor() { }

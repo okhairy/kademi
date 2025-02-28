@@ -4,11 +4,10 @@ import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.c
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-depot',
-  standalone: true,
-  imports: [CommonModule, SidebarEtudiantComponent, FormsModule],
-  templateUrl: './depot.component.html',
-  styleUrl: './depot.component.css',
+    selector: 'app-depot',
+    imports: [CommonModule, SidebarEtudiantComponent, FormsModule],
+    templateUrl: './depot.component.html',
+    styleUrl: './depot.component.css'
 })
 export class DepotComponent implements OnInit {
   depots = [

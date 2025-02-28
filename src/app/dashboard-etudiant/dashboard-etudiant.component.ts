@@ -6,12 +6,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dashboard-etudiant',
-  standalone: true,
-  imports: [SidebarEtudiantComponent, SidebarEtudiantComponent,NgxPaginationModule,CommonModule],
-  templateUrl: './dashboard-etudiant.component.html',
-  styleUrl: './dashboard-etudiant.component.css'
+    selector: 'app-dashboard-etudiant',
+    standalone: true,
+    imports: [CommonModule, SidebarEtudiantComponent, NgxPaginationModule],
+    templateUrl: './dashboard-etudiant.component.html',
+    styleUrl: './dashboard-etudiant.component.css'
 })
+
 export class DashboardEtudiantComponent implements AfterViewInit {
   transactions = [
     { id: 'K287308', type: 'Dépôt', date: '13/09/2022', montant: 3000, status: 'Shipped' },
