@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ModificationUtilisateurComponent implements OnInit {
   @Input() utilisateur: any; // L'utilisateur à modifier
+  @Input() user: any;
+  @Output() closeEdit = new EventEmitter<void>();
+
+  close() {
+    this.closeEdit.emit();
+  }
   modificationForm!: FormGroup;
   userForm!: FormGroup;
   utilisateurId!: string;
@@ -44,4 +50,5 @@ export class ModificationUtilisateurComponent implements OnInit {
   annuler() {
     this.router.navigate(['/user']); // Redirige vers le composant utilisateur
   }
+ 
 }

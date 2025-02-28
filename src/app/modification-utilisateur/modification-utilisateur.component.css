@@ -7,105 +7,115 @@ body, html {
     background-color: #f4f4f4;
     
 }
-
 .form-container {
-    max-width: 70%;
-   /*  margin: auto;
-    padding: 20px; */
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  
-  input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .modify-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .cancel-btn {
-    background-color: #dc3545;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .modify-btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  .form-title {
-    background: #5B3CC4;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-/* Bouton */
+
+.form-title {
+  background: #5B3CC4;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Regroupe les champs deux par deux avec plus d'espace */
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Augmente l'espace entre les inputs */
+  margin-bottom: 15px; /* Espace entre les lignes */
+}
+
+/* Chaque input prend 50% de la ligne */
+.input-group div {
+  flex: 1;
+}
+
+/* Espacement supplémentaire sous chaque div pour éviter les collisions */
+.input-group div input,
+.input-group div select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Boutons */
+
 .button-group {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
 button {
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 48%; /* Ajuste la largeur pour les aligner */
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 button[type="submit"] {
-    background-color: #5B3CC4;
-    color: white;
+  background-color: #28a745;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+button[type="submit"]:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
 }
 
 button[type="button"] {
-    background-color: red;
-    color: white;
+  background-color: #dc3545;
+  color: white;
 }
 
 button[type="button"]:hover {
-    background-color: #999;
+  background-color: #c82333;
 }
 
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+
+/* Bouton activé (formulaire valide) */
+.active-btn {
+  background: #007bff !important; /* Bleu */
+  color: white;
+}
+
+.active-btn:hover {
+  background: #0056b3;
+}
+
+/* Si un champ est seul, il prend toute la largeur */
+.input-group:has(:only-child) div {
+  flex: none;
+  width: 50%;
+}
+
+
+/* Si un champ est seul sur la ligne, il prend toute la largeur */
+.input-group:has(:only-child) div {
+  flex: none;
+  width: 50%;
 }

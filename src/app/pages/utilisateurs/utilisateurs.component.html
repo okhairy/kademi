@@ -1,112 +1,126 @@
 <div class="dashboard-container">
-    <app-sidebar></app-sidebar> 
- <div class="main-content">
-    
-    <h2>Utilisateurs</h2>
-    
-    <div class="search-container">
-      <input type="text" [(ngModel)]="searchTerm" (input)="filterUsers()" placeholder="Rechercher par ID, nom, rôle, date..." class="search-bar">
-      <i class="bi bi-search"></i>
+  <app-sidebar></app-sidebar> 
+  <div class="main-content">
+  
+  <h2>Utilisateurs</h2>
+  
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" (input)="filterUsers()" placeholder="Rechercher par ID, nom, rôle, date..." class="search-bar">
+    <i class="bi bi-search"></i>
+</div>
+  
+  <div class="button-container">
+    <button class="delete-btn" [disabled]="isSelectionEmpty" (click)="openDeleteMultipleModal()">Suppression plusieurs</button>
+      <button class="add-btn" (click)="openAddUserModal()">+ Nouveau utilisateur</button>
   </div>
     
-    <div class="button-container">
-        <button class="delete-btn">Suppression plusieurs</button>
-        <button class="add-btn" (click)="openAddUserModal()">+ Nouveau utilisateur</button>
-      </div>
-      
-    
-    <table>
-      <thead>
-        <tr>
-            <th>
-                <input type="checkbox" (change)="toggleSelectAll($event)"> <!-- Sélectionner tout -->
-              </th>
-          <th>Nom</th>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Rôle</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of filteredUsers">
-            <td>
-                <input type="checkbox" [(ngModel)]="user.selected"> <!-- Sélection individuelle -->
-              </td>
-          <td>{{ user.nom }}</td>
-          <td>{{ user.id }}</td>
-          <td>{{ user.date }}</td>
-          <td>{{ user.role }}</td>
-          <td>{{ user.email }}</td>
-          <td class="actions-cell">
-            <!-- Bouton Assigner/Désassigner séparé -->
-            <div class="assign-action">
-              <button *ngIf="user.role === 'etudiant'" 
-                      (click)="toggleAssign(user)" 
-                      [ngClass]="user.assigned ? 'desassigner-btn' : 'assigner-btn'"
-                      [title]="user.assigned ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
-                {{ user.assigned ? 'Désassigner' : 'Assigner' }}
-              </button>
-            </div>
-          
-            <!-- Groupe des autres actions -->
-            <div class="actions-container">
-              <button class="action-btn" title="Supprimer" (click)="openDeleteModal()">
-                  <i class="bi bi-trash"></i>
-              </button>
-          
-              <button class="action-btn" title="Modifier" (click)="modifierUtilisateur(user.id)">
-                <i class="bi bi-pencil"></i>
-              </button>
-              
-          
-              <button class="action-btn" title="Bloquer" (click)="openBlockModal()">
-                <i class="bi bi-ban"></i>
-              </button>
-            </div>
-          </td>
-          
-          
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <input type="checkbox" (change)="toggleSelectAll($event)"> <!-- Sélectionner tout -->
+        </th>
+        <th>Nom</th>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Rôle</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>
+          <input type="checkbox" [(ngModel)]="user.selected" (change)="updateSelection()"> <!-- Sélection individuelle -->
+        </td>
+        <td>{{ user.nom }}</td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.date }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.email }}</td>
+        <td class="actions-cell">
+          <!-- Bouton Assigner/Désassigner séparé -->
+          <div class="assign-action">
+            <button *ngIf="user.role === 'etudiant'" 
+                    (click)="toggleAssign(user)" 
+                    [ngClass]="user.assigned ? 'desassigner-btn' : 'assigner-btn'"
+                    [title]="user.assigned ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
+              {{ user.assigned ? 'Désassigner' : 'Assigner' }}
+            </button>
+          </div>
         
-        </tr>
-      </tbody>
-    </table>
-    <!-- Pagination -->
-<div class="pagination">
-    <button *ngFor="let page of [].constructor(totalPages()); let i = index" 
-            (click)="changePage(i + 1)" 
-            [class.active]="currentPage === i + 1">
-      {{ i + 1 }}
-</button>
+          <!-- Groupe des autres actions -->
+          <div class="actions-container">
+            <button class="action-btn" title="Supprimer" (click)="openDeleteModal()">
+                <i class="bi bi-trash"></i>
+            </button>
+        
+            <button class="action-btn" title="Modifier" (click)="openEditUserModal(user)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            
+            <button class="action-btn" title="Bloquer" (click)="openBlockModal()">
+              <i class="bi bi-ban"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination">
+      <button *ngFor="let page of [].constructor(totalPages()); let i = index" 
+              (click)="changePage(i + 1)" 
+              [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
   </div>
 </div>
- <!-- MODAL DE CONFIRMATION DE SUPPRESSION -->
+
+<!-- MODAL DE CONFIRMATION DE SUPPRESSION -->
 <div class="modal" *ngIf="showDeleteModal">
-  <div class="modal-content">
-    <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
-    <div class="modal-buttons">
-      <button class="confirm-btn" (click)="deleteUser()">Confirmer</button>
-      <button class="cancel-btn" (click)="closeDeleteModal()">Annuler</button>
-    </div>
+<div class="modal-content">
+  <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+  <div class="modal-buttons">
+    <button class="confirm-btn" (click)="deleteUser()">Confirmer</button>
+    <button class="cancel-btn" (click)="closeDeleteModal()">Annuler</button>
   </div>
+</div>
 </div>
 
 <!-- MODAL DE CONFIRMATION DE BLOCAGE -->
 <div class="modal-overlay" *ngIf="showBlockModal">
+<div class="modal-content">
+  <h3>Confirmation</h3>
+  <p>Êtes-vous sûr de vouloir bloquer cet utilisateur ?</p>
+  <div class="modal-buttons">
+    <button class="btn btn-secondary" (click)="closeBlockModal()">Annuler</button>
+    <button class="btn btn-danger" (click)="bloquerUtilisateur()">Valider</button>
+  </div>
+</div>
+</div>
+
+<!-- MODAL D'AJOUT UTILISATEUR -->
+<div class="modal-overlay" *ngIf="showAddUserModal">
+<div class="modal-content">
+  <app-add-user (closeForm)="closeAddUserModal()"></app-add-user>
+</div>
+</div>
+<!-- MODAL DE CONFIRMATION DE SUPPRESSION MULTIPLE -->
+<div class="modal" *ngIf="showDeleteMultipleModal">
   <div class="modal-content">
-    <h3>Confirmation</h3>
-    <p>Êtes-vous sûr de vouloir bloquer cet utilisateur ?</p>
+    <p>Êtes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ?</p>
     <div class="modal-buttons">
-      <button class="btn btn-secondary" (click)="closeBlockModal()">Annuler</button>
-      <button class="btn btn-danger" (click)="bloquerUtilisateur()">Valider</button>
+      <button class="confirm-btn" (click)="deleteSelectedUsers()">Confirmer</button>
+      <button class="cancel-btn" (click)="closeDeleteMultipleModal()">Annuler</button>
     </div>
   </div>
 </div>
-
- <!-- MODAL D'AJOUT UTILISATEUR -->
- <div class="modal-overlay" *ngIf="showAddUserModal">
+<!-- modalpour la Modification -->
+<div class="modal-overlay" *ngIf="showEditUserModal">
   <div class="modal-content">
-    <app-add-user (closeForm)="closeAddUserModal()"></app-add-user>
+    
+    <app-modification-utilisateur [user]="userToEdit" (closeEdit)="closeEditUserModal()"></app-modification-utilisateur>
   </div>
 </div>

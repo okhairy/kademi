@@ -4,11 +4,6 @@
     height: 100vh;
     
 }
-
-
-  
-  
-  
   /* Contenu principal */
   .main-content {
     flex-grow: 1;
@@ -94,7 +89,7 @@
   }
   
   .pagination button {
-    background-color: #1e3a8a;
+    background-color: #FFFFFF;
     
   }
   .logo-operateur {

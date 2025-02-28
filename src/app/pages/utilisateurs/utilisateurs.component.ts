@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from '../../add-user/add-user.component';
+import { ModificationUtilisateurComponent } from "../../modification-utilisateur/modification-utilisateur.component";
 
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [CommonModule,SidebarComponent,FormsModule,AddUserComponent],
+  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.css'
 })
@@ -31,6 +32,8 @@ export class UtilisateursComponent {
   filteredUsers = [...this.users];
   showBlockModal = false;  // Modal pour le blocage
   showAddUserModal: boolean = false;
+  isSelectionEmpty = true;
+  showDeleteMultipleModal: boolean = false;
 
   filterUsers() {
     const term = this.searchTerm.toLowerCase();
@@ -137,4 +140,45 @@ export class UtilisateursComponent {
       console.log("Utilisateur ajouté :", this.nouvelUtilisateur);
       this.closeAddUserModal();
   }
+ // Met à jour l'état du bouton "Suppression plusieurs"
+updateSelection() {
+  this.isSelectionEmpty = !this.filteredUsers.some(user => user.selected);
+}
+
+
+
+// Supprimer les utilisateurs sélectionnés
+deleteSelectedUsers() {
+  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
+  this.updateSelection();
+}
+openDeleteMultipleModal() {
+  this.showDeleteMultipleModal = true;
+}
+
+closeDeleteMultipleModal() {
+  this.showDeleteMultipleModal = false;
+}
+
+deleteMultipleUsers() {
+  // Logique de suppression des utilisateurs sélectionnés
+  const usersToDelete = this.filteredUsers.filter(user => user.selected);
+  console.log('Utilisateurs à supprimer :', usersToDelete);
+
+  // Suppression dans la liste
+  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
+  this.showDeleteMultipleModal = false;
+}
+showEditUserModal: boolean = false;
+userToEdit: any = null;
+
+openEditUserModal(user: any) {
+  this.userToEdit = { ...user }; // Cloner l'utilisateur pour éviter les modifications directes
+  this.showEditUserModal = true;
+}
+
+closeEditUserModal() {
+  this.showEditUserModal = false;
+  this.userToEdit = null;
+}
 }

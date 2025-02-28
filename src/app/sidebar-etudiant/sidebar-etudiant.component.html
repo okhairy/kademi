@@ -1,21 +1,28 @@
-<div class="sidebar ">
-    <div class="d-flex align-items-center mb-3">
-      <div class="logo bg-white text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-        A
+<div class="sidebar">
+  <!-- Logo -->
+  <div class="d-flex align-items-center mb-4 logo-container">
+      <div class="logo bg-white text-primary rounded-circle d-flex align-items-center justify-content-center">
+          <img src="assets/copy.png" alt="Logo" class="logo">
       </div>
-      <h5 class="ms-2">Akademi</h5>
-    </div>
-    <ul class="nav flex-column">
+      
+  </div>
+
+  <!-- Menu -->
+  <ul class="nav flex-column sidebar-menu">
       <li class="nav-item">
-        <a class="nav-link text-white active" href="dashboard-etudiant"><i class="bi bi-house-door"></i> Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/depot" routerLinkActive="active">
-            <i class="fas fa-upload text-white active"></i> Dépôt
+          <a class="nav-link text-white" href="/dashboard-etudiant" routerLinkActive="active">
+              <i class="bi bi-house-door"></i> Dashboard
           </a>
       </li>
-    </ul>
-    <div class="mt-auto">
-      <button class="btn text-white "><i class="bi bi-box-arrow-left"></i> Déconnexion</button>
-    </div>
+      <li class="nav-item">
+          <a class="nav-link text-white" href="/depot" routerLinkActive="active">
+              <i class="fas fa-upload"></i> Dépôt
+          </a>
+      </li>
+  </ul>
+
+  <!-- Déconnexion -->
+  <div class="logout-section">
+      <button class="btn text-white"><i class="bi bi-box-arrow-left"></i> Déconnexion</button>
   </div>
+</div>
