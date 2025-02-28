@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-dashboard-etudiant',
-    imports: [  SidebarEtudiantComponent, CommonModule],
+    imports: [SidebarEtudiantComponent, NgxPaginationModule],
     templateUrl: './dashboard-etudiant.component.html',
     styleUrl: './dashboard-etudiant.component.css'
 })

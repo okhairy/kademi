@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
+import { Inject } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-login', // ✅ Indique que c'est un Standalone Component
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    imports: [CommonModule, ReactiveFormsModule] // ✅ Importer ici ReactiveFormsModule
+    imports: [CommonModule, ReactiveFormsModule, BrowserModule, NgIf] // ✅ Importer ici ReactiveFormsModule
 })
 export class LoginComponent {
   loginForm: FormGroup;
   showPassword = false;
+  
 
-  constructor(private fb: FormBuilder) {
+  constructor(@Inject(FormBuilder) private fb: FormBuilder) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]

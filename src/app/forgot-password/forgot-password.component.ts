@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -13,7 +13,7 @@ export class ForgotPasswordComponent {
   forgotPasswordForm: FormGroup;
   
 
-  constructor(private fb: FormBuilder) {
+  constructor( @Inject(FormBuilder) private fb: FormBuilder) {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
