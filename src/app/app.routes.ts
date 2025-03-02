@@ -24,6 +24,6 @@ export const routes: Routes = [
     { path: 'forgot', component: ForgotPasswordComponent },
     { path: 'depot', component: DepotComponent },
     { path: 'vigile', component: DashboardVigileComponent },
-    { path: 'change', component: ChangePasswordComponent },
+    { path: 'change/:token', component: ChangePasswordComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
   ];

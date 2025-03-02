@@ -15,5 +15,13 @@ export class AuthService {
   login(credentials: { email: string, password: string }): Observable<any> {
     return from(this.axiosInstance.post('/login', credentials));
   }
+
+  forgotPassword(email: string): Observable<any> {
+    return from(this.axiosInstance.post('/password/forgot', { email }));
+  }
+
+  resetPassword(data: { token: string, password: string, password_confirmation: string }): Observable<any> {
+    return from(this.axiosInstance.post('/password/reset', data));
+  }  
    
 }

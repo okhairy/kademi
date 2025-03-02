@@ -1,8 +1,8 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-change-password',
@@ -15,8 +15,12 @@ export class ChangePasswordComponent {
   changePasswordForm: FormGroup;
   newPasswordVisible: boolean = false;
   confirmPasswordVisible: boolean = false;
+  token: string = ''; // Stocke le token extrait de l'URL
+  errorMessage: string = '';
+  successMessage: string = '';
+  isResetSuccessful: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private authService: AuthService) {
     this.changePasswordForm = this.fb.group({
       newPassword: ['', [
         Validators.required,
@@ -30,15 +34,43 @@ export class ChangePasswordComponent {
     }, { validator: this.passwordMatchValidator });
   }
 
+  ngOnInit() {
+    // Récupérer le token depuis l'URL
+    this.route.paramMap.subscribe(params => {
+      const tokenFromUrl = params.get('token');
+      if (tokenFromUrl) {
+        this.token = tokenFromUrl;
+      } else {
+        this.errorMessage = "Token invalide ou manquant.";
+      }
+    });
+  }
+
   passwordMatchValidator(form: FormGroup) {
     return form.get('newPassword')!.value === form.get('confirmPassword')!.value
       ? null : { mismatch: true };
   }
 
   onSubmit() {
-    if (this.changePasswordForm.valid) {
-      // Ajoutez ici la logique de réinitialisation du mot de passe
-      this.router.navigate(['/login']);
+    if (this.changePasswordForm.valid && this.token) {
+      const passwordData = {
+        token: this.token,
+        password: this.changePasswordForm.value.newPassword,
+        password_confirmation: this.changePasswordForm.value.confirmPassword
+      };
+
+      this.authService.resetPassword(passwordData).subscribe({
+        next: (response) => {
+          this.isResetSuccessful = true
+          this.successMessage = response.message; // Message de succès
+          this.errorMessage = '';
+          // setTimeout(() => this.router.navigate(['/login']), 3000); // Rediriger après 3s
+          console.log('Réponse:', response);
+        },
+        error: (error) => {
+          this.errorMessage = error.response?.data?.message || "Erreur lors de la réinitialisation.";
+        }
+      });
     }
   }
 
