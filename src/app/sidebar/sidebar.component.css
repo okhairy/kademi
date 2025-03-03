@@ -15,7 +15,7 @@
 .brand {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .brand h3 {
@@ -34,7 +34,7 @@
 
 .nav-link {
     color: white;
-    font-size: 30px;
+    font-size: 22px;
     padding: 12px 15px;
     display: flex;
     align-items: center;
@@ -44,8 +44,8 @@
 }
 
 .nav-link i {
-    margin-right: 10px;
-}
+    font-size: 18px;
+  }
 
 .nav-link:hover {
     background: #131eb4;

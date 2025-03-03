@@ -43,4 +43,14 @@ export class UserService {
     supprimerPlusieursUtilisateurs(role: string, ids: number[]): Observable<any> {
       return this.http.delete(`${this.apiUrl}/supprimer-utilisateurs/${role}`, { body: { ids } });
     }
+    //methode pour recuperr les transactions de l'etudiant
+    getTransactions(): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/transactions`).pipe(
+        map(response => {
+          console.log("Transactions reçues :", response);
+          return Array.isArray(response) ? response : [];
+        })
+      );
+    }
+    
 }
