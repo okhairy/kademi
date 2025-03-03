@@ -36,5 +36,11 @@ export class UserService {
    bloquerUtilisateur(id: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/bloquer/${id}`, {});
   }
-
+  supprimerUtilisateur(id: number, role: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/utilisateur/${id}/${role}`);
+  }
+    // Méthode pour supprimer plusieurs utilisateurs
+    supprimerPlusieursUtilisateurs(role: string, ids: number[]): Observable<any> {
+      return this.http.delete(`${this.apiUrl}/supprimer-utilisateurs/${role}`, { body: { ids } });
+    }
 }

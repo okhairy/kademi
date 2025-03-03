@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from '../../add-user/add-user.component';
 import { ModificationUtilisateurComponent } from "../../modification-utilisateur/modification-utilisateur.component";
 import { UserService } from '../../services/user.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -16,11 +17,12 @@ import { UserService } from '../../services/user.service';
   styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent {
-  constructor(private router: Router,private modalService: NgbModal,private userservice:UserService) {}
+  constructor(private router: Router,private modalService: NgbModal,private userservice:UserService,private cdRef: ChangeDetectorRef) {}
   searchTerm: string = '';
   users: any[] = []; // Déclare la propriété users
   filteredUsers: any[] = []; // Pour gérer la recherche
   selectedUser: any;
+  
   
   chargerUtilisateurs() {
     this.userservice.getUtilisateurs().subscribe(users => {
@@ -34,10 +36,20 @@ export class UtilisateursComponent {
     this.chargerUtilisateurs();
   }
   
+  showDeleteModal: boolean = false;
+  userIdToDelete: number | null = null;
+  userRoleToDelete: string = '';
+  message: string = '';
+  isSuccess: boolean = false;
+  selectedUsers: any[] = [];
+
+
   
-  
+  userIdToBlock: number | null = null;
+/*  */
+  showMessageModal: boolean = false;
   showModal = false;
-  showDeleteModal = false; // Modal pour la suppression
+ /*  showDeleteModal = false; // Modal pour la suppression */
   userToDelete: any = null;
   utilisateurId!: number;
 /*   filteredUsers = [...this.users]; */
@@ -111,29 +123,85 @@ export class UtilisateursComponent {
     this.router.navigate(['/modification', Number(id)]);
   }
   // Ouvrir/Fermer le modal de suppression
-  openDeleteModal() {
-    console.log('Ouverture du modal de suppression'); // Vérification
+   // Ouvrir la modal de confirmation
+   // Ouvrir la modal de confirmation de suppression
+  openDeleteModal(id: number, role: string) {
+    this.userIdToDelete = id;
+    this.userRoleToDelete = role;
     this.showDeleteModal = true;
   }
-  
+
+  // Fermer la modal de suppression
   closeDeleteModal() {
     this.showDeleteModal = false;
-  }
-  deleteUser() {
-    alert("L'utilisateur a été supprimé !");
-    this.closeDeleteModal();
+    this.userIdToDelete = null;
+    this.userRoleToDelete = '';
   }
 
+  // Fermer la modal du message
+  closeMessageModal() {
+    this.showMessageModal = false;
+    this.message = '';
+    this.chargerUtilisateurs(); // Recharge la liste après la suppression
+  }
+
+  // Supprimer l'utilisateur
+  deleteUser() {
+    if (this.userIdToDelete !== null) {
+      this.userservice.supprimerUtilisateur(this.userIdToDelete, this.userRoleToDelete)
+        .subscribe({
+          next: (response) => {
+            this.isSuccess = true;
+            this.message = 'Utilisateur supprimé avec succès !';
+            this.showDeleteModal = false;
+            this.showMessageModal = true;
+          },
+          error: (error) => {
+            this.isSuccess = false;
+            this.message = 'Erreur lors de la suppression.';
+            this.showDeleteModal = false;
+            this.showMessageModal = true;
+          }
+        });
+    }
+  }
+
+
   // Ouvrir/Fermer le modal de blocage
-  openBlockModal() {
+  openBlockModal(userId: number) {
+    this.userIdToBlock = userId;
     this.showBlockModal = true;
   }
+
   closeBlockModal() {
     this.showBlockModal = false;
+    this.userIdToBlock = null;
   }
+
   bloquerUtilisateur() {
-    alert("L'utilisateur a été bloqué !");
-    this.closeBlockModal();
+    if (this.userIdToBlock !== null) {
+      this.userservice.bloquerUtilisateur(this.userIdToBlock).subscribe({
+        next: () => {
+          this.isSuccess = true;
+          this.message = "L'utilisateur a été bloqué avec succès.";
+          this.refreshUsers();
+        },
+        error: () => {
+          this.isSuccess = false;
+          this.message = "Une erreur s'est produite lors du blocage.";
+        },
+        complete: () => {
+          this.showBlockModal = false;
+          this.showMessageModal = true;
+        }
+      });
+    }
+  }
+
+ 
+
+  refreshUsers() {
+    // Ici, récupérer à nouveau les utilisateurs si nécessaire
   }
   
   nouvelUtilisateur = {
@@ -172,6 +240,12 @@ updateSelection() {
 
 
 // Supprimer les utilisateurs sélectionnés
+/* deleteSelectedUsers() {
+  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
+  this.updateSelection();
+} */
+
+  // Supprimer les utilisateurs sélectionnés
 deleteSelectedUsers() {
   this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
   this.updateSelection();

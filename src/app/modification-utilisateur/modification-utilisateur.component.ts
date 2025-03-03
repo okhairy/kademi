@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modification-utilisateur',
@@ -30,7 +31,8 @@ export class ModificationUtilisateurComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -97,7 +99,6 @@ export class ModificationUtilisateurComponent implements OnInit {
   } */
     fermerModal() {
       this.showModal = false;
-      /* this.router.navigate(['/user']); */ // ✅ Redirection si on ferme le modal
     }
   
     close() {
