@@ -11,6 +11,7 @@
   
   <div class="button-container">
     <button class="delete-btn" [disabled]="isSelectionEmpty" (click)="openDeleteMultipleModal()">Suppression plusieurs</button>
+
       <button class="add-btn" (click)="openAddUserModal()">+ Nouveau utilisateur</button>
   </div>
     
@@ -32,7 +33,8 @@
     <tbody>
       <tr *ngFor="let user of paginatedUsers">
         <td>
-          <input type="checkbox" [(ngModel)]="user.selected" (change)="updateSelection()"> <!-- Sélection individuelle -->
+          <input type="checkbox" [(ngModel)]="user.selected" (change)="updateSelection()">
+ <!-- Sélection individuelle -->
         </td>
         <td>{{ user.nom }}</td>
         <td>{{ user.id }}</td>
@@ -53,17 +55,19 @@
         
           <!-- Groupe des autres actions -->
           <div class="actions-container">
-            <button class="action-btn" title="Supprimer" (click)="openDeleteModal()">
-                <i class="bi bi-trash"></i>
-            </button>
+            <button class="action-btn" title="Supprimer" (click)="openDeleteModal(user.id, user.role)">
+              <i class="bi bi-trash"></i>
+          </button>
+          
         
             <button class="action-btn" title="Modifier" (click)="openEditUserModal(user)">
               <i class="bi bi-pencil"></i>
             </button>
             
-            <button class="action-btn" title="Bloquer" (click)="openBlockModal()">
+            <button class="action-btn" title="Bloquer" (click)="openBlockModal(user.id)">
               <i class="bi bi-ban"></i>
             </button>
+            
           </div>
         </td>
       </tr>
@@ -89,6 +93,18 @@
     </div>
   </div>
 </div>
+<!-- MODAL DE MESSAGE DE CONFIRMATION -->
+<div class="modal-bg show-modal" *ngIf="showMessageModal">
+  <div class="modal-box">
+    <p [ngClass]="isSuccess ? 'success-message' : 'error-message'">
+      {{ message }}
+    </p>
+    <div class="modal-actions">
+      <button class="btn-confirm" (click)="closeMessageModal()">OK</button>
+    </div>
+  </div>
+</div>
+
 
 <!-- MODAL DE CONFIRMATION DE BLOCAGE -->
 <div class="custom-modal-overlay" *ngIf="showBlockModal">
@@ -101,6 +117,19 @@
     </div>
   </div>
 </div>
+
+<!-- MODAL DE MESSAGE DE CONFIRMATION -->
+<div class="modal-bg show-modal" *ngIf="showMessageModal">
+  <div class="modal-box">
+    <p [ngClass]="isSuccess ? 'success-message' : 'error-message'">
+      {{ message }}
+    </p>
+    <div class="modal-actions">
+      <button class="btn-confirm" (click)="closeMessageModal()">OK</button>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- MODAL D'AJOUT UTILISATEUR -->
@@ -120,12 +149,12 @@
   </div>
 </div>
 <!-- modalpour la Modification -->
-<div class="modal-overlay" *ngIf="showEditUserModal">
+<div class="modal-overlay" *ngIf="showDeleteModal">
   <div class="modal-content">
     
     <app-modification-utilisateur *ngIf="userToEdit"
     [userId]="userToEdit.id"
-    (closeEdit)="showEditUserModal = false">
+    (closeEdit)="userToEdit = null">
   </app-modification-utilisateur>
   
   </div>
