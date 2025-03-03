@@ -32,20 +32,45 @@
           </div>
 
           <!-- Affichage des informations de l'étudiant avec un beau design -->
-        <div *ngIf="etudiantData" class="student-info p-4">
-          <img src="assets/profile.png" alt="Photo étudiant" class="profile-img">
+        <!-- <div *ngIf="etudiantData" class="student-info p-4">
+          <img src="assets/wave.png" alt="Photo étudiant" class="profile-img">
           <p><strong>Numéro de dossier:</strong> {{ etudiantData.numero_dossier }}</p>
           <p><strong>Prénom:</strong> {{ etudiantData.prenom }}</p>
           <p><strong>Nom:</strong> {{ etudiantData.nom }}</p>
-          <p class="text-danger">{{ accessMessage }}</p>
+          <p class="text-danger">{{ accessMessage }}</p> -->
           
           <!-- Boutons d'action -->
-          <div class="action-buttons">
+          <!-- <div class="action-buttons">
             <button class="btn btn-danger">Rejeter</button>
             <button class="btn btn-success">Valider</button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="etudiantData">
+      <div class="modal-content">
+        <div class="student-info-container d-flex align-items-center">
+          <!-- Photo à gauche -->
+          <img src="assets/etudiant.png" alt="Photo étudiant" class="profile-img">
+          <!-- Infos à droite -->
+          <div class="student-details">
+            <p><strong>Numéro de dossier:</strong> {{ etudiantData.numero_dossier }}</p>
+            <p><strong>Prénom:</strong> {{ etudiantData.prenom }}</p>
+            <p><strong>Nom:</strong> {{ etudiantData.nom }}</p>
+            <p><strong>Telephone</strong> {{ etudiantData.telephone }}</p>
+
+            <p [ngClass]="{'text-success': accessMessage === 'Accès autorisé', 'text-danger': accessMessage !== 'Accès autorisé'}">
+              {{ accessMessage }}
+            </p>
+            <!-- Boutons d'action -->
+            <div class="action-buttons">
+              <button class="btn btn-danger" (click)="closeModal()">Fermer</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
   
