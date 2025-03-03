@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserComponent } from '../../add-user/add-user.component';
 import { ModificationUtilisateurComponent } from "../../modification-utilisateur/modification-utilisateur.component";
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -15,21 +16,31 @@ import { ModificationUtilisateurComponent } from "../../modification-utilisateur
   styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent {
-  constructor(private router: Router,private modalService: NgbModal) {}
+  constructor(private router: Router,private modalService: NgbModal,private userservice:UserService) {}
   searchTerm: string = '';
-  users = [
-    { nom: 'Karen Hope', id: '#123456789', date: 'March 25, 2021', role: 'etudiant', email: 'karenhope@gmail.com', selected: false, assigned: false },
-    { nom: 'Jordan Nico', id: '#123456789', date: 'March 25, 2021', role: 'etudiant', email: 'jordannico@gmail.com', selected: false, assigned: true },
-    { nom: 'Nadila Adja', id: '#123456789', date: 'March 25, 2021', role: 'Vigile', email: 'nadilaadja@gmail.com', selected: false },
-    { nom: 'Johnny Ahmad', id: '#123456789', date: 'March 25, 2021', role: 'Vigile', email: 'johnyahmad@gmail.com', selected: false },
-    { nom: 'oumoul Adja', id: '#123456789', date: 'March 25, 2021', role: 'Vigile', email: 'nadilaadja@gmail.com', selected: false },
-    { nom: 'Johnny Ahmad', id: '#123456789', date: 'March 25, 2021', role: 'Vigile', email: 'johnyahmad@gmail.com', selected: false }
-  ];
+  users: any[] = []; // Déclare la propriété users
+  filteredUsers: any[] = []; // Pour gérer la recherche
+  selectedUser: any;
+  
+  chargerUtilisateurs() {
+    this.userservice.getUtilisateurs().subscribe(users => {
+      this.users = users; // Remplace la liste statique par les données récupérées
+      this.filteredUsers = [...this.users]; // Pour la recherche
+    }, error => {
+      console.error('Erreur lors du chargement des utilisateurs', error);
+    });
+  }
+  ngOnInit() {
+    this.chargerUtilisateurs();
+  }
+  
+  
+  
   showModal = false;
   showDeleteModal = false; // Modal pour la suppression
   userToDelete: any = null;
   utilisateurId!: number;
-  filteredUsers = [...this.users];
+/*   filteredUsers = [...this.users]; */
   showBlockModal = false;  // Modal pour le blocage
   showAddUserModal: boolean = false;
   isSelectionEmpty = true;
@@ -44,7 +55,9 @@ export class UtilisateursComponent {
       user.role.toLowerCase().includes(term) ||
       user.date.includes(term)
     );
+    this.currentPage = 1; // Réinitialiser à la première page après la recherche
   }
+  
   toggleAssign(user: any) {
     user.assigned = !user.assigned;
     alert(`L'étudiant ${user.nom} est maintenant ${user.assigned ? 'assigné' : 'désassigné'} !`);
@@ -57,11 +70,11 @@ export class UtilisateursComponent {
 
   currentPage = 1;
   usersPerPage = 5;
-
   get paginatedUsers() {
     const startIndex = (this.currentPage - 1) * this.usersPerPage;
-    return this.users.slice(startIndex, startIndex + this.usersPerPage);
+    return this.filteredUsers.slice(startIndex, startIndex + this.usersPerPage);
   }
+  
 
   totalPages() {
     return Math.ceil(this.users.length / this.usersPerPage);
@@ -99,8 +112,10 @@ export class UtilisateursComponent {
   }
   // Ouvrir/Fermer le modal de suppression
   openDeleteModal() {
+    console.log('Ouverture du modal de suppression'); // Vérification
     this.showDeleteModal = true;
   }
+  
   closeDeleteModal() {
     this.showDeleteModal = false;
   }
@@ -137,9 +152,18 @@ export class UtilisateursComponent {
   }
 
   ajouterUtilisateur() {
-      console.log("Utilisateur ajouté :", this.nouvelUtilisateur);
-      this.closeAddUserModal();
+    this.userservice.ajouterUtilisateur(this.nouvelUtilisateur).subscribe(
+      (response) => {
+        console.log("Utilisateur ajouté avec succès :", response);
+        this.chargerUtilisateurs(); // Recharger la liste des utilisateurs
+        this.closeAddUserModal();
+      },
+      (error) => {
+        console.error("Erreur lors de l'ajout de l'utilisateur :", error);
+      }
+    );
   }
+  
  // Met à jour l'état du bouton "Suppression plusieurs"
 updateSelection() {
   this.isSelectionEmpty = !this.filteredUsers.some(user => user.selected);
