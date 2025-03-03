@@ -33,36 +33,3 @@
     max-width: 100%;
     height: auto;
   }
-
-  /* 🔹 Style pour la section étudiant */
-.student-info {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-top: 10px;
-  text-align: left;
-}
-
-.student-info p {
-  font-size: 18px;
-  margin: 5px 0;
-}
-
-.student-info .profile-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-/* 🔹 Style des boutons */
-.action-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.action-buttons .btn {
-  width: 45%;
-}

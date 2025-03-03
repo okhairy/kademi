@@ -62,28 +62,24 @@
         <div class="input-group">
           <div class="input-item">
             <label>Numéro de Dossier *</label>
-            <input type="text" formControlName="numeroDossier">
-            <span class="error" *ngIf="userForm.get('numeroDossier')?.invalid && userForm.get('numeroDossier')?.touched">
-              Numéro de dossier obligatoire.
-            </span>
+            <input type="text" formControlName="numero_de_dossier" (input)="checkField('numero_de_dossier')">
+            <span class="error" *ngIf="errors.numero_de_dossier">{{ errors.numero_de_dossier }}</span>
           </div>
           <div class="input-item">
             <label>Chambre *</label>
-            <input type="text" formControlName="chambre">
-            <span class="error" *ngIf="userForm.get('chambre')?.invalid && userForm.get('chambre')?.touched">
-              Chambre obligatoire.
-            </span>
+            <input type="text" formControlName="chambre" (input)="checkField('chambre')">
+            <span class="error" *ngIf="errors.chambre">{{ errors.chambre }}</span>
           </div>
         </div>
   
         <div class="input-group">
-          <div class="input-item">
+          <!-- <div class="input-item">
             <label>Campus *</label>
             <input type="text" formControlName="campus">
             <span class="error" *ngIf="userForm.get('campus')?.invalid && userForm.get('campus')?.touched">
               Campus obligatoire.
             </span>
-          </div>
+          </div> -->
           <div class="input-item">
             <label>Photo</label>
             <input type="file" formControlName="photo">
@@ -96,7 +92,12 @@
         <div class="input-group">
           <div class="input-item full-width">
             <label>Lieu *</label>
-            <input type="text" formControlName="lieu">
+            <select formControlName="lieu">
+              <option value="">Sélectionner un lieu</option>
+              <option value="site_vcn">Site VCN</option>
+              <option value="restaurant">Restaurant</option>
+            </select>
+            <!-- <input type="text" formControlName="lieu"> -->
             <span class="error" *ngIf="userForm.get('lieu')?.invalid && userForm.get('lieu')?.touched">
               Lieu obligatoire.
             </span>
@@ -111,5 +112,23 @@
       </div>
     </div>
   </form>
-  
+
+
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="inscriptionModal" tabindex="-1" aria-labelledby="inscriptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inscriptionModalLabel">{{ modalTitle }}</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        {{ modalMessage }}
+      </div>
+      <div class="modal-footer">
+       
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
 </div>

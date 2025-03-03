@@ -1,69 +1,66 @@
-<div class="form-container">
-   <!--  <h2 class="form-title">Modification</h2> -->
-  
-    <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-      <h2 class="form-title">Modification</h2>
-  
+<!-- Formulaire de modification (s'affiche uniquement si showForm = true) -->
+<div class="form-container" *ngIf="showForm">
+    <h2 class="form-title">Modification de l'utilisateur</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="modifierUtilisateur()">
       <div class="input-group">
-          <div>
-              <label>Prénom *</label>
-              <input type="text" formControlName="prenom">
-          </div>
-          <div>
-              <label>Nom *</label>
-              <input type="text" formControlName="nom">
-          </div>
+        <label>Prénom *</label>
+        <input type="text" formControlName="prenom">
       </div>
-  
+
       <div class="input-group">
-          <div>
-              <label>Email *</label>
-              <input type="email" formControlName="email">
-          </div>
-          <div>
-              <label>Téléphone *</label>
-              <input type="text" formControlName="telephone">
-          </div>
+        <label>Nom *</label>
+        <input type="text" formControlName="nom">
       </div>
-  
+
       <div class="input-group">
-          <div>
-              <label>Rôle *</label>
-              <select formControlName="role">
-                  <option value="etudiant">Étudiant</option>
-                  <option value="vigile">Vigile</option>
-                  <option value="admin">Admin</option>
-              </select>
-          </div>
+        <label>Email *</label>
+        <input type="email" formControlName="email">
       </div>
-  
-      <!-- Champs spécifiques au rôle sélectionné -->
+
+      <div class="input-group">
+        <label>Téléphone *</label>
+        <input type="text" formControlName="telephone">
+      </div>
+
+      <div class="input-group">
+        <label>Rôle *</label>
+        <select formControlName="role">
+          <option value="etudiant">Étudiant</option>
+          <option value="vigile">Vigile</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
       <div *ngIf="userForm.get('role')?.value === 'etudiant'">
-          <div class="input-group">
-              <div>
-                  <label>Numéro de Dossier *</label>
-                  <input type="text" formControlName="numeroDossier">
-              </div>
-              <div>
-                  <label>Photo</label>
-                  <input type="file" formControlName="photo">
-              </div>
-          </div>
+        <div class="input-group">
+          <label>Numéro de Dossier *</label>
+          <input type="text" formControlName="numeroDossier">
+        </div>
+        <div class="input-group">
+          <label>Photo</label>
+          <input type="file" formControlName="photo">
+        </div>
       </div>
-  
+
       <div *ngIf="userForm.get('role')?.value === 'vigile'">
-          <div class="input-group">
-              <div>
-                  <label>Lieu *</label>
-                  <input type="text" formControlName="lieu">
-              </div>
-          </div>
+        <div class="input-group">
+          <label>Lieu *</label>
+          <input type="text" formControlName="lieu">
+        </div>
       </div>
-  
+
       <div class="button-group">
-        <button type="submit" [disabled]="userForm.invalid">Valider</button>
-      
-          <button type="button" (click)="close()">Annuler</button>
+        <button type="submit" [disabled]="userForm.invalid">Modifier</button>
+        <button type="button" (click)="close()">Annuler</button>
       </div>
-  </form>
+    </form>
+</div>
+<!-- Modal de confirmation -->
+<div *ngIf="showModal" class="modal-backdrop">
+    <div class="modal">
+        <span class="close" (click)="fermerModal()">&times;</span>
+        <p [ngClass]="{'success-message': isSuccess, 'error-message': !isSuccess}">{{ message }}</p>
+        <button (click)="fermerModal()">Fermer</button>
+    </div>
 </div>

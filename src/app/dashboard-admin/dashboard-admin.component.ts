@@ -1,6 +1,7 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { EtudiantService } from '../services/etudiant.service';
 
 @Component({
     selector: 'app-dashboard-admin',
@@ -8,8 +9,25 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     templateUrl: './dashboard-admin.component.html',
     styleUrls: ['./dashboard-admin.component.css']
 })
-export class DashboardAdminComponent implements AfterViewInit {
-  
+export class DashboardAdminComponent implements AfterViewInit,OnInit {
+  nombreEtudiants: number = 0; // Stockera le nombre d'étudiants
+
+  constructor(private etudiantService: EtudiantService) {}
+
+  ngOnInit(): void {
+    this.getNombreEtudiants();
+  }
+
+  getNombreEtudiants(): void {
+    this.etudiantService.getNombreEtudiants().subscribe(
+      (data) => {
+        this.nombreEtudiants = data.nombre_etudiants; // Stocke le nombre récupéré
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération du nombre d\'étudiants', error);
+      }
+    );
+  }
   ngAfterViewInit() {
     this.loadBarChart();
     this.loadDonutChart();

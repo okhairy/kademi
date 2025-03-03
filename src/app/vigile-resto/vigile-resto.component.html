@@ -7,7 +7,7 @@
     <div class="container-fluid mt-3">
       <div class="row">
         <!-- Section Météo -->
-        <div class="col-md-6" hight="1000px" *ngIf="!etudiantData">
+        <div class="col-md-6" hight="1000px">
           <div class="weather-card p-4">
             <div class="d-flex justify-content-between">
               <span><i class="bi bi-geo-alt"></i> Dakar, Sénégal</span>
@@ -25,24 +25,10 @@
         </div>
   
         <!-- Section Scan Carte -->
-        <div class="col-md-6 text-center" >
-          <div class="scan-card p-4" *ngIf="!etudiantData">
+        <div class="col-md-6 text-center">
+          <div class="scan-card p-4">
             <img src="assets/Vigile_img.png" alt="Scanner" class="img-fluid" >
             <h5 class="text-danger mt-3">Veuillez scanner votre carte !</h5>
-          </div>
-
-          <!-- Affichage des informations de l'étudiant avec un beau design -->
-        <div *ngIf="etudiantData" class="student-info p-4">
-          <img src="assets/profile.png" alt="Photo étudiant" class="profile-img">
-          <p><strong>Numéro de dossier:</strong> {{ etudiantData.numero_dossier }}</p>
-          <p><strong>Prénom:</strong> {{ etudiantData.prenom }}</p>
-          <p><strong>Nom:</strong> {{ etudiantData.nom }}</p>
-          <p class="text-danger">{{ accessMessage }}</p>
-          
-          <!-- Boutons d'action -->
-          <div class="action-buttons">
-            <button class="btn btn-danger">Rejeter</button>
-            <button class="btn btn-success">Valider</button>
           </div>
         </div>
       </div>

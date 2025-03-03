@@ -320,3 +320,101 @@
   width: 100%;
 }
    */
+ /*   .modal, .modal-overlay {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  } */
+  /* Styles du fond du modal */
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Affichage du modal lorsqu'il est actif */
+.show-modal {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Contenu du modal */
+.modal-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+}
+
+/* Boutons du modal */
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-confirm {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: #ccc;
+  color: black;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-confirm:hover {
+  background-color: #c0392b;
+}
+
+.btn-cancel:hover {
+  background-color: #aaa;
+}
+/* Fond semi-transparent du modal */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Boîte du modal */
+.custom-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 350px;
+}
+
+/* Boutons */
+.custom-modal-buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}

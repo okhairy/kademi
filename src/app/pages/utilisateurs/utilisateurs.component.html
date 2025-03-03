@@ -26,10 +26,11 @@
         <th>Rôle</th>
         <th>Email</th>
         <th>Action</th>
+        <!-- <th>Assignation</th>  -->
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of filteredUsers">
+      <tr *ngFor="let user of paginatedUsers">
         <td>
           <input type="checkbox" [(ngModel)]="user.selected" (change)="updateSelection()"> <!-- Sélection individuelle -->
         </td>
@@ -38,14 +39,15 @@
         <td>{{ user.date }}</td>
         <td>{{ user.role }}</td>
         <td>{{ user.email }}</td>
+        <td>{{ user.assignation }}</td> 
         <td class="actions-cell">
           <!-- Bouton Assigner/Désassigner séparé -->
           <div class="assign-action">
             <button *ngIf="user.role === 'etudiant'" 
                     (click)="toggleAssign(user)" 
-                    [ngClass]="user.assigned ? 'desassigner-btn' : 'assigner-btn'"
-                    [title]="user.assigned ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
-              {{ user.assigned ? 'Désassigner' : 'Assigner' }}
+                    [ngClass]="user.assignation ? 'desassigner-btn' : 'assigner-btn'"
+                    [title]="user.assignation ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
+              {{ user.assignation ? 'Désassigner' : 'Assigner' }}
             </button>
           </div>
         
@@ -78,28 +80,28 @@
   </div>
 </div>
 
-<!-- MODAL DE CONFIRMATION DE SUPPRESSION -->
-<div class="modal" *ngIf="showDeleteModal">
-<div class="modal-content">
-  <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
-  <div class="modal-buttons">
-    <button class="confirm-btn" (click)="deleteUser()">Confirmer</button>
-    <button class="cancel-btn" (click)="closeDeleteModal()">Annuler</button>
+<div class="modal-bg show-modal" *ngIf="showDeleteModal">
+  <div class="modal-box">
+    <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+    <div class="modal-actions">
+      <button class="btn-confirm" (click)="deleteUser()">Confirmer</button>
+      <button class="btn-cancel" (click)="closeDeleteModal()">Annuler</button>
+    </div>
   </div>
-</div>
 </div>
 
 <!-- MODAL DE CONFIRMATION DE BLOCAGE -->
-<div class="modal-overlay" *ngIf="showBlockModal">
-<div class="modal-content">
-  <h3>Confirmation</h3>
-  <p>Êtes-vous sûr de vouloir bloquer cet utilisateur ?</p>
-  <div class="modal-buttons">
-    <button class="btn btn-secondary" (click)="closeBlockModal()">Annuler</button>
-    <button class="btn btn-danger" (click)="bloquerUtilisateur()">Valider</button>
+<div class="custom-modal-overlay" *ngIf="showBlockModal">
+  <div class="custom-modal-content">
+    <h3>Confirmation</h3>
+    <p>Êtes-vous sûr de vouloir bloquer cet utilisateur ?</p>
+    <div class="custom-modal-buttons">
+      <button class="btn btn-secondary" (click)="closeBlockModal()">Annuler</button>
+      <button class="btn btn-danger" (click)="bloquerUtilisateur()">Valider</button>
+    </div>
   </div>
 </div>
-</div>
+
 
 <!-- MODAL D'AJOUT UTILISATEUR -->
 <div class="modal-overlay" *ngIf="showAddUserModal">
@@ -108,12 +110,12 @@
 </div>
 </div>
 <!-- MODAL DE CONFIRMATION DE SUPPRESSION MULTIPLE -->
-<div class="modal" *ngIf="showDeleteMultipleModal">
-  <div class="modal-content">
+<div class="modal-bg show-modal" *ngIf="showDeleteMultipleModal">
+  <div class="modal-box">
     <p>Êtes-vous sûr de vouloir supprimer les utilisateurs sélectionnés ?</p>
-    <div class="modal-buttons">
-      <button class="confirm-btn" (click)="deleteSelectedUsers()">Confirmer</button>
-      <button class="cancel-btn" (click)="closeDeleteMultipleModal()">Annuler</button>
+    <div class="modal-actions">
+      <button class="btn-confirm" (click)="deleteSelectedUsers()">Confirmer</button>
+      <button class="btn-cancel" (click)="closeDeleteMultipleModal()">Annuler</button>
     </div>
   </div>
 </div>
@@ -121,6 +123,10 @@
 <div class="modal-overlay" *ngIf="showEditUserModal">
   <div class="modal-content">
     
-    <app-modification-utilisateur [user]="userToEdit" (closeEdit)="closeEditUserModal()"></app-modification-utilisateur>
+    <app-modification-utilisateur *ngIf="userToEdit"
+    [userId]="userToEdit.id"
+    (closeEdit)="showEditUserModal = false">
+  </app-modification-utilisateur>
+  
   </div>
 </div>

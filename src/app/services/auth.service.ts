@@ -13,7 +13,11 @@ export class AuthService {
   constructor() { }
 
   login(credentials: { email: string, password: string }): Observable<any> {
-    return from(this.axiosInstance.post('/login', credentials));
+    return from(this.axiosInstance.post('/login', credentials).then(response => {
+      // Stocker le token dans le localStorage
+      localStorage.setItem('token', response.data.token);
+      return response.data;
+    }));
   }
 
   forgotPassword(email: string): Observable<any> {
