@@ -83,7 +83,7 @@
       </button>
   </div>
 </div>
-
+<!-- modal de suprresion -->
 <div class="modal-bg show-modal" *ngIf="showDeleteModal">
   <div class="modal-box">
     <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
@@ -119,7 +119,7 @@
 </div>
 
 <!-- MODAL DE MESSAGE DE CONFIRMATION -->
-<div class="modal-bg show-modal" *ngIf="showMessageModal">
+ <div class="modal-bg show-modal" *ngIf="showMessageModal">
   <div class="modal-box">
     <p [ngClass]="isSuccess ? 'success-message' : 'error-message'">
       {{ message }}
@@ -128,7 +128,7 @@
       <button class="btn-confirm" (click)="closeMessageModal()">OK</button>
     </div>
   </div>
-</div>
+</div> 
 
 
 
@@ -148,14 +148,27 @@
     </div>
   </div>
 </div>
+<!-- MODAL DE MESSAGE DE CONFIRMATION -->
+<div class="modal-bg show-modal" *ngIf="showMessageModal">
+  <div class="modal-box">
+    <p [ngClass]="isSuccess ? 'success-message' : 'error-message'">
+      {{ message }}
+    </p>
+    <div class="modal-actions">
+      <button class="btn-confirm" (click)="closeMessageModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+
 <!-- modalpour la Modification -->
-<div class="modal-overlay" *ngIf="showDeleteModal">
+<div class="modal-overlay" *ngIf="showEditUserModal">
   <div class="modal-content">
     
     <app-modification-utilisateur *ngIf="userToEdit"
     [userId]="userToEdit.id"
     (closeEdit)="userToEdit = null">
-  </app-modification-utilisateur>
+   </app-modification-utilisateur>
   
   </div>
 </div>

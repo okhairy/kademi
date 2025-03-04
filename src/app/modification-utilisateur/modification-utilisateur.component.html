@@ -51,16 +51,25 @@
       </div>
 
       <div class="button-group">
-        <button type="submit" [disabled]="userForm.invalid">Modifier</button>
+        <button type="submit" class="btn btn-primary" (click)="modifierUtilisateur()">Modifier</button>
         <button type="button" (click)="close()">Annuler</button>
       </div>
     </form>
 </div>
 <!-- Modal de confirmation -->
-<div *ngIf="showModal" class="modal-backdrop">
-    <div class="modal">
-        <span class="close" (click)="fermerModal()">&times;</span>
-        <p [ngClass]="{'success-message': isSuccess, 'error-message': !isSuccess}">{{ message }}</p>
-        <button (click)="fermerModal()">Fermer</button>
+<div id="confirmationModal" class="modal fade" tabindex="-1" aria-labelledby="modalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <p [ngClass]="{'text-success': isSuccess, 'text-danger': !isSuccess}">{{ message }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
+      </div>
     </div>
-</div>
+  </div>

@@ -22,6 +22,7 @@ export class UtilisateursComponent {
   users: any[] = []; // Déclare la propriété users
   filteredUsers: any[] = []; // Pour gérer la recherche
   selectedUser: any;
+
   
   
   chargerUtilisateurs() {
@@ -70,7 +71,7 @@ export class UtilisateursComponent {
     this.currentPage = 1; // Réinitialiser à la première page après la recherche
   }
   
-  toggleAssign(user: any) {
+ toggleAssign(user: any) {
     user.assigned = !user.assigned;
     alert(`L'étudiant ${user.nom} est maintenant ${user.assigned ? 'assigné' : 'désassigné'} !`);
     // Ici, ajoute la logique pour mettre à jour l'état dans la base de données
@@ -78,7 +79,7 @@ export class UtilisateursComponent {
   toggleSelectAll(event: any) {
     const isChecked = event.target.checked;
     this.users.forEach(user => user.selected = isChecked);
-  }
+  } 
 
   currentPage = 1;
   usersPerPage = 5;
@@ -237,18 +238,10 @@ updateSelection() {
   this.isSelectionEmpty = !this.filteredUsers.some(user => user.selected);
 }
 
-
-
-// Supprimer les utilisateurs sélectionnés
-/* deleteSelectedUsers() {
-  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
-  this.updateSelection();
-} */
-
-  // Supprimer les utilisateurs sélectionnés
 deleteSelectedUsers() {
   this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
   this.updateSelection();
+  this.showDeleteMultipleModal = false;
 }
 openDeleteMultipleModal() {
   this.showDeleteMultipleModal = true;
@@ -258,7 +251,7 @@ closeDeleteMultipleModal() {
   this.showDeleteMultipleModal = false;
 }
 
-deleteMultipleUsers() {
+/*  deleteMultipleUsers() {
   // Logique de suppression des utilisateurs sélectionnés
   const usersToDelete = this.filteredUsers.filter(user => user.selected);
   console.log('Utilisateurs à supprimer :', usersToDelete);
@@ -266,7 +259,8 @@ deleteMultipleUsers() {
   // Suppression dans la liste
   this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
   this.showDeleteMultipleModal = false;
-}
+}  */
+
 showEditUserModal: boolean = false;
 userToEdit: any = null;
 

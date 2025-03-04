@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectorRef } from '@angular/core';
+// Importation de Bootstrap JS
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-modification-utilisateur',
@@ -35,11 +38,14 @@ export class ModificationUtilisateurComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
+  
+
   ngOnInit(): void {
     const id = this.userId || this.route.snapshot.paramMap.get('id');
     
     if (id) {
       this.chargerUtilisateur(id);
+      
     }
 
     this.userForm = this.fb.group({
@@ -68,38 +74,26 @@ export class ModificationUtilisateurComponent implements OnInit {
 
   modifierUtilisateur() {
     if (this.userForm.valid) {
-        this.userService.modifierUtilisateur(this.utilisateur.id, this.userForm.value)
-            .subscribe(
-                () => {
-                    // Succès
-                    this.message = 'Utilisateur modifié avec succès !';
-                    this.isSuccess = true;
-                    this.showModal = true; // Affiche le modal
-                },
-                (error) => {
-                    // Erreur
-                    this.message = 'Erreur lors de la modification. Veuillez réessayer.';
-                    this.isSuccess = false;
-                    this.showModal = true; // Affiche le modal
-                    console.error('Erreur lors de la modification', error);
-                }
-            );
+      this.userService.modifierUtilisateur(this.utilisateur.id, this.userForm.value)
+        .subscribe(
+          () => {
+            this.message = 'Utilisateur modifié avec succès !';
+            this.ouvrirModal(); // Ouvrir le modal après la modification réussie
+          },
+          (error) => {
+            this.message = 'Erreur lors de la modification. Veuillez réessayer.';
+            this.ouvrirModal(); // Ouvrir le modal en cas d'erreur
+            console.error('Erreur lors de la modification', error);
+          }
+        );
     }
-}
-
-  // Ferme le modal et le formulaire
-/*   fermerModal() {
-    this.showModal = false;
-    this.showForm = false; // Cache le formulaire
-    this.closeEdit.emit(); // Ferme le composant
   }
-  close() {
-    this.showForm = false; // Cache le formulaire lors du clic sur Annuler
-    this.closeEdit.emit();
-  } */
-    fermerModal() {
-      this.showModal = false;
-    }
+
+  ouvrirModal() {
+    let modalElement = document.getElementById('confirmationModal');
+    let modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
   
     close() {
       this.closeEdit.emit(); 
