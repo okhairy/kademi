@@ -20,6 +20,7 @@ export class UserService {
   ajouterUtilisateur(register: any) {
     return this.http.post(`${this.apiUrl}/utilisateurs/register`, register);
   }
+  //methode pour recuperer tous les utilisateurs
   getUsers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
@@ -52,5 +53,15 @@ export class UserService {
         })
       );
     }
+    // ✅ Assigner une carte à un étudiant (PUT)
+  assignerCarte(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/etudiants/${id}/assigner-carte`, {});
+  }
+
+  // ✅ Désassigner une carte d’un étudiant (DELETE)
+  desassignerCarte(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/etudiants/${id}/desassigner-carte`);
+  }
+
     
 }

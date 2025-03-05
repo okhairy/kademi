@@ -1,0 +1,11 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+      <h2>Veuillez scanner la carte s’il vous plaît !</h2>
+      <img src="assets/scan.png" alt="Scanner la carte">
+      
+      <input type="text" [(ngModel)]="cardUid" placeholder="UID de la carte RFID" *ngIf="!isCardScanned">
+      <button (click)="assignerCarte()" *ngIf="!isCardScanned">Confirmer l'assignation</button>
+      <button (click)="closeModal()">Annuler</button>
+      <p *ngIf="isCardScanned">Carte assignée avec succès !</p>
+    </div>
+  </div>

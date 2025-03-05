@@ -8,11 +8,12 @@ import { AddUserComponent } from '../../add-user/add-user.component';
 import { ModificationUtilisateurComponent } from "../../modification-utilisateur/modification-utilisateur.component";
 import { UserService } from '../../services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { ScanCarteModalComponent } from '../../scan-carte-modal/scan-carte-modal.component';
 
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
+  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent,ScanCarteModalComponent],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.css'
 })
@@ -64,18 +65,27 @@ export class UtilisateursComponent {
     this.filteredUsers = this.users.filter(user =>
       user.id.toString().includes(term) ||
       user.nom.toLowerCase().includes(term) ||
+      user.prenom.toLowerCase().includes(term) ||
       user.email.toLowerCase().includes(term) ||
       user.role.toLowerCase().includes(term) ||
       user.date.includes(term)
     );
     this.currentPage = 1; // Réinitialiser à la première page après la recherche
   }
-  
- toggleAssign(user: any) {
-    user.assigned = !user.assigned;
-    alert(`L'étudiant ${user.nom} est maintenant ${user.assigned ? 'assigné' : 'désassigné'} !`);
-    // Ici, ajoute la logique pour mettre à jour l'état dans la base de données
+  toggleAssign(user: any) {
+    if (user.assignation === 'Désassigné') {
+      this.userservice.assignerCarte(user.id).subscribe(response => {
+        user.assignation = 'Assigné'; // Met à jour l'affichage
+        alert(`L'étudiant ${user.nom} a été assigné !`);
+      });
+    } else {
+      this.userservice.desassignerCarte(user.id).subscribe(response => {
+        user.assignation = 'Désassigné'; // Met à jour l'affichage
+        alert(`L'étudiant ${user.nom} a été désassigné !`);
+      });
+    }
   }
+  
   toggleSelectAll(event: any) {
     const isChecked = event.target.checked;
     this.users.forEach(user => user.selected = isChecked);
@@ -272,5 +282,19 @@ openEditUserModal(user: any) {
 closeEditUserModal() {
   this.showEditUserModal = false;
   this.userToEdit = null;
+}
+showScanCarteModal = false;
+/* selectedUser: any; */
+
+// Ouvrir le modal de scan de carte
+openScanCarteModal(user: any) {
+  this.selectedUser = user;
+  this.showScanCarteModal = true;
+}
+
+// Fermer le modal de scan de carte
+closeScanCarteModal() {
+  this.showScanCarteModal = false;
+  this.selectedUser = null;
 }
 }
