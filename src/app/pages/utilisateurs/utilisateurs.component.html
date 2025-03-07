@@ -43,17 +43,18 @@
           <td>{{ user.role }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.statut }}</td>
-          <td><!-- { user.assignation }} -->
-            <!-- Bouton Assigner/Désassigner dans la colonne Assignation -->
+          <td>
             <div class="assign-action">
+              <!-- Le bouton va appeler la méthode pour ouvrir le modal de scan -->
               <button *ngIf="user.role === 'Etudiant'" 
-          (click)="openScanCarteModal(user)" 
-          [ngClass]="user.assignation === 'Assigné' ? 'desassigner-btn' : 'assigner-btn'"
-          [title]="user.assignation === 'Assigné' ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
-    {{ user.assignation === 'Assigné' ? 'Désassigner' : 'Assigner' }}
-  </button>
+                      (click)="openScanCarteModal(user)" 
+                      [ngClass]="user.assignation === 'Assigné' ? 'desassigner-btn' : 'assigner-btn'"
+                      [title]="user.assignation === 'Assigné' ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
+                {{ user.assignation === 'Assigné' ? 'Désassigner' : 'Assigner' }}
+              </button>
             </div>
           </td>
+          
           <td class="actions-cell">
             <!-- Boutons Modifier, Supprimer et Bloquer dans la colonne Actions -->
             <div class="actions-container">

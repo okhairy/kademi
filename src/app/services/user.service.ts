@@ -55,7 +55,7 @@ export class UserService {
     }
     // ✅ Assigner une carte à un étudiant (PUT)
   assignerCarte(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/etudiants/${id}/assigner-carte`, {});
+    return this.http.post(`${this.apiUrl}/assigner-carte/${id}`, {});
   }
 
   // ✅ Désassigner une carte d’un étudiant (DELETE)
@@ -63,5 +63,5 @@ export class UserService {
     return this.http.delete(`${this.apiUrl}/etudiants/${id}/desassigner-carte`);
   }
 
-    
+  
 }

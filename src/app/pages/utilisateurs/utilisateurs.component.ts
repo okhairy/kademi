@@ -287,10 +287,48 @@ showScanCarteModal = false;
 /* selectedUser: any; */
 
 // Ouvrir le modal de scan de carte
-openScanCarteModal(user: any) {
-  this.selectedUser = user;
-  this.showScanCarteModal = true;
+openScanCarteModal(user: any): void {
+  if (user.assignation === 'Assigné') {
+    // Si déjà assigné, appeler la méthode de désassignation
+    this.desassignerCarte(user);
+  } else {
+    // Sinon, ouvrir le modal pour scanner la carte
+    this.selectedUser = user;  // Sauvegarder l'utilisateur sélectionné pour la suite
+    this.showScanCarteModal = true;
+  }
 }
+
+
+// Méthode pour assignee une carte à un utilisateur
+assignerCarte(user: any) {
+  // Appelle ton service pour assigner la carte
+  this.userservice.assignerCarte(user.id).subscribe(response => {
+    this.showMessageModal = true;
+    this.message = "Carte assignée avec succès!";
+    this.isSuccess = true;
+    user.assignation = 'Assigné'; // Mise à jour de l'état de l'utilisateur
+  }, error => {
+    this.showMessageModal = true;
+    this.message = "Erreur lors de l'assignation de la carte.";
+    this.isSuccess = false;
+  });
+}
+
+// Méthode pour désassigner une carte d'un utilisateur
+desassignerCarte(user: any) {
+  // Appelle ton service pour désassigner la carte
+  this.userservice.desassignerCarte(user.id).subscribe(response => {
+    this.showMessageModal = true;
+    this.message = "Carte désassignée avec succès!";
+    this.isSuccess = true;
+    user.assignation = 'Non assigné'; // Mise à jour de l'état de l'utilisateur
+  }, error => {
+    this.showMessageModal = true;
+    this.message = "Erreur lors de la désassignation de la carte.";
+    this.isSuccess = false;
+  });
+}
+
 
 // Fermer le modal de scan de carte
 closeScanCarteModal() {
