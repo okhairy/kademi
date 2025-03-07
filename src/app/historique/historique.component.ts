@@ -23,11 +23,11 @@ export class HistoriqueComponent implements OnInit {
     this.fetchTransactions();
   }
 
-  fetchTransactions() {
+  fetchTransactions(): any {
     this.historiqueService.getTransactions().subscribe(
       (data) => {
         console.log('Transactions reçues :', data); // Vérification ici
-        this.transactions = Array.isArray(data) ? data : []; // Assurez-vous que c'est un tableau
+        this.transactions = data.transactions // Assurez-vous que c'est un tableau
       },
       (error) => {
         console.error('Erreur lors de la récupération des transactions', error);

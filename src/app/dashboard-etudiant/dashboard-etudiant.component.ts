@@ -1,5 +1,6 @@
 import { Component,AfterViewInit } from '@angular/core';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { AuthService } from '../services/auth.service';
+import { OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -13,17 +14,21 @@ import { CommonModule } from '@angular/common';
     styleUrl: './dashboard-etudiant.component.css'
 })
 
-export class DashboardEtudiantComponent implements AfterViewInit {
-  transactions = [
-    { id: 'K287308', type: 'Dépôt', date: '13/09/2022', montant: 3000, status: 'Shipped' },
-    { id: 'K287308', type: 'Dépôt', date: '13/09/2025', montant: 3000, status: 'Shipped' },
-    { id: 'K283038', type: 'Petit déjeuner', date: '13/09/2022', montant: 50, status: 'Delivered' },
-    { id: 'K287265', type: 'Déjeuner', date: '13/09/2022', montant: 100, status: 'Paid' },
-    { id: 'K287400', type: 'Dîner', date: '14/09/2022', montant: 200, status: 'Paid' },
-    { id: 'K287401', type: 'Déjeuner', date: '14/09/2022', montant: 150, status: 'Delivered' },
-    { id: 'K287402', type: 'Petit déjeuner', date: '15/09/2022', montant: 500, status: 'Shipped' },
-    { id: 'K287403', type: 'Dîner', date: '16/09/2022', montant: 1000, status: 'Paid' }
-  ];
+export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
+  transactions: any[] = [];
+  utilisateur: any;
+  page = 1; // Page actuelle
+  itemsPerPage = 4; // Nombre d'éléments par page
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.loadUserData();
+    this.loadTransactions();
+    this.loadWeekDepenses();
+    this.loadLastDepotEtDepenses();
+  }
+
   ngAfterViewInit() {
     const ctx = document.getElementById('barChart') as HTMLCanvasElement;
     new Chart(ctx, {
@@ -56,14 +61,51 @@ export class DashboardEtudiantComponent implements AfterViewInit {
       }
     });
   }
-  utilisateur = {
-    nom: 'Nabila Diallo',
-    role: 'Étudiant(e)',
-    photo: 'assets/profil.png' // Remplace par le chemin de la photo de l'utilisateur
-  };
+  loadUserData(): void {
+    this.authService.getUserConnected().subscribe(
+      (data) => {
+        this.utilisateur = data.data;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des données de l\'utilisateur', error);
+      }
+    );
+  }
 
+  loadTransactions(): void {
+    this.authService.getTransactions().subscribe(
+      (data) => {
+        console.log("transactions", data);
+        this.transactions = data.data;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des transactions', error);
+      }
+    );
+  }
 
-  page = 1; // Page actuelle
-  itemsPerPage = 4; // Nombre d'éléments par page
+  loadWeekDepenses(): void {
+    this.authService.getWeekDepenses().subscribe(
+      (data) => {
+        // Mettez à jour les données de dépenses hebdomadaires ici
+        console.log('Dépenses hebdomadaires:', data);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des dépenses hebdomadaires', error);
+      }
+    );
+  }
+
+  loadLastDepotEtDepenses(): void {
+    this.authService.getLastDepotEtDepenses().subscribe(
+      (data) => {
+        // Mettez à jour les données du dernier dépôt et des dépenses ici
+        console.log('Dernier dépôt et dépenses:', data);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement du dernier dépôt et des dépenses', error);
+      }
+    );
+  }
 
 }

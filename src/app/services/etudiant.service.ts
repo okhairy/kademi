@@ -19,5 +19,10 @@ export class EtudiantService {
     const url = `${this.baseUrl}/etudiant/acces-campus`;
     return this.http.post<any>(url, { uid_carte: uidCarte });
   }
+
+  checkAccesResto(uidCarte: string): Observable<any> {
+    const url = `${this.baseUrl}/etudiant/retrait`;
+    return this.http.post<any>(url, { uid_carte: uidCarte });
+  }
   
 }

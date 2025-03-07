@@ -10,10 +10,11 @@ import { UserService } from '../../services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
-    selector: 'app-utilisateurs',
-    imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
-    templateUrl: './utilisateurs.component.html',
-    styleUrl: './utilisateurs.component.css'
+  selector: 'app-utilisateurs',
+  standalone: true,
+  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
+  templateUrl: './utilisateurs.component.html',
+  styleUrl: './utilisateurs.component.css'
 })
 export class UtilisateursComponent {
   constructor(private router: Router,private modalService: NgbModal,private userservice:UserService,private cdRef: ChangeDetectorRef) {}
@@ -245,10 +246,11 @@ updateSelection() {
 } */
 
   // Supprimer les utilisateurs sélectionnés
-deleteSelectedUsers() {
-  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
-  this.updateSelection();
-}
+  deleteSelectedUsers() {
+    this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
+    this.updateSelection();
+    this.showDeleteMultipleModal = false;
+  }
 openDeleteMultipleModal() {
   this.showDeleteMultipleModal = true;
 }
@@ -257,15 +259,7 @@ closeDeleteMultipleModal() {
   this.showDeleteMultipleModal = false;
 }
 
-deleteMultipleUsers() {
-  // Logique de suppression des utilisateurs sélectionnés
-  const usersToDelete = this.filteredUsers.filter(user => user.selected);
-  console.log('Utilisateurs à supprimer :', usersToDelete);
 
-  // Suppression dans la liste
-  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
-  this.showDeleteMultipleModal = false;
-}
 showEditUserModal: boolean = false;
 userToEdit: any = null;
 
@@ -278,4 +272,6 @@ closeEditUserModal() {
   this.showEditUserModal = false;
   this.userToEdit = null;
 }
+
+
 }

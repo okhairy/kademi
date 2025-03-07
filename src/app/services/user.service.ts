@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -44,11 +45,18 @@ export class UserService {
       return this.http.delete(`${this.apiUrl}/supprimer-utilisateurs/${role}`, { body: { ids } });
     }
     //methode pour recuperr les transactions de l'etudiant
-    getTransactions(): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/transactions`).pipe(
+    getTransactions(): Observable<any> {
+      const token = localStorage.getItem('token'); // Récupération du token depuis le localStorage
+    
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`, // Ajout du token dans les headers
+        'Content-Type': 'application/json'
+      });
+    
+      return this.http.get<any>(`${this.apiUrl}/transactions`, { headers }).pipe(
         map(response => {
           console.log("Transactions reçues :", response);
-          return Array.isArray(response) ? response : [];
+          return response || [];
         })
       );
     }

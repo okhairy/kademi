@@ -39,10 +39,12 @@ export class LoginComponent {
           console.log('Connexion réussie', response);
           if (response.role === 'admin') {
             this.router.navigate(['/dashboard']);
-          } else {
+          } else 
+          if (response.role === 'etudiant'){
             this.router.navigate(['/dashboard-etudiant']);
+          } else {
+            this.router.navigate(['/vigile']);
           }
-          // Rediriger l'utilisateur ou effectuer d'autres actions
         },
         error => {
           console.log('Erreur de connexion', error);

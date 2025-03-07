@@ -149,12 +149,12 @@
   </div>
 </div>
 <!-- modalpour la Modification -->
-<div class="modal-overlay" *ngIf="showDeleteModal">
+<div class="modal-overlay" *ngIf="showEditUserModal">
   <div class="modal-content">
     
     <app-modification-utilisateur *ngIf="userToEdit"
     [userId]="userToEdit.id"
-    (closeEdit)="userToEdit = null">
+    (closeEdit)="closeEditUserModal()">
   </app-modification-utilisateur>
   
   </div>

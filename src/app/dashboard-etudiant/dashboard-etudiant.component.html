@@ -3,11 +3,11 @@
   <app-sidebar-etudiant></app-sidebar-etudiant>
 
   <div class="content p-4 flex-grow-1">
-    <h2 class="fw-bold">Bienvenue Nabila !!!</h2>
+    <h2 class="fw-bold">Bienvenue {{ utilisateur?.prenom }} !!!</h2>
     <div class="d-flex align-items-center justify-content-end">
       <div class="me-3 text-end">
-        <h6 class="fw-bold mb-0">{{ utilisateur.nom }}</h6>
-        <span class="text-muted">{{ utilisateur.role }}</span>
+        <h6 class="fw-bold mb-0">{{ utilisateur?.nom }}</h6>
+        <span class="text-muted">{{ utilisateur?.role }}</span>
       </div>
       <img [src]="utilisateur.photo || 'assets/default-user.png'" alt="Photo de profil" class="rounded-circle" width="40" height="40">
     </div>
@@ -18,7 +18,7 @@
         <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #0BF4C8; color: #000;">
           <div>
             <h6>Montant</h6>
-            <h4 id="montant-text">2000 F CFA</h4>
+            <h4 id="montant-text">{{ utilisateur?.solde }} F CFA</h4>
           </div>
           <div class="d-flex align-items-center">
             <img src="assets/depot.png" alt="Montant" width="50">
@@ -32,7 +32,7 @@
         <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #252C58; color: #fff;">
           <div>
             <h6>Dépense dans la semaine</h6>
-            <h4>750 F cfa</h4>
+            <h4>{{ utilisateur?.depenseSemaine }} F CFA</h4>
           </div>
           <img src="assets/motant.png" alt="Dépense" width="50">
           
@@ -42,7 +42,7 @@
         <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #C1BBEB; color: #000;">
           <div>
             <h6>Dernier dépôt</h6>
-            <h4>3000 F cfa</h4>
+            <h4>{{ utilisateur?.dernierDepot }} F CFA</h4>
           </div>
           <img src="assets/deposit.png" alt="Dépôt" width="50">
         </div>
@@ -92,7 +92,7 @@
         <div class="card p-3 shadow-sm mb-3">
           <h6>Informations de codification:</h6>
           <p><strong>Bâtiment / Pavillon :</strong> <span class="text-primary">B</span></p>
-          <p><strong>Chambre :</strong> <span class="text-primary">2</span></p>
+          <p><strong>Chambre :</strong> <span class="text-primary">{{ utilisateur?.chambre }}</span></p>
         </div>
     
         <!-- Actions -->
@@ -101,7 +101,7 @@
           <ul class="list-unstyled">
             <li>Déposer en sûreté</li>
             <li>Consultez vos transactions</li>
-            <li>Scannez pour vous régler</li>
+            <li>Scannez pour vous régaler</li>
           </ul>
         </div>
     
