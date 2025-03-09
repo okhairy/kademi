@@ -6,6 +6,13 @@ import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.c
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 
+
+interface Expense {
+  mois: string;
+  petit_dejeuner: number;
+  dejeuner_diner: number;
+}
+
 @Component({
     selector: 'app-dashboard-etudiant',
     standalone: true,
@@ -17,33 +24,36 @@ import { CommonModule } from '@angular/common';
 export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
   transactions: any[] = [];
   utilisateur: any;
+  depot: any;
+  depenses: any;
   page = 1; // Page actuelle
-  itemsPerPage = 4; // Nombre d'éléments par page
+  itemsPerPage = 12; // Nombre d'éléments par page
+  chart: any;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadUserData();
     this.loadTransactions();
-    this.loadWeekDepenses();
+    this.loadMonthDepenses();
     this.loadLastDepotEtDepenses();
   }
 
   ngAfterViewInit() {
     const ctx = document.getElementById('barChart') as HTMLCanvasElement;
-    new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: 'bar',  // Type de graphique en barres
       data: {
         labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sept', 'Oct', 'Nov', 'Déc'],
         datasets: [
           {
             label: 'Petit déjeuner',
-            data: [1200, 1500, 800, 2000, 1800, 1600, 1700, 1400, 2200, 2500, 2700, 3000],
+            data: [],
             backgroundColor: 'blue'
           },
           {
             label: 'Repas / Dîner',
-            data: [1000, 1200, 900, 1700, 1500, 1400, 1600, 1300, 2000, 2300, 2500, 2800],
+            data: [],
             backgroundColor: 'black'
           }
         ]
@@ -60,6 +70,8 @@ export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
         }
       }
     });
+
+    this.loadMonthDepenses();
   }
   loadUserData(): void {
     this.authService.getUserConnected().subscribe(
@@ -76,7 +88,9 @@ export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
     this.authService.getTransactions().subscribe(
       (data) => {
         console.log("transactions", data);
-        this.transactions = data.data;
+        this.transactions = data.data.transactions.sort((a: any, b: any) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
       },
       (error) => {
         console.error('Erreur lors du chargement des transactions', error);
@@ -84,23 +98,42 @@ export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
     );
   }
 
-  loadWeekDepenses(): void {
-    this.authService.getWeekDepenses().subscribe(
+  loadMonthDepenses(): void {
+    this.authService.getMonthDepenses().subscribe(
       (data) => {
-        // Mettez à jour les données de dépenses hebdomadaires ici
-        console.log('Dépenses hebdomadaires:', data);
+        console.log('Dépenses mensuelles:', data);
+
+        const expenses = data.data.expenses;
+        console.log('Expenses:', expenses);
+
+        const petitDejData = expenses.map((expense: any) => expense.petit_dejeuner || 0);
+        const repasDinerData = expenses.map((expense: any) => expense.dejeuner_diner || 0);
+  
+        // Mise à jour du graphique
+      if (this.chart) {
+        this.chart.data.datasets[0].data = petitDejData;
+        this.chart.data.datasets[1].data = repasDinerData;
+        this.chart.update();
+      }
       },
       (error) => {
-        console.error('Erreur lors du chargement des dépenses hebdomadaires', error);
+        console.error('Erreur lors du chargement des dépenses mensuelles', error);
       }
     );
   }
+  
 
   loadLastDepotEtDepenses(): void {
     this.authService.getLastDepotEtDepenses().subscribe(
       (data) => {
-        // Mettez à jour les données du dernier dépôt et des dépenses ici
-        console.log('Dernier dépôt et dépenses:', data);
+
+         // Vérifier que data contient bien les bonnes valeurs
+         if (data) {
+          this.depot = {
+            dernierDepot: data.data.Dernier_depot,
+            depenseSemaine: data.data.Depenses_dans_la_semaine
+          };
+        }
       },
       (error) => {
         console.error('Erreur lors du chargement du dernier dépôt et des dépenses', error);

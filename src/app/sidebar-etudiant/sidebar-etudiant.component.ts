@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 @Component({
     selector: 'app-sidebar-etudiant',
     imports: [],
@@ -9,7 +9,14 @@ import { Router } from '@angular/router';
 })
 export class SidebarEtudiantComponent {
 
-    constructor(private authService: AuthService, private router: Router) {}
+  currentRoute: string = '';
+    constructor(private authService: AuthService, private router: Router) {
+      this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+              this.currentRoute = event.url;
+            }
+          });
+    }
 
   logout(): void {
     this.authService.logout().subscribe(

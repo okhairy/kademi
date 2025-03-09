@@ -4,7 +4,7 @@
       <button (click)="logout()" class="btn btn-danger btn-sm">Déconnexion</button>
     </div>
   
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mt-3" *ngIf="!etudiantData">
       <div class="row">
         <!-- Section Météo -->
         <div class="col-md-6" hight="1000px">
@@ -25,10 +25,34 @@
         </div>
   
         <!-- Section Scan Carte -->
-        <div class="col-md-6 text-center">
+        <div class="col-md-6 text-center" *ngIf="!etudiantData">
           <div class="scan-card p-4">
             <img src="assets/Vigile_img.png" alt="Scanner" class="img-fluid" >
             <h5 class="text-danger mt-3">Veuillez scanner votre carte !</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="etudiantData">
+      <div class="modal-content">
+        <div class="student-info-container d-flex align-items-center">
+          <!-- Photo à gauche -->
+          <img src="assets/etudiant.png" alt="Photo étudiant" class="profile-img">
+          <!-- Infos à droite -->
+          <div class="student-details">
+            <p><strong>Numéro de dossier:</strong> {{ etudiantData.numero_de_dossier }}</p>
+            <p><strong>Prénom:</strong> {{ etudiantData.prenom }}</p>
+            <p><strong>Nom:</strong> {{ etudiantData.nom }}</p>
+            <p><strong>Telephone</strong> {{ etudiantData.telephone }}</p>
+
+            <p [ngClass]="{'text-success': accessMessage === 'Accès autorisé', 'text-danger': accessMessage !== 'Accès autorisé'}">
+              {{ accessMessage }}
+            </p>
+            <!-- Boutons d'action -->
+            <div class="action-buttons">
+              <button class="btn btn-danger" (click)="closeModal()">Fermer</button>
+            </div>
           </div>
         </div>
       </div>

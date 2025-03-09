@@ -2,6 +2,7 @@ import { Component, Renderer2, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.component';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-depot',
@@ -10,13 +11,8 @@ import { FormsModule } from '@angular/forms';
     styleUrl: './depot.component.css'
 })
 export class DepotComponent implements OnInit {
-  depots = [
-    { id: 'D012148', status: 'Réussi', date: '25 mars 2023', montant: 3000, operateur: 'Orange Money' },
-    { id: 'D012149', status: 'Réussi', date: '25 mars 2023', montant: 2000, operateur: 'Wave' },
-    { id: 'D012150', status: 'Réussi', date: '25 mars 2023', montant: 990, operateur: 'Wave' },
-    { id: 'D012151', status: 'Réussi', date: '25 mars 2023', montant: 1000, operateur: 'Wave' },
-    { id: 'D012152', status: 'Réussi', date: '25 mars 2023', montant: 5000, operateur: 'Wave' },
-  ];
+  depots: any[] = [];
+  utilisateur: any;
   montant: number = 0;
   frais: number = 0;
   montantRecu: number = 0;
@@ -32,9 +28,12 @@ export class DepotComponent implements OnInit {
 
   page = 1;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private authservice: AuthService) {}
 
   ngOnInit(): void {
+    this.loadDepots();
+    this.loadUserData();
+
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
       const modalNumero = document.getElementById('numeroDepotModal');
       const modalDepot = document.getElementById('depotModal');
@@ -56,11 +55,35 @@ export class DepotComponent implements OnInit {
     }
   }
   
-    
+  loadDepots() {
+    this.authservice.getDepots().subscribe(
+      (response: any) => {
+        console.log("Dépôts reçus :", response);
+        if (response?.data.depots) {
+          this.depots = response.data.depots.sort((a: any, b: any) => {
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          });
+        }
+      },
+      (error) => {
+        console.error("Erreur lors de la récupération des dépôts :", error);
+      }
+    );
+  }
   
-  
+  loadUserData(): void {
+    this.authservice.getUserConnected().subscribe(
+      (data) => {
+        this.utilisateur = data.data;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des données de l\'utilisateur', error);
+      }
+    );
+  }
 
-  ouvrirNumeroDepotModal(): void {
+  ouvrirNumeroDepotModal(operateur: string): void {
+    this.operateurChoisi = operateur;
     this.fermerModals(); // Ferme tous les modals ouverts avant d'en ouvrir un autre
     if (this.modalNumeroDepot) {
       this.modalNumeroDepot.show();
@@ -150,5 +173,30 @@ choisirOperateur(operateur: string): void {
   
     this.numeroValide = regexOperateurs[this.operateurChoisi as keyof typeof regexOperateurs]?.test(this.numeroSaisi) ?? false;
   }
+
+  effectuerDepot(): void {
+    if (!this.utilisateur || !this.utilisateur.id) {
+      console.error("Utilisateur non trouvé !");
+      return;
+    }
+  
+    const data = {
+      montant: this.montant,
+      operateur: this.operateurChoisi
+    };
+  
+    this.authservice.depot(this.utilisateur.id, data).subscribe(
+      (response: any) => {
+        console.log("Dépôt effectué avec succès :", response);
+        this.fermerModals();
+        this.loadDepots(); // Rafraîchir la liste des dépôts
+        this.loadUserData(); 
+      },
+      (error) => {
+        console.error("Erreur lors du dépôt :", error);
+      }
+    );
+  }
+  
   
 }

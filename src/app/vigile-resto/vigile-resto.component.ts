@@ -58,6 +58,11 @@ export class VigileRestoComponent implements OnInit{
     );
   }
 
+  closeModal(): void {
+    this.etudiantData = null; // Réinitialise les données de l'étudiant
+    this.accessMessage = ''; // Réinitialise le message d'accès
+  }
+
   logout() {
     // Ajoutez ici la logique de déconnexion si nécessaire
     this.router.navigate(['/login']);

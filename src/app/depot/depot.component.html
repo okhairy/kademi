@@ -8,8 +8,8 @@
       <div class="solde-card">
         <div class="solde-info">
           <p class="compte-text">Mon compte</p>
-          <p class="numero-compte">21030100010</p>
-          <h2 class="montant">2000 F CFA</h2>
+          <p class="numero-compte">{{ utilisateur.numero_de_dossier }}</p>
+          <h2 class="montant">{{ utilisateur.solde }} F CFA</h2>
         </div>
         <button class="btn-depot" data-bs-toggle="modal" data-bs-target="#depotModal">
           <i class="fas fa-upload"></i> Effectuer un dépôt
@@ -63,7 +63,7 @@
       </div>
       <div class="modal-body">
         <ul class="list-group">
-          <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirNumeroDepotModal()">
+          <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirNumeroDepotModal('orange')">
             <div class="d-flex align-items-center">
               <img src="assets/orange.png" alt="Orange Money" class="logo-operateur">
               <div>
@@ -74,7 +74,7 @@
             <i class="bi bi-chevron-right"></i>
           </li>
 
-          <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirNumeroDepotModal()">
+          <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirNumeroDepotModal('wave')">
             <div class="d-flex align-items-center">
               <img src="assets/wave.png" alt="Wave" class="logo-operateur">
               <div>
@@ -85,7 +85,7 @@
             <i class="bi bi-chevron-right"></i>
           </li>
 
-          <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirNumeroDepotModal()">
+          <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirNumeroDepotModal('free')">
             <div class="d-flex align-items-center">
               <img src="assets/free.png" alt="Free Money" class="logo-operateur">
               <div>
@@ -113,7 +113,7 @@
           <li class="list-group-item d-flex align-items-center justify-content-between" (click)="ouvrirMontantDepotModal()">
             <div>
               <strong>Mon numéro</strong>
-              <p class="text-muted">785240028</p>
+              <p class="text-muted">{{ utilisateur.telephone }}</p>
             </div>
             <i class="bi bi-chevron-right"></i>
           </li>
@@ -160,7 +160,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Retour</button>
-        <button type="button" class="btn btn-primary" [disabled]="!!erreurMontant">Confirmer</button>
+        <button (click)="effectuerDepot()" type="button" class="btn btn-primary" [disabled]="!!erreurMontant">Confirmer</button>
       </div>
     </div>
   </div>

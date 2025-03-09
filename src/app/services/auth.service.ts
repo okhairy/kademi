@@ -70,7 +70,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     if (token) {
-      return from(this.axiosInstance.get('/etudiant/last-depot', {
+      return from(this.axiosInstance.get('/last-depot', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -84,9 +84,10 @@ export class AuthService {
 
   getTransactions(): Observable<any> {
     const token = localStorage.getItem('token');
+    console.log("Token récupéré :", token);
 
     if (token) {
-      return from(this.axiosInstance.get('/etudiant/transactions', {
+      return from(this.axiosInstance.get('/testest', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -119,6 +120,102 @@ export class AuthService {
 
     if (token) {
       return from(this.axiosInstance.get('/etudiant/week-depenses', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }));
+    } else {
+      return new Observable(observer => {
+        observer.error(new Error('No token found'));
+      });
+    }
+  }
+
+  getMonthDepenses(): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return from(this.axiosInstance.get('/etudiantc/month-depenses', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }));
+    } else {
+      return new Observable(observer => {
+        observer.error(new Error('No token found'));
+      });
+    }
+  }
+
+  getMeals(): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return from(this.axiosInstance.get('/depenses-mensuelles', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }));
+    } else {
+      return new Observable(observer => {
+        observer.error(new Error('No token found'));
+      });
+    }
+  }
+
+  getdailyMeals(): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return from(this.axiosInstance.get('/depenses-journee', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }));
+    } else {
+      return new Observable(observer => {
+        observer.error(new Error('No token found'));
+    });
+      }
+    }
+
+    getDepots(): Observable<any> {
+      const token = localStorage.getItem('token');
+  
+        if (token) {
+          return from(this.axiosInstance.get('/mes-depot', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        }));
+      } else {
+        return new Observable(observer => {
+          observer.error(new Error('No token found'));
+        });
+      }
+    }
+
+    getusers(): Observable<any> {
+      const token = localStorage.getItem('token');
+  
+      if (token) {
+        return from(this.axiosInstance.get('/nbr-users', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }}));
+        } else {
+          return new Observable(observer => {
+            observer.error(new Error('No token found'));
+          });
+        
+    }
+  }
+
+  depot(etudiantId: number, data: { montant: number, operateur: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return from(this.axiosInstance.post(`/etudiantc/depot/${etudiantId}`, data, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

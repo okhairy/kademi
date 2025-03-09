@@ -4,10 +4,10 @@
      
     </div>
     <ul class="nav flex-column">
-      <li class="nav-item"><a href="/dashboard" class="nav-link active"><i class="bi bi-house-door"></i> Dashboard</a></li>
-      <li class="nav-item"> <a href="/user" class="nav-link"><i class="bi bi-people"></i> Utilisateurs</a>
+      <li class="nav-item"><a href="/dashboard" class="nav-link" [class.active]="currentRoute === '/dashboard'"><i class="bi bi-house-door"></i> Dashboard</a></li>
+      <li class="nav-item"> <a href="/user" class="nav-link" [class.active]="currentRoute === '/user'"><i class="bi bi-people"></i> Utilisateurs</a>
       </li>
-      <li class="nav-item"><a href="/historique" class="nav-link"><i class="bi bi-clock-history"></i> Historique</a></li>
+      <li class="nav-item"><a href="/historique" class="nav-link" [class.active]="currentRoute === '/historique'"><i class="bi bi-clock-history"></i> Historique</a></li>
     </ul>
     <button class="logout" (click)="logout()">
         <i class="bi bi-box-arrow-left"></i> Déconnexion

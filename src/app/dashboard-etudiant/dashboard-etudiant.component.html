@@ -7,9 +7,9 @@
     <div class="d-flex align-items-center justify-content-end">
       <div class="me-3 text-end">
         <h6 class="fw-bold mb-0">{{ utilisateur?.nom }}</h6>
-        <span class="text-muted">{{ utilisateur?.role }}</span>
+        <span class="text-muted">Etudiant</span>
       </div>
-      <img [src]="utilisateur.photo || 'assets/default-user.png'" alt="Photo de profil" class="rounded-circle" width="40" height="40">
+      <img [src]="utilisateur.photo || 'assets/etudiant.png'" alt="Photo de profil" class="rounded-circle" width="40" height="40">
     </div>
 
     <!-- Cartes récapitulatives -->
@@ -32,7 +32,7 @@
         <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #252C58; color: #fff;">
           <div>
             <h6>Dépense dans la semaine</h6>
-            <h4>{{ utilisateur?.depenseSemaine }} F CFA</h4>
+            <h4>{{ depot?.depenseSemaine }} F CFA</h4>
           </div>
           <img src="assets/motant.png" alt="Dépense" width="50">
           
@@ -42,7 +42,7 @@
         <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #C1BBEB; color: #000;">
           <div>
             <h6>Dernier dépôt</h6>
-            <h4>{{ utilisateur?.dernierDepot }} F CFA</h4>
+            <h4>{{ depot?.dernierDepot }} F CFA</h4>
           </div>
           <img src="assets/deposit.png" alt="Dépôt" width="50">
         </div>

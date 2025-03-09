@@ -15,12 +15,20 @@
 .brand {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    justify-content: center;
+    margin-bottom: 30%;
 }
 
 .brand h3 {
     margin: 0;
     font-size: 22px;
+}
+
+.brand img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 /* Navigation */
@@ -35,40 +43,52 @@
 .nav-link {
     color: white;
     font-size: 22px;
-    padding: 12px 15px;
+    padding: 15px 15px;
     display: flex;
     align-items: center;
     text-decoration: none;
     width: 100%;
-    transition: background 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+    border-radius: 10px;
+    right: 0;
 }
 
 .nav-link i {
     font-size: 18px;
+    margin-right: 10px;
   }
 
-.nav-link:hover {
-    background: #131eb4;
-    color: #FFFFFF;
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
 }
 
 /* Bouton de déconnexion */
 .logout {
-    margin-top: auto; /* Pousse la déconnexion vers le bas */
-    color: white;
-    font-size: 22px;
-    text-decoration: none;
-    padding: 12px 15px;
-    width: 100%;
-    text-align: left;
+    margin-top: auto;
+    background: none;
+    border: none;
+    color: #e3e3e3;
+    font-size: 25px;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    padding: 10px;
 }
 
 .logout i {
     margin-right: 10px;
+    font-size: 18px;
 }
 
 .logout:hover {
-    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+/* Style pour l'élément actif */
+/* Style du menu actif */
+.nav-link.active {
+    background: #ffffff;
+    color: #4c3fad;
+    font-weight: bold;
 }

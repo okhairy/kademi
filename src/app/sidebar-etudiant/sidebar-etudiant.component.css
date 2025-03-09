@@ -1,59 +1,94 @@
+/* Sidebar */
 .sidebar {
   width: 250px;
-  height: 100vh;
-  background-color: #4D44B5;
+  background: #4D44B5;
+  color: white;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start; /* Aligner les éléments en haut */
+  height: 100vh;
+  
 }
 
-.logo-container {
+/* Logo et nom */
+.logo {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 30%;
 }
 
-.logo {
-  width: 90px;
-  height: 90px;
-}
-
-.sidebar-menu {
-  flex-grow: 1;
-  margin-top: 20px;
-}
-
-.nav-link {
-  padding: 10px;
+.logo h3 {
+  margin: 0;
   font-size: 22px;
-  display: flex;
-  align-items: center;
-  transition: background 0.3s;
 }
 
-.nav-link i {
+.logo img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
   margin-right: 10px;
 }
 
-.nav-link:hover, .nav-link.active {
-  background-color: #131eb4;
-  border-radius: 5px;
+/* Navigation */
+.nav {
+  width: 100%;
 }
 
+.nav-item {
+  width: 100%;
+}
+
+.nav-link {
+  color: white;
+  font-size: 22px;
+  padding: 15px 15px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+  transition: 0.3s ease-in-out;
+  border-radius: 10px;
+  right: 0;
+}
+
+.nav-link i {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+/* Bouton de déconnexion */
 .logout-section {
   margin-top: auto;
-  text-align: center;
-}
-
-.btn {
-  width: 100%;
   background: none;
   border: none;
+  color: #e3e3e3;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
   padding: 10px;
-  font-size: 22px;
 }
 
-.btn:hover {
-  background-color: #1a252f;
-  border-radius: 5px;
+.logout-section i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.logout-section:hover {
+  color: #ffffff;
+}
+
+/* Style pour l'élément actif */
+/* Style du menu actif */
+.nav-link.active {
+  background: #ffffff;
+  color: #4c3fad;
+  font-weight: bold;
 }
