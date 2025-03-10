@@ -32,6 +32,7 @@ export class DepotComponent implements OnInit {
   operateurChoisi: string = ''; // Stocke l'opérateur sélectionné
 
   page = 1;
+  
 
   constructor(private renderer: Renderer2) {}
 
