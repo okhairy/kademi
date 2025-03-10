@@ -20,59 +20,58 @@
       <tr>
         <th>
           <input type="checkbox" (change)="toggleSelectAll($event)"> <!-- Sélectionner tout -->
-        </th>
-        <th>Nom</th>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Rôle</th>
-        <th>Email</th>
-        <th>Action</th>
-        <!-- <th>Assignation</th>  -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of paginatedUsers">
-        <td>
-          <input type="checkbox" [(ngModel)]="user.selected" (change)="updateSelection()">
- <!-- Sélection individuelle -->
-        </td>
-        <td>{{ user.nom }}</td>
-        <td>{{ user.id }}</td>
-        <td>{{ user.date }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.assignation }}</td> 
-        <td class="actions-cell">
-          <!-- Bouton Assigner/Désassigner séparé -->
-          <div class="assign-action">
-            <button *ngIf="user.role === 'etudiant'" 
-                    (click)="toggleAssign(user)" 
-                    [ngClass]="user.assignation ? 'desassigner-btn' : 'assigner-btn'"
-                    [title]="user.assignation ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
-              {{ user.assignation ? 'Désassigner' : 'Assigner' }}
-            </button>
-          </div>
-        
-          <!-- Groupe des autres actions -->
-          <div class="actions-container">
-            <button class="action-btn" title="Supprimer" (click)="openDeleteModal(user.id, user.role)">
-              <i class="bi bi-trash"></i>
-          </button>
+          <th>Nom</th>
+          <th>Prenom</th>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Rôle</th>
+          <th>Email</th>
+          <th>Statut</th>
+          <th>Assignation</th> <!-- Colonne pour Assigner/Désassigner -->
+          <th>Actions</th> <!-- Colonne pour les autres actions -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers">
+          <td>
+            <input type="checkbox" [(ngModel)]="user.selected" (change)="updateSelection()"> <!-- Sélection individuelle -->
+          </td>
+          <td>{{ user.nom }}</td>
+          <td>{{ user.prenom }}</td>
+          <td>{{ user.id }}</td>
+          <td>{{ user.date }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.statut }}</td>
+          <td>
+            <div class="assign-action">
+              <!-- Le bouton va appeler la méthode pour ouvrir le modal de scan -->
+              <button *ngIf="user.role === 'Etudiant'" 
+                      (click)="openScanCarteModal(user)" 
+                      [ngClass]="user.assignation === 'Assigné' ? 'desassigner-btn' : 'assigner-btn'"
+                      [title]="user.assignation === 'Assigné' ? 'Désassigner cet étudiant' : 'Assigner cet étudiant'">
+                {{ user.assignation === 'Assigné' ? 'Désassigner' : 'Assigner' }}
+              </button>
+            </div>
+          </td>
           
-        
-            <button class="action-btn" title="Modifier" (click)="openEditUserModal(user)">
-              <i class="bi bi-pencil"></i>
-            </button>
-            
-            <button class="action-btn" title="Bloquer" (click)="openBlockModal(user.id)">
-              <i class="bi bi-ban"></i>
-            </button>
-            
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <td class="actions-cell">
+            <!-- Boutons Modifier, Supprimer et Bloquer dans la colonne Actions -->
+            <div class="actions-container">
+              <button class="action-btn" title="Modifier" (click)="openEditUserModal(user)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="action-btn" title="Supprimer" (click)="openDeleteModal(user.id, user.role)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button class="action-btn" title="Bloquer" (click)="openBlockModal(user.id)">
+                <i class="bi bi-ban"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   <!-- Pagination -->
   <div class="pagination">
@@ -83,7 +82,7 @@
       </button>
   </div>
 </div>
-
+<!-- modal de suprresion -->
 <div class="modal-bg show-modal" *ngIf="showDeleteModal">
   <div class="modal-box">
     <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
@@ -119,7 +118,7 @@
 </div>
 
 <!-- MODAL DE MESSAGE DE CONFIRMATION -->
-<div class="modal-bg show-modal" *ngIf="showMessageModal">
+ <div class="modal-bg show-modal" *ngIf="showMessageModal">
   <div class="modal-box">
     <p [ngClass]="isSuccess ? 'success-message' : 'error-message'">
       {{ message }}
@@ -128,7 +127,7 @@
       <button class="btn-confirm" (click)="closeMessageModal()">OK</button>
     </div>
   </div>
-</div>
+</div> 
 
 
 
@@ -148,14 +147,34 @@
     </div>
   </div>
 </div>
+<!-- MODAL DE MESSAGE DE CONFIRMATION -->
+<div class="modal-bg show-modal" *ngIf="showMessageModal">
+  <div class="modal-box">
+    <p [ngClass]="isSuccess ? 'success-message' : 'error-message'">
+      {{ message }}
+    </p>
+    <div class="modal-actions">
+      <button class="btn-confirm" (click)="closeMessageModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+
 <!-- modalpour la Modification -->
 <div class="modal-overlay" *ngIf="showEditUserModal">
   <div class="modal-content">
     
     <app-modification-utilisateur *ngIf="userToEdit"
     [userId]="userToEdit.id"
+<<<<<<< HEAD
     (closeEdit)="closeEditUserModal()">
   </app-modification-utilisateur>
+=======
+    (closeEdit)="userToEdit = null">
+   </app-modification-utilisateur>
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
   
   </div>
 </div>
+<!-- Modal de scan de carte -->
+<app-scan-carte-modal *ngIf="showScanCarteModal" [user]="selectedUser" (close)="closeScanCarteModal()"></app-scan-carte-modal>

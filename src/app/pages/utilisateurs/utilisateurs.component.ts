@@ -8,11 +8,12 @@ import { AddUserComponent } from '../../add-user/add-user.component';
 import { ModificationUtilisateurComponent } from "../../modification-utilisateur/modification-utilisateur.component";
 import { UserService } from '../../services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { ScanCarteModalComponent } from '../../scan-carte-modal/scan-carte-modal.component';
 
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent],
+  imports: [CommonModule, SidebarComponent, FormsModule, AddUserComponent, ModificationUtilisateurComponent,ScanCarteModalComponent],
   templateUrl: './utilisateurs.component.html',
   styleUrl: './utilisateurs.component.css'
 })
@@ -22,6 +23,7 @@ export class UtilisateursComponent {
   users: any[] = []; // Déclare la propriété users
   filteredUsers: any[] = []; // Pour gérer la recherche
   selectedUser: any;
+
   
   
   chargerUtilisateurs() {
@@ -63,22 +65,31 @@ export class UtilisateursComponent {
     this.filteredUsers = this.users.filter(user =>
       user.id.toString().includes(term) ||
       user.nom.toLowerCase().includes(term) ||
+      user.prenom.toLowerCase().includes(term) ||
       user.email.toLowerCase().includes(term) ||
       user.role.toLowerCase().includes(term) ||
       user.date.includes(term)
     );
     this.currentPage = 1; // Réinitialiser à la première page après la recherche
   }
-  
   toggleAssign(user: any) {
-    user.assigned = !user.assigned;
-    alert(`L'étudiant ${user.nom} est maintenant ${user.assigned ? 'assigné' : 'désassigné'} !`);
-    // Ici, ajoute la logique pour mettre à jour l'état dans la base de données
+    if (user.assignation === 'Désassigné') {
+      this.userservice.assignerCarte(user.id).subscribe(response => {
+        user.assignation = 'Assigné'; // Met à jour l'affichage
+        alert(`L'étudiant ${user.nom} a été assigné !`);
+      });
+    } else {
+      this.userservice.desassignerCarte(user.id).subscribe(response => {
+        user.assignation = 'Désassigné'; // Met à jour l'affichage
+        alert(`L'étudiant ${user.nom} a été désassigné !`);
+      });
+    }
   }
+  
   toggleSelectAll(event: any) {
     const isChecked = event.target.checked;
     this.users.forEach(user => user.selected = isChecked);
-  }
+  } 
 
   currentPage = 1;
   usersPerPage = 5;
@@ -237,6 +248,7 @@ updateSelection() {
   this.isSelectionEmpty = !this.filteredUsers.some(user => user.selected);
 }
 
+<<<<<<< HEAD
 
 
 // Supprimer les utilisateurs sélectionnés
@@ -251,6 +263,13 @@ updateSelection() {
     this.updateSelection();
     this.showDeleteMultipleModal = false;
   }
+=======
+deleteSelectedUsers() {
+  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
+  this.updateSelection();
+  this.showDeleteMultipleModal = false;
+}
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 openDeleteMultipleModal() {
   this.showDeleteMultipleModal = true;
 }
@@ -259,7 +278,20 @@ closeDeleteMultipleModal() {
   this.showDeleteMultipleModal = false;
 }
 
+<<<<<<< HEAD
 
+=======
+/*  deleteMultipleUsers() {
+  // Logique de suppression des utilisateurs sélectionnés
+  const usersToDelete = this.filteredUsers.filter(user => user.selected);
+  console.log('Utilisateurs à supprimer :', usersToDelete);
+
+  // Suppression dans la liste
+  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
+  this.showDeleteMultipleModal = false;
+}  */
+
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 showEditUserModal: boolean = false;
 userToEdit: any = null;
 
@@ -272,6 +304,61 @@ closeEditUserModal() {
   this.showEditUserModal = false;
   this.userToEdit = null;
 }
+<<<<<<< HEAD
 
 
+=======
+showScanCarteModal = false;
+/* selectedUser: any; */
+
+// Ouvrir le modal de scan de carte
+openScanCarteModal(user: any): void {
+  if (user.assignation === 'Assigné') {
+    // Si déjà assigné, appeler la méthode de désassignation
+    this.desassignerCarte(user);
+  } else {
+    // Sinon, ouvrir le modal pour scanner la carte
+    this.selectedUser = user;  // Sauvegarder l'utilisateur sélectionné pour la suite
+    this.showScanCarteModal = true;
+  }
+}
+
+
+// Méthode pour assignee une carte à un utilisateur
+assignerCarte(user: any) {
+  // Appelle ton service pour assigner la carte
+  this.userservice.assignerCarte(user.id).subscribe(response => {
+    this.showMessageModal = true;
+    this.message = "Carte assignée avec succès!";
+    this.isSuccess = true;
+    user.assignation = 'Assigné'; // Mise à jour de l'état de l'utilisateur
+  }, error => {
+    this.showMessageModal = true;
+    this.message = "Erreur lors de l'assignation de la carte.";
+    this.isSuccess = false;
+  });
+}
+
+// Méthode pour désassigner une carte d'un utilisateur
+desassignerCarte(user: any) {
+  // Appelle ton service pour désassigner la carte
+  this.userservice.desassignerCarte(user.id).subscribe(response => {
+    this.showMessageModal = true;
+    this.message = "Carte désassignée avec succès!";
+    this.isSuccess = true;
+    user.assignation = 'Non assigné'; // Mise à jour de l'état de l'utilisateur
+  }, error => {
+    this.showMessageModal = true;
+    this.message = "Erreur lors de la désassignation de la carte.";
+    this.isSuccess = false;
+  });
+}
+
+
+// Fermer le modal de scan de carte
+closeScanCarteModal() {
+  this.showScanCarteModal = false;
+  this.selectedUser = null;
+}
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }

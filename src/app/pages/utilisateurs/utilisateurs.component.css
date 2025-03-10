@@ -465,3 +465,18 @@
   background-color: #218838;
 }
 /*  */
+.assigner-btn {
+  background-color: green; /* Couleur verte pour le bouton Assigner */
+  color: white; /* Texte en blanc pour une meilleure lisibilité */
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.desassigner-btn {
+  background-color: red; /* Couleur rouge pour le bouton Désassigner */
+  color: white; /* Texte en blanc pour une meilleure lisibilité */
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}

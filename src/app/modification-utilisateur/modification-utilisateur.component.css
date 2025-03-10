@@ -116,6 +116,7 @@ width: 50%;
 
 /* Si un champ est seul sur la ligne, il prend toute la largeur */
 .input-group:has(:only-child) div {
+<<<<<<< HEAD
 flex: none;
 width: 50%;
 }/* Styles pour l'arrière-plan du modal */
@@ -141,15 +142,129 @@ animation: fadeIn 0.3s ease-in-out; */
 .modal-title {
 font-size: 1.25rem;
 font-weight: bold;
+=======
+  flex: none;
+  width: 50%;
+}/* Styles pour l'arrière-plan du modal */
+
+
+/* Styles pour le modal */
+/* .modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+} */
+
+/* Style pour le bouton de fermeture */
+/* .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s ease-in-out;
+}
+
+.close:hover {
+  color: red;
+} */
+
+/* Animation d'apparition */
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+} */
+
+/* Styles pour les messages de confirmation */
+/* .success-message {
+  color: green;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+} */
+
+/* Style du bouton de fermeture */
+/* button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #0056b3;
+} */
+/* Ajoute une légère transparence au fond du modal */
+/* .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+} */
+
+/* Centrer verticalement le modal */
+.modal-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* Personnalisation du contenu du modal */
+.modal-content {
+  border-radius: 8px;
+/*   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out; */
+}
+
+/* Animation d'apparition du modal */
+/* @keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+} */
+
+/* Style du titre du modal */
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }
 
 /* Bouton de fermeture */
 .btn-close {
+<<<<<<< HEAD
 font-size: 1rem;
+=======
+  font-size: 1rem;
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }
 
 /* Style du texte de confirmation */
 .text-success {
+<<<<<<< HEAD
 color: #28a745; /* Vert Bootstrap */
 font-weight: bold;
 }
@@ -157,10 +272,20 @@ font-weight: bold;
 .text-danger {
 color: #dc3545; /* Rouge Bootstrap */
 font-weight: bold;
+=======
+  color: #28a745; /* Vert Bootstrap */
+  font-weight: bold;
+}
+
+.text-danger {
+  color: #dc3545; /* Rouge Bootstrap */
+  font-weight: bold;
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }
 
 /* Style du bouton de fermeture */
 .modal-footer .btn-secondary {
+<<<<<<< HEAD
 background-color: #6c757d; 
 border: none;
 }
@@ -170,3 +295,14 @@ background-color: #5a6268;
 } 
 
 
+=======
+  background-color: #6c757d; 
+  border: none;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #5a6268;
+} 
+
+ 
+>>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
