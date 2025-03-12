@@ -248,28 +248,11 @@ updateSelection() {
   this.isSelectionEmpty = !this.filteredUsers.some(user => user.selected);
 }
 
-<<<<<<< HEAD
-
-
-// Supprimer les utilisateurs sélectionnés
-/* deleteSelectedUsers() {
-  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
-  this.updateSelection();
-} */
-
-  // Supprimer les utilisateurs sélectionnés
-  deleteSelectedUsers() {
-    this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
-    this.updateSelection();
-    this.showDeleteMultipleModal = false;
-  }
-=======
 deleteSelectedUsers() {
   this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
   this.updateSelection();
   this.showDeleteMultipleModal = false;
 }
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 openDeleteMultipleModal() {
   this.showDeleteMultipleModal = true;
 }
@@ -278,20 +261,6 @@ closeDeleteMultipleModal() {
   this.showDeleteMultipleModal = false;
 }
 
-<<<<<<< HEAD
-
-=======
-/*  deleteMultipleUsers() {
-  // Logique de suppression des utilisateurs sélectionnés
-  const usersToDelete = this.filteredUsers.filter(user => user.selected);
-  console.log('Utilisateurs à supprimer :', usersToDelete);
-
-  // Suppression dans la liste
-  this.filteredUsers = this.filteredUsers.filter(user => !user.selected);
-  this.showDeleteMultipleModal = false;
-}  */
-
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 showEditUserModal: boolean = false;
 userToEdit: any = null;
 
@@ -304,10 +273,6 @@ closeEditUserModal() {
   this.showEditUserModal = false;
   this.userToEdit = null;
 }
-<<<<<<< HEAD
-
-
-=======
 showScanCarteModal = false;
 /* selectedUser: any; */
 
@@ -360,5 +325,4 @@ closeScanCarteModal() {
   this.showScanCarteModal = false;
   this.selectedUser = null;
 }
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }

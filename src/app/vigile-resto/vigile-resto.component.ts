@@ -15,6 +15,7 @@ export class VigileRestoComponent implements OnInit{
   etudiantData: any;
   accessMessage: string = '';
   weatherData: any;
+  transactions: any;
 
   constructor(private router: Router, private meteoService: MeteoService, private etudiantService: EtudiantService) {}
 
@@ -49,6 +50,7 @@ export class VigileRestoComponent implements OnInit{
       (data) => {
         this.etudiantData = data.etudiant;
         this.accessMessage = data.message; // Assurez-vous que l'API renvoie un champ 'message'
+        this.transactions = data.transaction;
         console.log('Accès vérifié:', data);
       },
       (error) => {

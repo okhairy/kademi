@@ -44,9 +44,10 @@
             <p><strong>Numéro de dossier:</strong> {{ etudiantData.numero_de_dossier }}</p>
             <p><strong>Prénom:</strong> {{ etudiantData.prenom }}</p>
             <p><strong>Nom:</strong> {{ etudiantData.nom }}</p>
-            <p><strong>Telephone</strong> {{ etudiantData.telephone }}</p>
+            <p><strong>Repas:</strong> {{ transactions.type }}</p>
+            <p><strong>Repas:</strong> {{ transactions.montant }}</p>
 
-            <p [ngClass]="{'text-success': accessMessage === 'Accès autorisé', 'text-danger': accessMessage !== 'Accès autorisé'}">
+            <p [ngClass]="{'text-success': accessMessage === 'Retrait effectué avec succès', 'text-danger': accessMessage !== 'Retrait effectué avec succès'}">
               {{ accessMessage }}
             </p>
             <!-- Boutons d'action -->
