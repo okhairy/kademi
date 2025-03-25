@@ -5,6 +5,9 @@ import Chart from 'chart.js/auto';
 import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
+import { ModifComponent } from "../modif/modif.component";
+import { Modal } from 'bootstrap';
+declare var bootstrap: any; // Pour utiliser Bootstrap JS
 
 
 interface Expense {
@@ -16,10 +19,11 @@ interface Expense {
 @Component({
     selector: 'app-dashboard-etudiant',
     standalone: true,
-    imports: [CommonModule, SidebarEtudiantComponent, NgxPaginationModule],
+    imports: [CommonModule, SidebarEtudiantComponent, NgxPaginationModule, ModifComponent],
     templateUrl: './dashboard-etudiant.component.html',
     styleUrl: './dashboard-etudiant.component.css'
 })
+
 
 export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
   transactions: any[] = [];
@@ -29,6 +33,7 @@ export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
   page = 1; // Page actuelle
   itemsPerPage = 12; // Nombre d'éléments par page
   chart: any;
+  etudiant: any = {};
 
   constructor(private authService: AuthService) {}
 
@@ -140,5 +145,29 @@ export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
       }
     );
   }
+  isSettingsOpen: boolean = false;
+  modalInstance: any;
+  openSettings() {
+    this.isSettingsOpen = true;
+
+    
+}  openModal(): void {
+  let modalElement = document.getElementById('editStudentModal');
+  if (modalElement) {
+    let modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+}
+
+closeModal(): void {
+  let modalElement = document.getElementById('editStudentModal');
+  if (modalElement) {
+    let modal = bootstrap.Modal.getInstance(modalElement);
+    if (modal) {
+      modal.hide();
+    }
+  }
+}
+
 
 }

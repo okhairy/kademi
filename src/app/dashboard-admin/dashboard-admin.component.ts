@@ -6,13 +6,19 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-dashboard-admin',
+    standalone:true,
     imports: [SidebarComponent],
     templateUrl: './dashboard-admin.component.html',
     styleUrls: ['./dashboard-admin.component.css']
 })
 export class DashboardAdminComponent implements AfterViewInit,OnInit {
   nombreEtudiants: number = 0; // Stockera le nombre d'étudiants
-  totaux: any;
+  totaux: any = {
+    admins: 0,
+    vigiles: 0,
+    nombre_total_utilisateurs: 0
+  };
+ /*  totaux: any; */
   chart: any;
   chart2: any;
 

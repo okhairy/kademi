@@ -1,0 +1,51 @@
+<!-- Bannière en haut -->
+<div class="header">
+    <img src="/assets/banniere.png" alt="Bannière" class="banner-img">
+  </div>
+  
+  <div class="container mt-4">
+    <h2>Mon Profil</h2>
+  
+    <!-- Vérification que etudiant existe avant d'afficher -->
+    <div class="d-flex align-items-center mb-4 justify-content-center" *ngIf="etudiant">
+      <img src="assets/etudiant.png" alt="Profil" class="rounded-circle me-3 profile-img">
+      <div>
+        <h5 class="mb-1">{{ etudiant.prenom || 'Prénom' }} {{ etudiant.nom || 'Nom' }}</h5>
+        <p class="text-muted mb-0">{{ etudiant.email || 'Email' }}</p>
+      </div>
+    </div>
+  
+    <form [formGroup]="etudiantForm" (ngSubmit)="modifierEtudiant()">
+      <div class="mb-3">
+        <label class="form-label">Nom :</label>
+        <input type="text" class="form-control" formControlName="nom">
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Prénom :</label>
+        <input type="text" class="form-control" formControlName="prenom">
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Email :</label>
+        <input type="email" class="form-control" formControlName="email">
+      </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Numéro de dossier :</label>
+        <input type="text" class="form-control" formControlName="numero_de_dossier">
+      </div>
+  
+      <!-- Boutons -->
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-danger" (click)="bloquerCarte()">Bloquer Carte</button>
+        <button type="submit" class="btn btn-primary">Modifier</button>
+      </div>
+    </form>
+  
+    <!-- Lien de réinitialisation -->
+    <a href="#" class="text-primary mt-3 d-block">Réinitialiser mon mot de passe</a>
+    <!-- Bouton de retour -->
+  <button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
+  </div>
+  

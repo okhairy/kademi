@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 @Component({
     selector: 'app-sidebar-etudiant',
+    standalone:true,
     imports: [],
     templateUrl: './sidebar-etudiant.component.html',
     styleUrl: './sidebar-etudiant.component.css'

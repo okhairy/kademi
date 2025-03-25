@@ -116,33 +116,6 @@ width: 50%;
 
 /* Si un champ est seul sur la ligne, il prend toute la largeur */
 .input-group:has(:only-child) div {
-<<<<<<< HEAD
-flex: none;
-width: 50%;
-}/* Styles pour l'arrière-plan du modal */
-
-
-
-/* Centrer verticalement le modal */
-.modal-dialog {
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-}
-
-/* Personnalisation du contenu du modal */
-.modal-content {
-border-radius: 8px;
-/*   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-animation: fadeIn 0.3s ease-in-out; */
-}
-
-/* Style du titre du modal */
-.modal-title {
-font-size: 1.25rem;
-font-weight: bold;
-=======
   flex: none;
   width: 50%;
 }/* Styles pour l'arrière-plan du modal */
@@ -250,29 +223,15 @@ button:hover {
 .modal-title {
   font-size: 1.25rem;
   font-weight: bold;
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }
 
 /* Bouton de fermeture */
 .btn-close {
-<<<<<<< HEAD
-font-size: 1rem;
-=======
   font-size: 1rem;
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }
 
 /* Style du texte de confirmation */
 .text-success {
-<<<<<<< HEAD
-color: #28a745; /* Vert Bootstrap */
-font-weight: bold;
-}
-
-.text-danger {
-color: #dc3545; /* Rouge Bootstrap */
-font-weight: bold;
-=======
   color: #28a745; /* Vert Bootstrap */
   font-weight: bold;
 }
@@ -280,22 +239,10 @@ font-weight: bold;
 .text-danger {
   color: #dc3545; /* Rouge Bootstrap */
   font-weight: bold;
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
 }
 
 /* Style du bouton de fermeture */
 .modal-footer .btn-secondary {
-<<<<<<< HEAD
-background-color: #6c757d; 
-border: none;
-}
-
-.modal-footer .btn-secondary:hover {
-background-color: #5a6268;
-} 
-
-
-=======
   background-color: #6c757d; 
   border: none;
 }
@@ -305,4 +252,3 @@ background-color: #5a6268;
 } 
 
  
->>>>>>> bdb30c3d3e0e2adbbea3d65679ef4d2e5d291aeb
