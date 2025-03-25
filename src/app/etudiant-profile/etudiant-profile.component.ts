@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class EtudiantProfileComponent implements OnInit {
   etudiantForm!: FormGroup;
   etudiant: any = {};
+  carteBloquee: boolean = false;  // Variable pour gérer l'état de la carte
   constructor(private userService: UserService, private fb: FormBuilder, private router: Router) {}
 
 
@@ -52,11 +53,14 @@ export class EtudiantProfileComponent implements OnInit {
       );
     }
   }
-  bloquerCarte() {
-    if (confirm("Voulez-vous vraiment bloquer la carte de cet étudiant ?")) {
-      alert("Carte bloquée avec succès !");
-      // Ajoute ici l'appel à ton service si nécessaire
-    }
+  bloquerCarte(): void {
+    // Appel à l'API pour bloquer la carte
+    this.userService.bloquerCarte().subscribe(response => {
+      // Si la carte est bien bloquée, mettre à jour l'état
+      this.carteBloquee = true;
+    }, error => {
+      console.error('Erreur lors du blocage de la carte', error);
+    });
   }
   retournerDashboard() {
     this.router.navigate(['/dashboard-etudiant']); // Redirige vers le Dashboard

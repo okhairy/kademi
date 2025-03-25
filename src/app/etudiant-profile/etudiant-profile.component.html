@@ -38,7 +38,22 @@
   
       <!-- Boutons -->
       <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-danger" (click)="bloquerCarte()">Bloquer Carte</button>
+        <!-- Bouton Bloquer la carte -->
+  <div class="mt-4">
+    <button 
+      *ngIf="!carteBloquee" 
+      (click)="bloquerCarte()" 
+      class="btn btn-danger">
+      Bloquer la carte
+    </button>
+
+    <button 
+      *ngIf="carteBloquee" 
+      class="btn btn-secondary" 
+      disabled>
+      Carte bloquée
+    </button>
+  </div>
         <button type="submit" class="btn btn-primary">Modifier</button>
       </div>
     </form>

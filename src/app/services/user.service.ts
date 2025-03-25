@@ -90,6 +90,15 @@ export class UserService {
     return this.http.put(`${this.apiUrl}/etudiant/${id}`, data, { headers });
     
   }
+   // Appel pour bloquer la carte
+   bloquerCarte(): Observable<any> {
+    const token = localStorage.getItem('token'); // Récupérer le token stocké
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.patch(`${this.apiUrl}/etudiant/bloquer-carte`, {}, { headers });
+  }
   
   
 }
