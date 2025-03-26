@@ -11,6 +11,8 @@
       </div>
       <img [src]="utilisateur.photo || 'assets/etudiant.png'" alt="Photo de profil" class="rounded-circle" width="40" height="40">
     </div>
+     
+     
 
     <!-- Cartes récapitulatives -->
     <div class="row g-3">
@@ -26,6 +28,10 @@
           </div>
         </div>
       </div>
+
+    <!-- Composant de modification des informations de l'étudiant -->
+   <!--  <app-modifier-etudiant *ngIf="isSettingsOpen" [utilisateur]="utilisateur" (close)="isSettingsOpen = false"></app-modifier-etudiant> -->
+
       
      
       <div class="col-md-4">
@@ -141,3 +147,7 @@
     }, 500); // Délai pour éviter que l'événement ne s'attache pas
   });
 </script>
+
+
+
+

@@ -24,5 +24,14 @@ export class EtudiantService {
     const url = `${this.baseUrl}/etudiant/retrait`;
     return this.http.post<any>(url, { uid_carte: uidCarte });
   }
-  
+  // Récupérer les informations de l'étudiant par ID
+  getEtudiant(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/etudiant/${id}`);
+    
+  }
+
+  // Mettre à jour les informations de l'étudiant
+  updateEtudiant(id: number, data: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/etudiant/${id}`, data);
+  }
 }

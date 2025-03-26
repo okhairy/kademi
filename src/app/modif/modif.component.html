@@ -1,0 +1,47 @@
+<div class="header">
+  <img src="/assets/banniere.png" alt="Bannière" class="banner-img">
+</div>
+
+<!-- Vérification que etudiant existe avant d'afficher -->
+<div class="form-container mx-auto">
+  <div class="d-flex align-items-center mb-4 justify-content-center" *ngIf="etudiant">
+    <img src="https://via.placeholder.com/80" alt="Profil" class="rounded-circle me-3 profile-img">
+    <div>
+      <h5 class="mb-1">{{ etudiant.prenom || 'Prénom' }} {{ etudiant.nom || 'Nom' }}</h5>
+      <p class="text-muted mb-0">{{ etudiant.email || 'Email' }}</p>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4" *ngIf="etudiant">
+    <div class="col-md-6">
+      <label class="form-label">Prénom</label>
+      <input type="text" [(ngModel)]="etudiant.prenom" class="form-control" [disabled]="!isEditing">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Nom</label>
+      <input type="text" [(ngModel)]="etudiant.nom" class="form-control" [disabled]="!isEditing">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Email</label>
+      <input type="email" [(ngModel)]="etudiant.email" class="form-control" [disabled]="!isEditing">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Téléphone</label>
+      <input type="text" [(ngModel)]="etudiant.telephone" class="form-control" [disabled]="!isEditing">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Numéro de dossier</label>
+      <input type="text" [(ngModel)]="etudiant.numero_de_dossier" class="form-control" [disabled]="!isEditing">
+    </div>
+  </div>
+
+  <a href="#" class="text-primary mb-4 d-block">Réinitialiser mon mot de passe</a>
+
+ <!--  <div class="d-flex justify-content-between">
+    <button class="btn btn-danger">Bloquer sa carte</button>
+    <button class="btn btn-primary" (click)="isEditing ? enregistrer() : modifier()">
+      {{ isEditing ? 'Enregistrer' : 'Modifier' }}
+    </button>
+    <button class="btn btn-outline-danger" routerLink="/dashboard">Retour au dashboard</button>
+  </div> -->
+  

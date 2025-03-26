@@ -7,6 +7,7 @@ import { EtudiantService } from '../services/etudiant.service';
 
 @Component({
   selector: 'app-vigile-resto',
+  standalone:true,
   imports: [CommonModule],
   templateUrl: './vigile-resto.component.html',
   styleUrl: './vigile-resto.component.css'

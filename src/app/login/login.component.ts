@@ -7,9 +7,10 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login', // ✅ Indique que c'est un Standalone Component
+    standalone:true,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    imports: [CommonModule, ReactiveFormsModule] // ✅ Importer ici ReactiveFormsModule
+    imports: [CommonModule, ReactiveFormsModule,NgIf] // ✅ Importer ici ReactiveFormsModule
 })
 export class LoginComponent {
   loginForm: FormGroup;

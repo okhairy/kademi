@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'app-depot',
+    standalone:true,
     imports: [CommonModule, SidebarEtudiantComponent, FormsModule],
     templateUrl: './depot.component.html',
     styleUrl: './depot.component.css'

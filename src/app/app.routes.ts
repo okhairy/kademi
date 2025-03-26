@@ -11,6 +11,9 @@ import { DepotComponent } from './depot/depot.component';
 import { DashboardVigileComponent } from './dashboard-vigile/dashboard-vigile.component';
 import { VigileRestoComponent } from './vigile-resto/vigile-resto.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ModifierEtudiantComponent } from './modifier-etudiant/modifier-etudiant.component';
+import { ModifComponent } from './modif/modif.component';
+import { EtudiantProfileComponent } from './etudiant-profile/etudiant-profile.component';
 
 
 export const routes: Routes = [
@@ -27,5 +30,8 @@ export const routes: Routes = [
     { path: 'vigile', component: DashboardVigileComponent },
     { path: 'vigile-resto', component: VigileRestoComponent },
     { path: 'change/:token', component: ChangePasswordComponent },
+    { path: 'ModifierEtudiant', component: ModifierEtudiantComponent },
+    { path: 'modif', component: ModifComponent },
+    { path: 'modifprofile', component: EtudiantProfileComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
   ];

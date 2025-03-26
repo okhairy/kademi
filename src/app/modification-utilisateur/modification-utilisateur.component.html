@@ -50,58 +50,26 @@
       </div>
     </div>
 
-      <div class="input-group">
-        <label>Téléphone *</label>
-        <input type="text" formControlName="telephone">
-      </div>
-
-      <div class="input-group">
-        <label>Rôle *</label>
-        <select formControlName="role">
-          <option value="etudiant">Étudiant</option>
-          <option value="vigile">Vigile</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-
-      <div *ngIf="userForm.get('role')?.value === 'etudiant'">
-        <div class="input-group">
-          <label>Numéro de Dossier *</label>
-          <input type="text" formControlName="numeroDossier">
-        </div>
-        <div class="input-group">
-          <label>Photo</label>
-          <input type="file" formControlName="photo">
-        </div>
-      </div>
-
-      <div *ngIf="userForm.get('role')?.value === 'vigile'">
-        <div class="input-group">
-          <label>Lieu *</label>
-          <input type="text" formControlName="lieu">
-        </div>
-      </div>
-
-      <div class="button-group">
-        <button type="submit" class="btn btn-primary" (click)="modifierUtilisateur()">Modifier</button>
-        <button type="button" (click)="close()">Annuler</button>
-      </div>
-    </form>
+    <div class="button-group">
+      <button type="submit" class="btn btn-primary" (click)="modifierUtilisateur()">Modifier</button>
+      <button type="button" (click)="close()">Annuler</button>
+    </div>
+  </form>
 </div>
 <!-- Modal de confirmation -->
-<div id="confirmationModal" class="modal fade" tabindex="-1" aria-labelledby="modalLabel">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalLabel">Confirmation</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-        </div>
-        <div class="modal-body">
-          <p [ngClass]="{'text-success': isSuccess, 'text-danger': !isSuccess}">{{ message }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-        </div>
+<div id="confirmationModal" class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <p [ngClass]="{'text-success': isSuccess, 'text-danger': !isSuccess}">{{ message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
       </div>
     </div>
   </div>
+</div>
