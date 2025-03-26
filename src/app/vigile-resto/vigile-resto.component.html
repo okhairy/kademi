@@ -4,7 +4,7 @@
       <button (click)="logout()" class="btn btn-danger btn-sm">Déconnexion</button>
     </div>
   
-    <div class="container-fluid mt-3" *ngIf="!etudiantData">
+    <div class="container-fluid mt-3" *ngIf="accessMessage === ''">
       <div class="row">
         <!-- Section Météo -->
         <div class="col-md-6" hight="1000px">
@@ -34,9 +34,11 @@
       </div>
     </div>
 
-    <div class="modal-overlay" *ngIf="etudiantData">
+    <div class="modal-overlay" *ngIf="accessMessage !== ''">
       <div class="modal-content">
-        <div class="student-info-container d-flex align-items-center">
+        <div class="student-info-container d-flex align-items-center" >
+
+          <ng-container *ngIf="etudiantData; else errorTemplate">
           <!-- Photo à gauche -->
           <img src="assets/etudiant.png" alt="Photo étudiant" class="profile-img">
           <!-- Infos à droite -->
@@ -50,11 +52,26 @@
             <p [ngClass]="{'text-success': accessMessage === 'Retrait effectué avec succès', 'text-danger': accessMessage !== 'Retrait effectué avec succès'}">
               {{ accessMessage }}
             </p>
+
+          
+
+            <!-- Si erreur, afficher un message d'erreur -->
+      
             <!-- Boutons d'action -->
             <div class="action-buttons">
               <button class="btn btn-danger" (click)="closeModal()">Fermer</button>
             </div>
           </div>
+          </ng-container>
+          <ng-template #errorTemplate>
+            <div class="student-details text-center">
+              <p class="text-danger"><strong>Erreur :</strong> {{ accessMessage }}</p>
+            </div>
+            <div class="action-buttons">
+              <button class="btn btn-danger" (click)="closeModal()">Fermer</button>
+            </div>
+          </ng-template>
+
         </div>
       </div>
     </div>

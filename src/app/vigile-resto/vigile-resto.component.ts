@@ -41,21 +41,29 @@ export class VigileRestoComponent implements OnInit{
       {
         const scannedCard = event.data;
       console.log('Carte scannée:', scannedCard);
-      this.checkAccess(scannedCard);
+      this.checkAccess(scannedCard, ws);
     }
   }}
 
-  checkAccess(uidCarte: string): void {
+  checkAccess(uidCarte: string, ws: WebSocket): void {
     this.etudiantService.checkAccesResto(uidCarte).subscribe(
       (data) => {
         this.etudiantData = data.etudiant;
         this.accessMessage = data.message; // Assurez-vous que l'API renvoie un champ 'message'
         this.transactions = data.transaction;
         console.log('Accès vérifié:', data);
+        console.log('message de lapi:', data.message);
+
+        // Envoyer "OK" ou "NO" au serveur WebSocket
+        const responseMessage = this.accessMessage === 'Retrait effectué avec succès' ? "OK" : "NO";
+        ws.send(responseMessage);
+        console.log('Message envoyé au serveur WebSocket:', responseMessage);
       },
       (error) => {
         console.error('Erreur lors de la vérification de l\'accès', error);
         this.accessMessage = 'Erreur lors de la vérification de l\'accès.';
+        const responseMessage = "NO";
+        ws.send(responseMessage);
       }
     );
   }

@@ -31,6 +31,19 @@ const wss = new WebSocket.Server({ port: 3004 });
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  connectedClient = ws; // Sauvegarde du client WebSocket connecté
+
+  ws.on('message', (message) => {
+    console.log('Réponse reçue du client WebSocket:', message);
+
+    // Envoi de la réponse à l'Arduino
+    port.write(message + '\n', (err) => {
+        if (err) {
+            return console.error('Erreur d\'envoi à l\'Arduino:', err.message);
+        }
+        console.log(`Message envoyé à l'Arduino: ${message}`);
+    });
+});
 
   ws.on('close', () => {
     console.log('Client disconnected');
