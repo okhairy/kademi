@@ -35,7 +35,7 @@
     <div *ngIf="userForm.get('role')?.value === 'etudiant'">
       <div class="input-group">
         <label>Numéro de Dossier *</label>
-        <input type="text" formControlName="numeroDossier">
+        <input type="text" formControlName="numero_de_dossier">
       </div>
       <div class="input-group">
         <label>Photo</label>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="button-group">
-      <button type="submit" class="btn btn-primary" (click)="modifierUtilisateur()">Modifier</button>
+      <button type="submit" class="btn btn-primary">Modifier</button>
       <button type="button" (click)="close()">Annuler</button>
     </div>
   </form>
@@ -65,10 +65,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
       </div>
       <div class="modal-body">
-        <p [ngClass]="{'text-success': isSuccess, 'text-danger': !isSuccess}">{{ message }}</p>
+        <p [class.text-success]="isSuccess" [class.text-danger]="!isSuccess">{{ message }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="fermerModal()">Fermer</button>
       </div>
     </div>
   </div>

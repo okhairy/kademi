@@ -166,6 +166,7 @@
     
     <app-modification-utilisateur *ngIf="userToEdit"
     [userId]="userToEdit.id"
+    [userRole]="userToEdit.role"
     (closeEdit)="closeEditUserModal()">
   </app-modification-utilisateur>
   

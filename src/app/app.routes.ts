@@ -14,6 +14,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ModifierEtudiantComponent } from './modifier-etudiant/modifier-etudiant.component';
 import { ModifComponent } from './modif/modif.component';
 import { EtudiantProfileComponent } from './etudiant-profile/etudiant-profile.component';
+import { ChangeMyPwdComponent } from './change-my-pwd/change-my-pwd.component';
 
 
 export const routes: Routes = [
@@ -33,5 +34,6 @@ export const routes: Routes = [
     { path: 'ModifierEtudiant', component: ModifierEtudiantComponent },
     { path: 'modif', component: ModifComponent },
     { path: 'modifprofile', component: EtudiantProfileComponent },
+    { path: 'myaccount', component: ChangeMyPwdComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
   ];

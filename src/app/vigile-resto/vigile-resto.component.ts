@@ -4,6 +4,7 @@ import { MeteoService } from '../services/meteo.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EtudiantService } from '../services/etudiant.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vigile-resto',
@@ -62,9 +63,14 @@ export class VigileRestoComponent implements OnInit{
       },
       (error) => {
         console.error('Erreur lors de la vérification de l\'accès', error);
-        this.accessMessage = 'Erreur lors de la vérification de l\'accès.';
         const responseMessage = "NO";
         ws.send(responseMessage);
+        Swal.fire({
+          title: 'Erreur',
+          text: error || 'Erreur lors de la vérification de l\'accès',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
     );
   }

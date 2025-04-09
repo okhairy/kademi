@@ -19,6 +19,7 @@ declare var bootstrap: any;
 })
 export class ModificationUtilisateurComponent implements OnInit {
   @Input() userId!: string;
+  @Input() userRole!: string;
   @Output() closeEdit = new EventEmitter<void>();
 
   userForm!: FormGroup;
@@ -35,6 +36,7 @@ export class ModificationUtilisateurComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private cdRef: ChangeDetectorRef,
     private modalService: NgbModal
   ) {}
 
@@ -43,8 +45,8 @@ export class ModificationUtilisateurComponent implements OnInit {
   ngOnInit(): void {
     const id = this.userId || this.route.snapshot.paramMap.get('id');
     
-    if (id) {
-      this.chargerUtilisateur(id);
+    if (id && this.userRole) {
+      this.chargerUtilisateur(id, this.userRole);
       
     }
 
@@ -54,17 +56,18 @@ export class ModificationUtilisateurComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telephone: ['', Validators.required],
       role: ['', Validators.required],
-      numeroDossier: [''],
+      numero_de_dossier: [''],
       photo: [''],
       lieu: ['']
     });
   }
 
-  chargerUtilisateur(id: string) {
-    this.userService.getUtilisateur(id).subscribe(
+  chargerUtilisateur(id: string, role: string) {
+    this.userService.getUtilisateur(id, role).subscribe(
       (data) => {
         this.utilisateur = data;
         this.userForm.patchValue(data);
+        console.log('Utilisateur chargé :', this.utilisateur);
       },
       (error) => {
         console.error('Erreur lors du chargement de l’utilisateur', error);
@@ -78,10 +81,12 @@ export class ModificationUtilisateurComponent implements OnInit {
         .subscribe(
           () => {
             this.message = 'Utilisateur modifié avec succès !';
+            this.isSuccess = true; 
             this.ouvrirModal(); // Ouvrir le modal après la modification réussie
           },
           (error) => {
             this.message = 'Erreur lors de la modification. Veuillez réessayer.';
+            this.isSuccess = false;
             this.ouvrirModal(); // Ouvrir le modal en cas d'erreur
             console.error('Erreur lors de la modification', error);
           }
@@ -90,10 +95,25 @@ export class ModificationUtilisateurComponent implements OnInit {
   }
 
   ouvrirModal() {
-    let modalElement = document.getElementById('confirmationModal');
-    let modal = new bootstrap.Modal(modalElement);
-    modal.show();
+    this.cdRef.detectChanges();
+
+    const modalElement = document.getElementById('confirmationModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+    this.closeEdit.emit(); // Déplacez cette ligne après l'ouverture du modal
   }
+
+  fermerModal() {
+    const modalElement = document.getElementById('confirmationModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
+  }  
   
     close() {
       this.closeEdit.emit(); 

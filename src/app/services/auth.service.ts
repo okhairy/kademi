@@ -226,4 +226,20 @@ export class AuthService {
       });
     }
   }
+
+  changePassword(data: { ancien_password: string, nouveau_password: string, nouveau_password_confirmation: string }): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      return from(this.axiosInstance.patch('/change-mdp', data, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }));
+    } else {
+      return new Observable(observer => {
+        observer.error(new Error('No token found'));
+      });
+    }
+  }
 }

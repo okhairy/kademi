@@ -26,8 +26,8 @@ export class UserService {
     return this.http.get<any[]>(this.apiUrl);
   }
    // Récupérer un utilisateur spécifique par ID
-  getUtilisateur(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/utilisateurs/${id}`);
+  getUtilisateur(id: string, role: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/utilisateurs/${id}/${role}`);
   }
 
   // Modifier un utilisateur existant
