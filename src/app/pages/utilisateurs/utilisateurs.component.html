@@ -172,4 +172,5 @@
   </div>
 </div>
 <!-- Modal de scan de carte -->
-<app-scan-carte-modal *ngIf="showScanCarteModal" [user]="selectedUser" (close)="closeScanCarteModal()"></app-scan-carte-modal>
+<app-scan-carte-modal *ngIf="showScanCarteModal" [user]="selectedUser" (close)="closeScanCarteModal()" (carteAssignee)="onCarteAssignee()"></app-scan-carte-modal>
+<!-- Dans votre composant parent HTML -->

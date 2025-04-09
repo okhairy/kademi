@@ -5,7 +5,7 @@ import Chart from 'chart.js/auto';
 import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
-import { ModifComponent } from "../modif/modif.component";
+
 import { Modal } from 'bootstrap';
 declare var bootstrap: any; // Pour utiliser Bootstrap JS
 
@@ -19,7 +19,7 @@ interface Expense {
 @Component({
     selector: 'app-dashboard-etudiant',
     standalone: true,
-    imports: [CommonModule, SidebarEtudiantComponent, NgxPaginationModule, ModifComponent],
+    imports: [CommonModule, SidebarEtudiantComponent, NgxPaginationModule],
     templateUrl: './dashboard-etudiant.component.html',
     styleUrl: './dashboard-etudiant.component.css'
 })

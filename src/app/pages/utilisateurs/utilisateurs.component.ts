@@ -9,7 +9,7 @@ import { ModificationUtilisateurComponent } from "../../modification-utilisateur
 import { UserService } from '../../services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { ScanCarteModalComponent } from '../../scan-carte-modal/scan-carte-modal.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
@@ -315,18 +315,49 @@ assignerCarte(user: any) {
 }
 
 // Méthode pour désassigner une carte d'un utilisateur
+// Méthode pour désassigner une carte d'un utilisateur
 desassignerCarte(user: any) {
-  // Appelle ton service pour désassigner la carte
-  this.userservice.desassignerCarte(user.id).subscribe(response => {
-    this.showMessageModal = true;
-    this.message = "Carte désassignée avec succès!";
-    this.isSuccess = true;
-    user.assignation = 'Non assigné'; // Mise à jour de l'état de l'utilisateur
-  }, error => {
-    this.showMessageModal = true;
-    this.message = "Erreur lors de la désassignation de la carte.";
-    this.isSuccess = false;
+  // Confirmation avant désassignation (facultatif)
+  Swal.fire({
+    title: 'Désassigner la carte',
+    text: 'Êtes-vous sûr de vouloir désassigner la carte de cet étudiant ?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Oui',
+    cancelButtonText: 'Non',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Appelle ton service pour désassigner la carte
+      this.userservice.desassignerCarte(user.id).subscribe({
+        next: (response) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Carte désassignée avec succès!',
+            text: 'La carte RFID a été désassignée de l\'étudiant.',
+          }).then(() => {
+            // Rafraîchir la page après la désassignation
+            window.location.reload();
+          });
+          
+          user.assignation = 'Non assigné'; // Mise à jour de l'état de l'utilisateur
+        },
+        error: (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: "Erreur lors de la désassignation de la carte : " + (error.error?.message || error.message || 'Erreur inconnue'),
+          });
+        }
+      });
+    }
   });
+}
+
+// Ajouter cette méthode pour gérer l'événement d'assignation réussie
+onCarteAssignee() {
+  console.log("🔄 La carte a été assignée, rafraîchissement des données...");
+  // Vous pouvez aussi mettre à jour vos données ici au lieu de recharger toute la page
+  // Par exemple, récupérer à nouveau la liste des utilisateurs depuis votre API
 }
 
 

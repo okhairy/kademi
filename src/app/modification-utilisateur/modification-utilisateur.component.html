@@ -26,7 +26,7 @@
     <div class="input-group">
       <label>Rôle *</label>
       <select formControlName="role">
-        <option value="etudiant">Étudiant</option>
+        <option value="etudiant">etudiant</option>
         <option value="vigile">Vigile</option>
         <option value="admin">Admin</option>
       </select>
@@ -35,7 +35,7 @@
     <div *ngIf="userForm.get('role')?.value === 'etudiant'">
       <div class="input-group">
         <label>Numéro de Dossier *</label>
-        <input type="text" formControlName="numeroDossier">
+        <input type="text" formControlName="numero_de_dossier">
       </div>
       <div class="input-group">
         <label>Photo</label>

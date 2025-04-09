@@ -54,7 +54,7 @@ export class ModificationUtilisateurComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telephone: ['', Validators.required],
       role: ['', Validators.required],
-      numeroDossier: [''],
+      numero_de_dossier: [''],
       photo: [''],
       lieu: ['']
     });

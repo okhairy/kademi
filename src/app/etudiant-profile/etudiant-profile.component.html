@@ -37,23 +37,23 @@
       </div>
   
       <!-- Boutons -->
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-end gap-2 mt-4">
         <!-- Bouton Bloquer la carte -->
-  <div class="mt-4">
-    <button 
-      *ngIf="!carteBloquee" 
-      (click)="bloquerCarte()" 
-      class="btn btn-danger">
-      Bloquer la carte
-    </button>
-
-    <button 
-      *ngIf="carteBloquee" 
-      class="btn btn-secondary" 
-      disabled>
-      Carte bloquée
-    </button>
-  </div>
+        <button 
+          *ngIf="!carteBloquee" 
+          (click)="bloquerCarte()" 
+          class="btn btn-danger">
+          Bloquer la carte
+        </button>
+  
+        <button 
+          *ngIf="carteBloquee" 
+          class="btn btn-secondary" 
+          disabled>
+          Carte bloquée
+        </button>
+  
+        <!-- Bouton Modifier -->
         <button type="submit" class="btn btn-primary">Modifier</button>
       </div>
     </form>
@@ -61,6 +61,6 @@
     <!-- Lien de réinitialisation -->
     <a href="#" class="text-primary mt-3 d-block">Réinitialiser mon mot de passe</a>
     <!-- Bouton de retour -->
-  <button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
+    <button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
   </div>
   
