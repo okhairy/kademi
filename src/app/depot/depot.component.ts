@@ -92,12 +92,17 @@ export class DepotComponent implements OnInit {
     }
   }
 
+
   ouvrirDepotModal(): void {
-    this.fermerModals(); // Ferme tous les modals ouverts avant d'en ouvrir un autre
-    if (this.modalDepot) {
-      this.modalDepot.show();
+    this.fermerModals(); // Assure que tout est propre
+    const modalElement = document.getElementById('depotModal');
+    if (modalElement) {
+      const modal = new (window as any).bootstrap.Modal(modalElement);
+      modal.show();
     }
   }
+  
+
   ouvrirMontantDepotModal(): void {
     this.fermerModals(); // Ferme les autres modals avant d'ouvrir le nouveau
     if (this.modalMontantDepot) {
@@ -128,22 +133,14 @@ choisirOperateur(operateur: string): void {
   
   
   fermerModals(): void {
-    if (this.modalNumeroDepot) {
-      this.modalNumeroDepot.hide();
-    }
-    if (this.modalDepot) {
-      this.modalDepot.hide();
-    }
-    if (this.modalMontantDepot) { // Ajout de la fermeture du modal de montant
-      this.modalMontantDepot.hide();
-    }
-    if (this.modalSaisieNumero) this.modalSaisieNumero.hide();
-
-    // Supprimer les backdrops bloqués
-    const backdrops = document.querySelectorAll('.modal-backdrop');
-    backdrops.forEach(backdrop => backdrop.remove());
-
-    // Retirer la classe qui empêche de scroller après fermeture
+    document.querySelectorAll('.modal.show').forEach(modal => {
+      (window as any).bootstrap.Modal.getInstance(modal)?.hide();
+    });
+  
+    // Supprimer les backdrops
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+  
+    // Réactiver le scroll
     document.body.classList.remove('modal-open');
   }
 
@@ -168,13 +165,17 @@ choisirOperateur(operateur: string): void {
   }
   validerNumero(): void {
     const regexOperateurs = {
-      'Orange Money': /^(77|78)\d{7}$/, // Orange : 77xxxxxxx ou 78xxxxxxx
-      'Wave': /^(76)\d{7}$/, // Wave : 76xxxxxxx
-      'Free Money': /^(70|75)\d{7}$/ // Free : 70xxxxxxx ou 75xxxxxxx
+      'orange': /^(77|78)\d{7}$/, // Orange : 77xxxxxxx ou 78xxxxxxx
+      'wave': /^(76|77|78)\d{7}$/, // Wave : 76xxxxxxx
+      'free': /^(70|75)\d{7}$/ // Free : 70xxxxxxx ou 75xxxxxxx
     } as const; 
-  
+    
+    console.log("Numero saisi :", this.numeroSaisi);
     this.numeroValide = regexOperateurs[this.operateurChoisi as keyof typeof regexOperateurs]?.test(this.numeroSaisi) ?? false;
   }
+
+  
+  
 
   effectuerDepot(): void {
     if (!this.utilisateur || !this.utilisateur.id) {
@@ -198,7 +199,9 @@ choisirOperateur(operateur: string): void {
         console.error("Erreur lors du dépôt :", error);
       }
     );
+  
   }
+  
   
   
 }

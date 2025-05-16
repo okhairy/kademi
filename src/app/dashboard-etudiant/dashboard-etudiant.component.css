@@ -2,7 +2,11 @@
 .dashboard-container {
     display: flex;
     height: 100vh;
+    margin-left: 250px; /* même largeur que le sidebar */
+    padding: 20px;
 }
+
+
 
   .logo {
     font-size: 18px;

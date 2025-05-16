@@ -1,11 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import Swal from 'sweetalert2';
-
-
 
 @Component({
   selector: 'app-scan-carte-modal',
@@ -13,20 +11,21 @@ import Swal from 'sweetalert2';
   imports: [CommonModule, FormsModule],
   templateUrl: './scan-carte-modal.component.html',
   styleUrls: ['./scan-carte-modal.component.css']
-})export class ScanCarteModalComponent {
+})
+export class ScanCarteModalComponent {
   @Input() user: any;  // L'utilisateur sélectionné
   @Output() close = new EventEmitter<void>();
+  @Output() carteAssignee = new EventEmitter<void>(); // Nouvel émetteur pour signaler l'assignation réussie
 
   cardUid: string = '';
   isCardScanned: boolean = false;
   errorMessage: string | null = null; // Variable pour stocker les messages d'erreur
   private socket: WebSocket | null = null;
 
-  constructor() {
+  constructor(private http: HttpClient) { // Injecter HttpClient
     this.connectToWebSocket();
   }
 
-  // Connexion au WebSocket
   // Connexion au WebSocket
   connectToWebSocket() {
     this.socket = new WebSocket('ws://localhost:8081');
@@ -55,37 +54,24 @@ import Swal from 'sweetalert2';
         this.isCardScanned = true;    // Mettre à jour isCardScanned
         console.log("🟢 Carte scannée :", this.cardUid);
         
-        // Demander à l'utilisateur si la carte doit être assignée
-        this.confirmerAssignerCarte();
+        // Assigner directement la carte sans demander confirmation
+        this.assignerCarte();
       } else {
         console.error("❌ Donnée reçue invalide :", rawData);
       }
     };
+
+    this.socket.onerror = (error) => {
+      console.error("❌ Erreur WebSocket:", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur de connexion',
+        text: 'Impossible de se connecter au serveur WebSocket.',
+      });
+    };
   }
 
-  // Demander à l'utilisateur si la carte doit être assignée
-  confirmerAssignerCarte() {
-    Swal.fire({
-      title: 'Carte scannée',
-      text: `La carte ${this.cardUid} a été scannée. Voulez-vous l\'assigner à l\'étudiant ?`,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Oui',
-      cancelButtonText: 'Non',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.assignerCarte(); // Si l'utilisateur confirme, on assigne la carte
-      } else {
-        Swal.fire({
-          icon: 'info',
-          title: 'Action annulée',
-          text: 'La carte n\'a pas été assignée.',
-        });
-      }
-    });
-  }
-
-  // Envoyer la carte scannée à Laravel
+  // Envoyer la carte scannée à Laravel en utilisant HttpClient
   assignerCarte() {
     // Réinitialiser le message d'erreur
     this.errorMessage = null;
@@ -113,75 +99,103 @@ import Swal from 'sweetalert2';
     }
 
     const url = `http://127.0.0.1:8000/api/assigner-carte/${studentId}`;
-    
     const body = { uid_carte: this.cardUid };
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
+    // En-têtes pour aider avec CORS
+    const httpOptions = {
+      headers: new HttpHeaders({
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then(response => {
-        console.log("Réponse brute :", response);
+        'Accept': 'application/json'
+      })
+    };
 
-        // Vérifier le type de contenu de la réponse
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          // Si c'est du JSON, on le traite comme tel
-          if (!response.ok) {
-            return response.json().then(errorData => {
-              throw new Error(errorData.message || 'Erreur inconnue');
+    console.log("📤 Envoi de la requête à", url, "avec les données", body);
+
+    // Utiliser HttpClient au lieu de fetch
+    this.http.post(url, body, httpOptions)
+      .subscribe({
+        next: (response: any) => {
+          console.log("✅ Réponse Laravel :", response);
+          
+          // Afficher un message de succès
+          Swal.fire({
+            icon: 'success',
+            title: 'Carte assignée avec succès!',
+            text: 'La carte RFID a été correctement assignée à l\'étudiant.',
+          }).then(() => {
+            // Émettre l'événement pour indiquer que la carte a été assignée
+            this.carteAssignee.emit();
+            
+            // Fermer le modal
+            this.closeModal();
+            
+            // Rafraîchir la page
+            window.location.reload();
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error("❌ Erreur :", error);
+          
+          // Traiter spécifiquement l'erreur 422 (Unprocessable Entity) - carte déjà assignée
+          if (error.status === 422) {
+            let message = 'Cette carte est déjà assignée à un utilisateur.';
+            
+            // Extraire le message d'erreur spécifique si disponible
+            if (error.error && typeof error.error === 'object') {
+              if (error.error.message) {
+                message = error.error.message;
+              } else if (error.error.errors && error.error.errors.uid_carte) {
+                message = error.error.errors.uid_carte[0];
+              }
+            }
+            
+            Swal.fire({
+              icon: 'warning',
+              title: 'Carte déjà assignée',
+              text: message,
+            });
+          } else {
+            // Afficher des informations détaillées pour le débogage pour les autres erreurs
+            let errorDetails = '';
+            if (error.error instanceof ErrorEvent) {
+              // Erreur côté client
+              errorDetails = `Erreur: ${error.error.message}`;
+            } else {
+              // Erreur côté serveur
+              errorDetails = `Code: ${error.status}, Message: ${error.message}`;
+              if (error.error && error.error.message) {
+                errorDetails += `, Détails: ${error.error.message}`;
+              }
+            }
+            
+            this.errorMessage = "Erreur lors de l'assignation de la carte: " + errorDetails;
+            
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: this.errorMessage,
             });
           }
-          return response.json();
-        } else {
-          // Si ce n'est pas du JSON, on traite comme du texte
-          return response.text().then(text => {
-            if (!response.ok) {
-              // Si la réponse contient du HTML, extraire un message plus précis
-              if (text.includes('<!DOCTYPE')) {
-                throw new Error('Le serveur a retourné une page HTML au lieu de JSON. Vérifiez la configuration du serveur.');
-              }
-              throw new Error(text || 'Erreur de communication avec le serveur');
-            }
-            return { success: true, message: text };
-          });
         }
-      })
-      .then(data => {
-        console.log("✅ Réponse Laravel :", data);
-        this.isCardScanned = true;
-        
-        // Afficher un message de succès
-        Swal.fire({
-          icon: 'success',
-          title: 'Carte assignée avec succès!',
-          text: 'La carte RFID a été correctement assignée à l\'étudiant.',
-        });
-      })
-      .catch(error => {
-        console.error("❌ Erreur :", error);
-        this.errorMessage = "Erreur lors de l'assignation de la carte : " + error.message;
-
-        // Afficher l'erreur avec SweetAlert
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur',
-          text: this.errorMessage,
-        });
       });
   }
 
   // Fermer le modal
   closeModal() {
+    // Fermer la connexion WebSocket si elle est active
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.close();
+      console.log("🔴 Connexion WebSocket fermée.");
+    }
+    
     this.close.emit();
+  }
+
+  // Gérer la déconnexion lors de la destruction du composant
+  ngOnDestroy() {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.close();
+      console.log("🔴 Connexion WebSocket fermée (destruction du composant).");
+    }
   }
 }
-
-  // Fermer le modal
- /*  closeModal() {
-    this.close.emit();
-  }
-} */

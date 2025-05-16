@@ -2,8 +2,11 @@
   .dashboard-container {
     display: flex;
     height: 100vh;
+    margin-left: 250px; /* même largeur que le sidebar */
+    padding: 20px;
     
 }
+
   /* Contenu principal */
   .main-content {
     flex-grow: 1;

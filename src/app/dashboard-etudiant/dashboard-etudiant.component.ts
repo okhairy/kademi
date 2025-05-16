@@ -169,5 +169,14 @@ closeModal(): void {
   }
 }
 
+get pavillon(): string {
+  return this.utilisateur?.chambre?.charAt(0) ?? 'Neant';
+}
+
+get numeroChambre(): string {
+  return this.utilisateur?.chambre?.slice(1) ?? 'Neant';
+}
+
+
 
 }

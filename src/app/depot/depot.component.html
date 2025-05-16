@@ -11,7 +11,7 @@
           <p class="numero-compte">{{ utilisateur.numero_de_dossier }}</p>
           <h2 class="montant">{{ utilisateur.solde }} F CFA</h2>
         </div>
-        <button class="btn-depot" data-bs-toggle="modal" data-bs-target="#depotModal">
+        <button class="btn-depot" data-bs-toggle="modal" (click)="ouvrirDepotModal()" >
           <i class="fas fa-upload"></i> Effectuer un dépôt
         </button>
       </div>
@@ -176,12 +176,12 @@
       </div>
       <div class="modal-body">
         <p>Veuillez entrer un numéro pour l'opérateur <strong>{{ operateurChoisi }}</strong> :</p>
-        <input type="text" class="form-control" [(ngModel)]="numeroSaisi" (input)="validerNumero()" placeholder="Entrer un numéro">
+        <input type="tel" class="form-control" [(ngModel)]="numeroSaisi" (input)="validerNumero()" placeholder="Entrer un numéro">
         <p *ngIf="numeroSaisi && !numeroValide" class="text-danger">Numéro invalide pour {{ operateurChoisi }}.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="fermerModals()">Annuler</button>
-        <button type="button" class="btn btn-primary" [disabled]="!numeroValide">Valider</button>
+        <button type="button" class="btn btn-primary" [disabled]="!numeroValide" (click)="ouvrirMontantDepotModal()">Valider</button>
       </div>
     </div>
   </div>

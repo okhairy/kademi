@@ -43,8 +43,11 @@ export class LoginComponent {
           } else 
           if (response.role === 'etudiant'){
             this.router.navigate(['/dashboard-etudiant']);
-          } else {
+          } else 
+          if (response.role === 'vigile' && response.user.lieu === 'campus') {
             this.router.navigate(['/vigile']);
+          } else {
+            this.router.navigate(['/vigile-resto']);
           }
         },
         error => {
