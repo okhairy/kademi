@@ -20,11 +20,14 @@
         <div class="card d-flex align-items-center justify-content-between text-center shadow-sm py-2 px-3" style="background-color: #0BF4C8; color: #000;">
           <div>
             <h6>Montant</h6>
-            <h4 id="montant-text">{{ utilisateur?.solde }} F CFA</h4>
+            <h4 id="montant-text">{{ montantVisible ? (utilisateur?.solde + ' F CFA') : '**** F CFA' }}</h4>
           </div>
           <div class="d-flex align-items-center">
             <img src="assets/depot.png" alt="Montant" width="50">
-            <i id="toggle-montant" class="fas fa-eye ms-2" style="cursor: pointer; font-size: 20px;"></i>
+            <i (click)="toggleMontantVisibility()" 
+               [class]="montantVisible ? 'fas fa-eye' : 'fas fa-eye-slash'" 
+               class="ms-2" 
+               style="cursor: pointer; font-size: 20px;"></i>
           </div>
         </div>
       </div>

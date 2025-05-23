@@ -168,6 +168,11 @@ closeModal(): void {
     }
   }
 }
-
+montantVisible = true;
+  
+// Ajoutez cette méthode pour basculer la visibilité
+toggleMontantVisibility() {
+  this.montantVisible = !this.montantVisible;
+}
 
 }
