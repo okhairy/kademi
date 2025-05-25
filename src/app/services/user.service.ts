@@ -99,6 +99,18 @@ export class UserService {
 
     return this.http.patch(`${this.apiUrl}/etudiant/bloquer-carte`, {}, { headers });
   }
-  
-  
+
+  // Appel pour débloquer la carte
+  debloquerCarte(): Observable<any> {
+    const token = localStorage.getItem('token'); // Récupérer le token stocké
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.patch(`${this.apiUrl}/etudiant/debloquer-carte`, {}, { headers });
+  }
 }
+  
+  
+
+
+
