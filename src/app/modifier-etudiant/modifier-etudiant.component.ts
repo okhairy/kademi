@@ -18,7 +18,7 @@ interface Student {
   standalone:true,
   imports:[CommonModule,FormsModule],
   templateUrl: './modifier-etudiant.component.html',
-  styleUrls: ['./modifier-etudiant.component.scss']
+  styleUrls: ['./modifier-etudiant.component.css']
 })
 export class ModifierEtudiantComponent implements OnInit {
   student: Student = {
