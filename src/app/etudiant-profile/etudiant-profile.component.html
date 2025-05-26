@@ -2,65 +2,106 @@
 <div class="header">
     <img src="/assets/banniere.png" alt="Bannière" class="banner-img">
   </div>
+    <!-- Affichage des alertes dynamiques -->
+    <div *ngIf="message" [ngClass]="messageType === 'success' ? 'alert alert-success' : 'alert alert-danger'" class="mt-3">
+      {{ message }}
+    </div>
+
+  <form [formGroup]="etudiantForm" (ngSubmit)="modifierEtudiant($event)">
+    <div class="mb-3">
+      <label class="form-label">Nom :</label>
+      <input type="text" class="form-control" formControlName="nom">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Prénom :</label>
+      <input type="text" class="form-control" formControlName="prenom">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email :</label>
+      <input type="email" class="form-control" formControlName="email">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Numéro de dossier :</label>
+      <input type="text" class="form-control" formControlName="numero_de_dossier">
+    </div>
+
+    <!-- Boutons -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
   
-  <div class="container mt-4">
-    <h2>Mon Profil</h2>
-  
-    <!-- Vérification que etudiant existe avant d'afficher -->
-    <div class="d-flex align-items-center mb-4 justify-content-center" *ngIf="etudiant">
-      <img src="assets/etudiant.png" alt="Profil" class="rounded-circle me-3 profile-img">
-      <div>
-        <h5 class="mb-1">{{ etudiant.prenom || 'Prénom' }} {{ etudiant.nom || 'Nom' }}</h5>
-        <p class="text-muted mb-0">{{ etudiant.email || 'Email' }}</p>
+      <button 
+      type="button" 
+      (click)="toggleCarte()" 
+      [disabled]="isProcessing" 
+      [ngClass]="carteBloquee ? 'btn-secondary' : 'btn-danger'" 
+      class="btn">
+      {{ carteBloquee ? 'Débloquer la carte' : 'Bloquer la carte' }}
+    </button>
+
+
+      <!-- Bouton Modifier -->
+      <button type="submit" class="btn btn-primary">Modifier</button>
+    </div>
+  </form>
+
+  <!-- Lien de réinitialisation -->
+  <a href="myaccount" class="text-primary mt-3 d-block">Réinitialiser mon mot de passe</a>
+  <!-- Bouton de retour -->
+<button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
+
+
+<!-- Modal pour la modification -->
+<div class="modal fade" id="modificationModal" tabindex="-1" aria-labelledby="modificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modificationModalLabel">{{ isModificationSuccess ? 'Succès' : 'Erreur' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ messageModification }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="fermerModal('modificationModal')">Fermer</button>
       </div>
     </div>
-  
-    <form [formGroup]="etudiantForm" (ngSubmit)="modifierEtudiant()">
-      <div class="mb-3">
-        <label class="form-label">Nom :</label>
-        <input type="text" class="form-control" formControlName="nom">
-      </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Prénom :</label>
-        <input type="text" class="form-control" formControlName="prenom">
-      </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Email :</label>
-        <input type="email" class="form-control" formControlName="email">
-      </div>
-  
-      <div class="mb-3">
-        <label class="form-label">Numéro de dossier :</label>
-        <input type="text" class="form-control" formControlName="numero_de_dossier">
-      </div>
-  
-      <!-- Boutons -->
-      <div class="d-flex justify-content-end gap-2 mt-4">
-        <!-- Bouton Bloquer la carte -->
-        <button 
-          *ngIf="!carteBloquee" 
-          (click)="bloquerCarte()" 
-          class="btn btn-danger">
-          Bloquer la carte
-        </button>
-  
-        <button 
-          *ngIf="carteBloquee" 
-          class="btn btn-secondary" 
-          disabled>
-          Carte bloquée
-        </button>
-  
-        <!-- Bouton Modifier -->
-        <button type="submit" class="btn btn-primary">Modifier</button>
-      </div>
-    </form>
-  
-    <!-- Lien de réinitialisation -->
-    <a href="#" class="text-primary mt-3 d-block">Réinitialiser mon mot de passe</a>
-    <!-- Bouton de retour -->
-    <button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
   </div>
-  
+</div>
+
+<!-- Modal pour le blocage -->
+<div class="modal fade" id="blocageModal" tabindex="-1" aria-labelledby="blocageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="blocageModalLabel">{{ isBlocageSuccess ? 'Succès' : 'Erreur' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ messageBlocage }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="fermerModal('blocageModal')">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour le déblocage -->
+<div class="modal fade" id="deblocageModal" tabindex="-1" aria-labelledby="deblocageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deblocageModalLabel">{{ isDeblocageSuccess ? 'Succès' : 'Erreur' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ messageDeblocage }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="fermerModal('deblocageModal')">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
