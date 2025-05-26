@@ -10,7 +10,6 @@ import { UserService } from '../../services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { ScanCarteModalComponent } from '../../scan-carte-modal/scan-carte-modal.component';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-utilisateurs',
   standalone: true,
@@ -357,6 +356,7 @@ assignerCarte(user: any) {
 }
 
 // Méthode pour désassigner une carte d'un utilisateur
+// Méthode pour désassigner une carte d'un utilisateur
 desassignerCarte(user: any) {
   // Confirmation avant désassignation (facultatif)
   Swal.fire({
@@ -379,7 +379,6 @@ desassignerCarte(user: any) {
             // Rafraîchir la page après la désassignation
             window.location.reload();
           });
-
           user.assignation = 'Non assigné'; // Mise à jour de l'état de l'utilisateur
         },
         error: (error) => {

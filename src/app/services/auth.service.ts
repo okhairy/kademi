@@ -215,7 +215,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     if (token) {
-      return from(this.axiosInstance.post(`/etudiantc/depot/${etudiantId}`, data, {
+      return from(this.axiosInstance.post(`/etudiant/depot/${etudiantId}`, data, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

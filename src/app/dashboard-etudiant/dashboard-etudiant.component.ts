@@ -5,7 +5,7 @@ import Chart from 'chart.js/auto';
 import { SidebarEtudiantComponent } from '../sidebar-etudiant/sidebar-etudiant.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
-import { ModifComponent } from "../modif/modif.component";
+
 import { Modal } from 'bootstrap';
 declare var bootstrap: any; // Pour utiliser Bootstrap JS
 
@@ -166,6 +166,7 @@ closeModal(): void {
     }
   }
 }
+<<<<<<< HEAD
 
 get pavillon(): string {
   return this.utilisateur?.chambre?.charAt(0) ?? 'Neant';
@@ -176,5 +177,13 @@ get numeroChambre(): string {
 }
 
 
+=======
+montantVisible = true;
+  
+// Ajoutez cette méthode pour basculer la visibilité
+toggleMontantVisibility() {
+  this.montantVisible = !this.montantVisible;
+}
+>>>>>>> da8422a3bb300b7bb4da10e1fd4e81432265141e
 
 }

@@ -11,8 +11,7 @@ import { DepotComponent } from './depot/depot.component';
 import { DashboardVigileComponent } from './dashboard-vigile/dashboard-vigile.component';
 import { VigileRestoComponent } from './vigile-resto/vigile-resto.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { ModifierEtudiantComponent } from './modifier-etudiant/modifier-etudiant.component';
-import { ModifComponent } from './modif/modif.component';
+
 import { EtudiantProfileComponent } from './etudiant-profile/etudiant-profile.component';
 import { ChangeMyPwdComponent } from './change-my-pwd/change-my-pwd.component';
 
@@ -33,8 +32,8 @@ export const routes: Routes = [
     { path: 'vigile', component: DashboardVigileComponent, canActivate: [authGuard] },
     { path: 'vigile-resto', component: VigileRestoComponent, canActivate: [authGuard] },
     { path: 'change/:token', component: ChangePasswordComponent },
-    { path: 'ModifierEtudiant', component: ModifierEtudiantComponent, canActivate: [authGuard] },
-    { path: 'modif', component: ModifComponent },
+   // { path: 'ModifierEtudiant', component: ModifierEtudiantComponent, canActivate: [authGuard] },
+    //{ path: 'modif', component: ModifComponent },
     { path: 'modifprofile', component: EtudiantProfileComponent, canActivate: [authGuard] },
     { path: 'myaccount', component: ChangeMyPwdComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
