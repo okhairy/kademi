@@ -46,7 +46,11 @@
     <div *ngIf="userForm.get('role')?.value === 'vigile'">
       <div class="input-group">
         <label>Lieu *</label>
-        <input type="text" formControlName="lieu">
+        <select formControlName="lieu">
+      <option value="">Sélectionner un lieu</option>
+      <option value="campus">Campus</option>
+      <option value="restaurant">Restaurant</option>
+    </select>
       </div>
     </div>
 

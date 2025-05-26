@@ -88,27 +88,35 @@ export class AddUserComponent   {
   }
 
   submitForm() {
-    if (this.userForm.valid) {
-      this.utilisateurService.ajouterUtilisateur(this.userForm.value).subscribe({
-        next: (response) => {
-          this.modalTitle = 'Inscription Réussie 🎉';
-          this.modalMessage = 'Votre inscription a été effectuée avec succès.';
-          this.openModal();
-          this.userForm.reset(); // Réinitialiser le formulaire après l'ajout
-        },
-        error: (error) => {
-          console.error('Erreur lors de l\'ajout de l\'utilisateur', error);
-          this.modalTitle = 'Inscription Échouée ❌';
-          this.modalMessage = 'Une erreur est survenue lors de l\'ajout.';
-          this.openModal();
-        }
-      });
-    } else {
-      this.modalTitle = 'Inscription Échouée ❌';
-      this.modalMessage = 'Veuillez remplir tous les champs obligatoires.';
-      this.openModal();
+  if (this.userForm.valid) {
+    this.utilisateurService.ajouterUtilisateur(this.userForm.value).subscribe({
+      next: (response) => {
+        this.userForm.reset(); // à garder ou pas selon ton besoin
+        this.closeForm.emit();
+      },
+      error: (error) => {
+  this.errors = {}; // Réinitialise les anciennes erreurs
+
+  if (error.status === 422 && error.error?.errors) {
+    for (const field in error.error.errors) {
+      if (this.userForm.get(field)) {
+        // Prend le 1er message de l'array d'erreurs
+        this.errors[field] = error.error.errors[field][0];
+      }
     }
+  } else {
+    console.error('Erreur inattendue :', error);
   }
+}
+
+    });
+  } else {
+    // Déclenche la validation front
+    Object.keys(this.userForm.controls).forEach(field => this.checkField(field));
+  }
+}
+
+
   
   openModal() {
     let modalElement = document.getElementById('inscriptionModal');

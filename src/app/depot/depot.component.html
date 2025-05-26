@@ -25,7 +25,6 @@
           <thead>
             <tr>
               <th>ID Référence</th>
-              <th>Status</th>
               <th>Date</th>
               <th>Montant</th>
               <th>Opérateur</th>
@@ -34,7 +33,6 @@
           <tbody>
             <tr *ngFor="let depot of depots">
               <td>{{ depot.id }}</td>
-              <td class="status" [class.success]="depot.status === 'Réussi'">{{ depot.status }}</td>
               <td>{{ depot.date }}</td>
               <td>{{ depot.montant }} F CFA</td>
               <td><span class="operateur">{{ depot.operateur }}</span></td>

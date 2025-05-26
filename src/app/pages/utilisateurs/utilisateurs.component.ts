@@ -24,13 +24,20 @@ export class UtilisateursComponent {
   users: any[] = []; // Déclare la propriété users
   filteredUsers: any[] = []; // Pour gérer la recherche
   selectedUser: any;
+  userRoleToBlock: string = '';
+
 
   
   
   chargerUtilisateurs() {
     this.userservice.getUtilisateurs().subscribe(users => {
+
+       // Tri du plus récent au plus ancien
+      users.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
       this.users = users; // Remplace la liste statique par les données récupérées
       this.filteredUsers = [...this.users]; // Pour la recherche
+      console.log('Liste des utilisateurs:', this.users); 
     }, error => {
       console.error('Erreur lors du chargement des utilisateurs', error);
     });
@@ -93,7 +100,7 @@ export class UtilisateursComponent {
   } 
 
   currentPage = 1;
-  usersPerPage = 5;
+  usersPerPage = 16;
   get paginatedUsers() {
     const startIndex = (this.currentPage - 1) * this.usersPerPage;
     return this.filteredUsers.slice(startIndex, startIndex + this.usersPerPage);
@@ -178,10 +185,44 @@ export class UtilisateursComponent {
     }
   }
 
+  toggleBlocage(user: any) {
+  const id = user.id;
+  const role = (user.role || 'etudiant').toLowerCase();
+
+  const action = user.statut === 'bloqué' ? 'débloquer' : 'bloquer';
+  const message = `Voulez-vous vraiment ${action} cet utilisateur ?`;
+
+  Swal.fire({
+    title: `${action.charAt(0).toUpperCase() + action.slice(1)} l'utilisateur`,
+    text: message,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Oui',
+    cancelButtonText: 'Non',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.userservice.toggleBlocage(id, role, user.statut).subscribe({
+        next: () => {
+          this.message = `Utilisateur ${action} avec succès !`;
+          this.isSuccess = true;
+          this.showMessageModal = true;
+          this.chargerUtilisateurs(); // 🔄 refresh
+        },
+        error: () => {
+          this.message = `Erreur lors de la tentative de ${action}.`;
+          this.isSuccess = false;
+          this.showMessageModal = true;
+        }
+      });
+    }
+  });
+}
+
 
   // Ouvrir/Fermer le modal de blocage
-  openBlockModal(userId: number) {
+  openBlockModal(userId: number, role: string) {
     this.userIdToBlock = userId;
+    this.userRoleToBlock = role.toLowerCase(); 
     this.showBlockModal = true;
   }
 
@@ -191,24 +232,27 @@ export class UtilisateursComponent {
   }
 
   bloquerUtilisateur() {
-    if (this.userIdToBlock !== null) {
-      this.userservice.bloquerUtilisateur(this.userIdToBlock).subscribe({
-        next: () => {
-          this.isSuccess = true;
-          this.message = "L'utilisateur a été bloqué avec succès.";
-          this.refreshUsers();
-        },
-        error: () => {
-          this.isSuccess = false;
-          this.message = "Une erreur s'est produite lors du blocage.";
-        },
-        complete: () => {
-          this.showBlockModal = false;
-          this.showMessageModal = true;
-        }
-      });
-    }
+  if (this.userIdToBlock !== null && this.userRoleToBlock) {
+    this.userservice.bloquerUtilisateur(this.userIdToBlock, this.userRoleToBlock.toLowerCase()).subscribe({
+      next: () => {
+        this.isSuccess = true;
+        this.message = "L'utilisateur a été bloqué avec succès.";
+        this.chargerUtilisateurs();
+      },
+      error: () => {
+        this.isSuccess = false;
+        this.message = "Une erreur s'est produite lors du blocage.";
+      },
+      complete: () => {
+        this.showBlockModal = false;
+        this.showMessageModal = true;
+        this.userIdToBlock = null;
+        this.userRoleToBlock = '';
+      }
+    });
   }
+}
+
 
  
 
@@ -229,6 +273,7 @@ export class UtilisateursComponent {
 
   closeAddUserModal() {
       this.showAddUserModal = false;
+      this.chargerUtilisateurs(); 
   }
 
   ajouterUtilisateur() {
@@ -260,6 +305,7 @@ openDeleteMultipleModal() {
 
 closeDeleteMultipleModal() {
   this.showDeleteMultipleModal = false;
+  this.chargerUtilisateurs(); 
 }
 
 showEditUserModal: boolean = false;
@@ -273,6 +319,11 @@ openEditUserModal(user: any) {
 closeEditUserModal() {
   this.showEditUserModal = false;
   this.userToEdit = null;
+  this.chargerUtilisateurs(); 
+
+  document.body.classList.remove('modal-open');
+  const backdrops = document.querySelectorAll('.modal-backdrop');
+  backdrops.forEach(b => b.remove());
 }
 showScanCarteModal = false;
 /* selectedUser: any; */
@@ -297,6 +348,7 @@ assignerCarte(user: any) {
     this.message = "Carte assignée avec succès!";
     this.isSuccess = true;
     user.assignation = 'Assigné'; // Mise à jour de l'état de l'utilisateur
+    this.chargerUtilisateurs(); 
   }, error => {
     this.showMessageModal = true;
     this.message = "Erreur lors de l'assignation de la carte.";
@@ -354,5 +406,6 @@ onCarteAssignee() {
 closeScanCarteModal() {
   this.showScanCarteModal = false;
   this.selectedUser = null;
+  this.chargerUtilisateurs(); 
 }
 }

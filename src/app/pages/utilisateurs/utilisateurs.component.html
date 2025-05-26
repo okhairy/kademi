@@ -64,9 +64,12 @@
               <button class="action-btn" title="Supprimer" (click)="openDeleteModal(user.id, user.role)">
                 <i class="bi bi-trash"></i>
               </button>
-              <button class="action-btn" title="Bloquer" (click)="openBlockModal(user.id)">
-                <i class="bi bi-ban"></i>
+              <button class="action-btn" 
+                      [title]="user.statut === 'bloqué' ? 'Débloquer' : 'Bloquer'"
+                      (click)="toggleBlocage(user)">
+                <i class="bi" [ngClass]="user.statut === 'bloqué' ? 'bi-unlock' : 'bi-ban'"></i>
               </button>
+
             </div>
           </td>
         </tr>

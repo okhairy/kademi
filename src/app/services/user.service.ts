@@ -35,9 +35,16 @@ export class UserService {
     return this.http.put<any>(`${this.apiUrl}/utilisateurs/${id}`, data);
   }
    // Méthode pour bloquer un utilisateur
-   bloquerUtilisateur(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/bloquer/${id}`, {});
-  }
+   bloquerUtilisateur(id: number, role: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/bloquer/${id}`, { role });
+ }
+
+ toggleBlocage(id: number, role: string, statutActuel: string): Observable<any> {
+  const endpoint = statutActuel === 'bloqué' ? 'debloquer' : 'bloquer';
+  return this.http.post(`${this.apiUrl}/${endpoint}/${id}`, { role });
+}
+
+
   supprimerUtilisateur(id: number, role: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/utilisateur/${id}/${role}`);
   }

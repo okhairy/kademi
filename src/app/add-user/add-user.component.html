@@ -2,6 +2,10 @@
   <h2 class="form-title">Inscription</h2>
 
   <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <div *ngIf="modalMessage && modalTitle.includes('Erreur')" class="general-error">
+  {{ modalMessage }}
+</div>
+
     <div class="form-group">
       <!-- Nom et Prénom -->
       <div class="input-group">

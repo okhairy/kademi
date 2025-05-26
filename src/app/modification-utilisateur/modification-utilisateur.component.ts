@@ -47,27 +47,29 @@ export class ModificationUtilisateurComponent implements OnInit {
     
     if (id && this.userRole) {
       this.chargerUtilisateur(id, this.userRole);
-      
     }
 
-    this.userForm = this.fb.group({
-      prenom: ['', Validators.required],
-      nom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telephone: ['', Validators.required],
-      role: ['', Validators.required],
-      numero_de_dossier: [''],
-      photo: [''],
-      lieu: ['']
-    });
+
   }
 
   chargerUtilisateur(id: string, role: string) {
     this.userService.getUtilisateur(id, role).subscribe(
       (data) => {
         this.utilisateur = data;
-        this.userForm.patchValue(data);
+         // Crée le formulaire AVEC les valeurs existantes
+      this.userForm = this.fb.group({
+        prenom: [data.prenom || '', Validators.required],
+        nom: [data.nom || '', Validators.required],
+        email: [data.email || '', [Validators.required, Validators.email]],
+        telephone: [data.telephone || '', Validators.required],
+        role: [data.role || '', Validators.required],
+        numero_de_dossier: [data.numero_de_dossier || ''],
+        photo: [''], // fichier non patchable, laissé vide
+        lieu: [data.lieu || ''] // initialise le lieu
+      });
         console.log('Utilisateur chargé :', this.utilisateur);
+
+        this.cdRef.detectChanges(); 
       },
       (error) => {
         console.error('Erreur lors du chargement de l’utilisateur', error);

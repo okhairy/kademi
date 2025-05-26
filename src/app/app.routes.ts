@@ -16,24 +16,26 @@ import { ModifComponent } from './modif/modif.component';
 import { EtudiantProfileComponent } from './etudiant-profile/etudiant-profile.component';
 import { ChangeMyPwdComponent } from './change-my-pwd/change-my-pwd.component';
 
+import { authGuard } from './guards/auth.guard';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirige vers /login par défaut
     { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: DashboardAdminComponent },
-    { path: 'user', component: UtilisateursComponent },
-    { path: 'historique', component: HistoriqueComponent },
+    { path: 'dashboard', component: DashboardAdminComponent, canActivate: [authGuard] },
+    { path: 'user', component: UtilisateursComponent, canActivate: [authGuard] },
+    { path: 'historique', component: HistoriqueComponent, canActivate: [authGuard] },
     { path: 'inscription', component: AddUserComponent },
     { path: 'modification/:id', component: ModificationUtilisateurComponent },
-    { path: 'dashboard-etudiant', component: DashboardEtudiantComponent },
+    { path: 'dashboard-etudiant', component: DashboardEtudiantComponent, canActivate: [authGuard] },
     { path: 'forgot', component: ForgotPasswordComponent },
-    { path: 'depot', component: DepotComponent },
-    { path: 'vigile', component: DashboardVigileComponent },
-    { path: 'vigile-resto', component: VigileRestoComponent },
+    { path: 'depot', component: DepotComponent, canActivate: [authGuard] },
+    { path: 'vigile', component: DashboardVigileComponent, canActivate: [authGuard] },
+    { path: 'vigile-resto', component: VigileRestoComponent, canActivate: [authGuard] },
     { path: 'change/:token', component: ChangePasswordComponent },
-    { path: 'ModifierEtudiant', component: ModifierEtudiantComponent },
+    { path: 'ModifierEtudiant', component: ModifierEtudiantComponent, canActivate: [authGuard] },
     { path: 'modif', component: ModifComponent },
-    { path: 'modifprofile', component: EtudiantProfileComponent },
+    { path: 'modifprofile', component: EtudiantProfileComponent, canActivate: [authGuard] },
     { path: 'myaccount', component: ChangeMyPwdComponent },
     { path: '**', redirectTo: 'login' } // Redirige toutes les routes inconnues vers /login
   ];

@@ -62,9 +62,7 @@ export class DepotComponent implements OnInit {
       (response: any) => {
         console.log("Dépôts reçus :", response);
         if (response?.data.depots) {
-          this.depots = response.data.depots.sort((a: any, b: any) => {
-            return new Date(b.date).getTime() - new Date(a.date).getTime();
-          });
+          this.depots = response.data.depots.reverse();
         }
       },
       (error) => {

@@ -15,7 +15,8 @@ export class HistoriqueComponent implements OnInit {
   transactions: any[] = [];
   searchTerm: string = '';
   currentPage = 1;
-  usersPerPage = 5;
+  usersPerPage = 16;
+  filteredUsers: any[] = [];
 
   constructor(private historiqueService: UserService) {}
 
@@ -27,7 +28,9 @@ export class HistoriqueComponent implements OnInit {
     this.historiqueService.getTransactions().subscribe(
       (data) => {
         console.log('Transactions reçues :', data); // Vérification ici
+        data.transactions.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
         this.transactions = data.transactions // Assurez-vous que c'est un tableau
+        this.filteredUsers = [...this.transactions]; // Initialiser filteredUsers
       },
       (error) => {
         console.error('Erreur lors de la récupération des transactions', error);
@@ -39,15 +42,15 @@ export class HistoriqueComponent implements OnInit {
 
   getFilteredUsers(): any[] {
     if (!this.searchTerm) {
-      return this.paginatedUsers;
+      return this.transactions;
     }
 
-    return this.paginatedUsers.filter(user =>
-      user.id.toString().includes(this.searchTerm) ||
-      user.nom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      user.prenom.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      user.role.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      user.date.includes(this.searchTerm)
+    return this.transactions.filter(transaction =>
+      transaction.id.toString().includes(this.searchTerm) ||
+      transaction.montant.toString().includes(this.searchTerm.toLowerCase()) ||
+      transaction.operateur?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      transaction.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      transaction.date.includes(this.searchTerm)
     );
   }
 
@@ -72,12 +75,13 @@ export class HistoriqueComponent implements OnInit {
   }
 
   get paginatedUsers() {
+    const filtered = this.getFilteredUsers();
     const startIndex = (this.currentPage - 1) * this.usersPerPage;
-    return this.transactions.slice(startIndex, startIndex + this.usersPerPage);
+    return filtered.slice(startIndex, startIndex + this.usersPerPage);
   }
 
   totalPages() {
-    return Math.ceil(this.transactions.length / this.usersPerPage);
+    return Math.ceil(this.getFilteredUsers().length / this.usersPerPage);
   }
 
   changePage(page: number) {

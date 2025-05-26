@@ -61,8 +61,8 @@ export class DashboardVigileComponent implements OnInit{
       (error) => {
         console.error('Erreur lors de la vérification de l\'accès', error);
         Swal.fire({
-          title: 'Erreur',
-          text: error || 'Erreur lors de la vérification de l\'accès',
+          title: 'Attention',
+          text: error.error.message || 'Erreur lors de la vérification de l\'accès',
           icon: 'error',
           confirmButtonText: 'OK'
         });
@@ -77,6 +77,7 @@ export class DashboardVigileComponent implements OnInit{
 
   logout() {
     // Ajoutez ici la logique de déconnexion si nécessaire
+    localStorage.removeItem('token'); 
     this.router.navigate(['/login']);
   }
 }

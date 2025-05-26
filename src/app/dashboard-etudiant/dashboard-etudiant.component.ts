@@ -93,9 +93,7 @@ export class DashboardEtudiantComponent implements OnInit, AfterViewInit {
     this.authService.getTransactions().subscribe(
       (data) => {
         console.log("transactions", data);
-        this.transactions = data.data.transactions.sort((a: any, b: any) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        });
+        this.transactions = data.data.transactions.reverse(); 
       },
       (error) => {
         console.error('Erreur lors du chargement des transactions', error);

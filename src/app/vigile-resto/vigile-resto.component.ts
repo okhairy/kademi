@@ -39,6 +39,7 @@ export class VigileRestoComponent implements OnInit{
     const ws = new WebSocket('ws://localhost:3004');
     ws.onmessage = (event) => {
 
+      
       if (event.data !== '') 
       {
         const scannedCard = event.data;
@@ -67,7 +68,7 @@ export class VigileRestoComponent implements OnInit{
         ws.send(responseMessage);
         Swal.fire({
           title: 'Erreur',
-          text: error || 'Erreur lors de la vérification de l\'accès',
+          text: error.error.message || 'Erreur lors de la vérification de l\'accès',
           icon: 'error',
           confirmButtonText: 'OK'
         });
