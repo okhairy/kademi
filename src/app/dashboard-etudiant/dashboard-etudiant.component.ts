@@ -166,7 +166,6 @@ closeModal(): void {
     }
   }
 }
-<<<<<<< HEAD
 
 get pavillon(): string {
   return this.utilisateur?.chambre?.charAt(0) ?? 'Neant';
@@ -177,13 +176,11 @@ get numeroChambre(): string {
 }
 
 
-=======
 montantVisible = true;
   
 // Ajoutez cette méthode pour basculer la visibilité
 toggleMontantVisibility() {
   this.montantVisible = !this.montantVisible;
 }
->>>>>>> da8422a3bb300b7bb4da10e1fd4e81432265141e
 
 }

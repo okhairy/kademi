@@ -49,20 +49,6 @@ export class ModificationUtilisateurComponent implements OnInit {
       this.chargerUtilisateur(id, this.userRole);
     }
 
-<<<<<<< HEAD
-
-=======
-    this.userForm = this.fb.group({
-      prenom: ['', Validators.required],
-      nom: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      telephone: ['', Validators.required],
-      role: ['', Validators.required],
-      numero_de_dossier: [''],
-      photo: [''],
-      lieu: ['']
-    });
->>>>>>> da8422a3bb300b7bb4da10e1fd4e81432265141e
   }
 
   chargerUtilisateur(id: string, role: string) {

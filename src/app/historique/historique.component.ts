@@ -15,7 +15,7 @@ export class HistoriqueComponent implements OnInit {
   transactions: any[] = [];
   searchTerm: string = '';
   currentPage = 1;
-  usersPerPage = 16;
+  usersPerPage = 14;
   filteredUsers: any[] = [];
 
   constructor(private historiqueService: UserService) {}

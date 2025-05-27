@@ -75,6 +75,7 @@ export class ChangePasswordComponent {
   }
 
   navigateToLogin() {
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 

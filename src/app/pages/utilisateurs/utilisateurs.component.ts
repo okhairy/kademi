@@ -99,7 +99,7 @@ export class UtilisateursComponent {
   } 
 
   currentPage = 1;
-  usersPerPage = 16;
+  usersPerPage = 12;
   get paginatedUsers() {
     const startIndex = (this.currentPage - 1) * this.usersPerPage;
     return this.filteredUsers.slice(startIndex, startIndex + this.usersPerPage);

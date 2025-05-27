@@ -28,7 +28,7 @@ export class ScanCarteModalComponent {
 
   // Connexion au WebSocket
   connectToWebSocket() {
-    this.socket = new WebSocket('ws://localhost:8081');
+    this.socket = new WebSocket('ws://localhost:3004');
 
     this.socket.onopen = () => {
       console.log("🟢 Connecté au WebSocket.");

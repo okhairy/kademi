@@ -38,6 +38,7 @@ isDeblocageSuccess: boolean = false;
     this.userService.getEtudiantConnecte().subscribe(
       (data) => {
         this.etudiant = data;
+        this.carteBloquee = true ? data.status_carte=='bloqué': false; // Utiliser le champ correct de l'API
         this.etudiantForm = this.fb.group({
           nom: [data.nom],
           prenom: [data.prenom],
@@ -76,7 +77,7 @@ isDeblocageSuccess: boolean = false;
     if (this.carteBloquee) {
       this.userService.debloquerCarte().subscribe(
         (response) => {
-          this.carteBloquee = false;
+          this.carteBloquee = false; // Mettre à jour l'état localement
           this.messageDeblocage = 'Votre carte a été débloquée avec succès.';
           this.isDeblocageSuccess = true;
           this.ouvrirModal('deblocageModal'); // Ouvrir le modal de déblocage
@@ -92,7 +93,7 @@ isDeblocageSuccess: boolean = false;
     } else {
       this.userService.bloquerCarte().subscribe(
         (response) => {
-          this.carteBloquee = true;
+          this.carteBloquee = true; // Mettre à jour l'état localement
           this.messageBlocage = 'Votre carte a été bloquée avec succès.';
           this.isBlocageSuccess = true;
           this.ouvrirModal('blocageModal'); // Ouvrir le modal de blocage
@@ -107,9 +108,8 @@ isDeblocageSuccess: boolean = false;
       );
     }
   }
-
   ouvrirModal(modalId: string) {
-    console.log(`Ouverture du modal : ${modalId}`);
+    console.log('Ouverture du modal : ${modalId}');
     const modalElement = document.getElementById(modalId);
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);

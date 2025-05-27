@@ -1,6 +1,18 @@
 <!-- Bannière en haut -->
 <div class="header">
-    <img src="/assets/banniere.png" alt="Bannière" class="banner-img">
+  <img src="/assets/banniere.png" alt="Bannière" class="banner-img">
+</div>
+
+<div class="container mt-4">
+  <h2>Mon Profil</h2>
+
+  <!-- Vérification que etudiant existe avant d'afficher -->
+  <div class="d-flex align-items-center mb-4 justify-content-center" *ngIf="etudiant">
+    <img src="assets/etudiant.png" alt="Profil" class="rounded-circle me-3 profile-img">
+    <div>
+      <h5 class="mb-1">{{ etudiant.prenom || 'Prénom' }} {{ etudiant.nom || 'Nom' }}</h5>
+      <p class="text-muted mb-0">{{ etudiant.email || 'Email' }}</p>
+    </div>
   </div>
     <!-- Affichage des alertes dynamiques -->
     <div *ngIf="message" [ngClass]="messageType === 'success' ? 'alert alert-success' : 'alert alert-danger'" class="mt-3">
@@ -49,7 +61,8 @@
   <!-- Lien de réinitialisation -->
   <a href="myaccount" class="text-primary mt-3 d-block">Réinitialiser mon mot de passe</a>
   <!-- Bouton de retour -->
-<button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
+  <button class="btn btn-secondary mt-3" (click)="retournerDashboard()">Retour au Dashboard</button>
+</div>
 
 
 <!-- Modal pour la modification -->
